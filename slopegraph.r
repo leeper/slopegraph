@@ -16,6 +16,7 @@ yaxt = 'n',
 xaxt = 'n',
 xlab = '',
 ylab = '',
+add.exp = NULL, # an expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph)
 labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
@@ -44,6 +45,10 @@ mai = NULL,
     
     plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main,
          bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
+    # optional expression
+    if(!is.null(add.exp))
+        eval(add.exp)
+    
     # x-axis
     axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt)
     
