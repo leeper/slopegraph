@@ -49,7 +49,7 @@ mai = NULL,
     
     # left-side labels
     l <- df[,1] # I MAY WANT TO BIN THESE SO THAT CLOSE VALUES DON'T OVERLAP
-    leftlabs <- lapply(split(rownames(df),l), paste, collapse=',')
+    leftlabs <- lapply(split(rownames(df),l), paste, collapse=', ')
     text(1-offset.lab, as.numeric(names(leftlabs)),
          col=col.lab, leftlabs, pos=labpos.left, cex=cex.lab, font=font.lab)
     
@@ -99,7 +99,7 @@ mai = NULL,
 cancer <- read.csv('tufte-cancer-survival-data.csv')
 rownames(cancer) <- cancer[,1]
 cancer <- cancer [,-1]
-pdf('cancer-surival-plot.pdf',height=16, width=12)
-slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5))
+pdf('tufte-cancer-surival-plot.pdf',height=16, width=12)
+slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), labels=c('5 Year','10 Year','15 Year','20 Year'))
 dev.off()
 
