@@ -16,7 +16,7 @@ yaxt = 'n',
 xaxt = 'n',
 xlab = '',
 ylab = '',
-lables = names(df),
+labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
 col.lines = par('fg'),
@@ -96,7 +96,7 @@ mai = NULL,
 # EXAMPLE
 
 ## Tufte's original graph (to the correct scale)
-cancer <- read.csv('cancer-survival-data.csv')
+cancer <- read.csv('tufte-cancer-survival-data.csv')
 rownames(cancer) <- cancer[,1]
 cancer <- cancer [,-1]
 pdf('cancer-surival-plot.pdf',height=16, width=12)
