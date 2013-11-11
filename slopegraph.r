@@ -104,7 +104,7 @@ mai = NULL,
 cancer <- read.csv('tufte-cancer-survival-data.csv')
 rownames(cancer) <- cancer[,1]
 cancer <- cancer [,-1]
-pdf('tufte-cancer-surival-plot.pdf',height=16, width=12)
+pdf('tufte-cancer-survival-plot.pdf',height=16, width=12)
 slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), labels=c('5 Year','10 Year','15 Year','20 Year'))
 dev.off()
 
