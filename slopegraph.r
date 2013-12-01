@@ -1,10 +1,5 @@
 # R Function to Draw Edward Tufte-style Slopeplots
 
-# TODO:
-## deal with overlapping numeric values: if more than one label falls at a position, offset based on rank() of the subsequent column values for those rows
-## overlapping rownames (same algorithm as above, but hard code for 1st and 2nd value)
-
-
 slopegraph <-
 function(
 df,
@@ -67,37 +62,64 @@ mai = NULL,
         list(lengths = diff(c(0L,i)),
              values = x[head(c(0L,i)+1L,-1L)]) 
     } 
-    overlaps <- function(coldf){
+    
+    # deal with duplicate value labels (i.e., not double printing anything)
+    #df2 <- do.call(cbind,lapply(df, function(y) {y[duplicated(y)] <- ''; y}))
+    # print them
+    #apply(cbind(df,df2),1, function(y){
+     #   text(1:ncol(df), as.numeric(y[1:ncol(df)]), y[(ncol(df)+1):(2*ncol(df))],
+      #       col=col.num, cex=cex.num, font=font.num)
+    #})
+    
+    overlaps <- function(coldf, cat='rownames'){
+        # conditionally remove exactly duplicated values
+        if(any(duplicated(coldf[,1]))){
+            u <- unique(coldf[,1])
+            out <- cbind.data.frame(t(sapply(u, function(i)
+                c(paste(rownames(coldf)[coldf[,1]==i],collapse='\n'),i))))
+            rownames(out) <- out[,1]
+            out[,1] <- NULL
+            names(out) <- names(coldf)
+            out[,1] <- as.numeric(as.character(out[,1]))
+            coldf <- out[order(out[,1]),,drop=FALSE]
+        }
         # function to fix overlaps
         overlaps <- which(abs(diff(coldf[,1]))<(1.5*h))
-        runs <- seqle(overlaps) # use seqle function
-        overlaps2 <- mapply(function(i,j) seq(i,length.out=j+1), runs$values, runs$lengths)
-        
-        newlabs <- data.frame(sapply(overlaps2, function(i) mean(coldf[i,1])))
-        names(newlabs) <- names(coldf)
-        rownames(newlabs) <- 
-            sapply(overlaps2, function(i) paste(rownames(coldf)[i],collapse='\n'))
-        return(rbind(coldf[-unique(c(overlaps,overlaps+1)),,drop=FALSE],newlabs))
+        if(length(overlaps)){
+            runs <- seqle(overlaps) # use seqle function
+            overlaps2 <- mapply(function(i,j) seq(i,length.out=j+1), runs$values, runs$lengths)
+            oldlabs <- coldf[-unique(c(overlaps,overlaps+1)),,drop=FALSE]
+            newlabs <- data.frame(sapply(overlaps2, function(i) mean(coldf[i,1])))
+            names(newlabs) <- names(coldf)
+            if(cat=='rownames'){
+                rownames(newlabs) <- 
+                    sapply(overlaps2, function(i) paste(rownames(coldf)[i],collapse='\n'))
+            } else if(cat=='values'){
+                rownames(oldlabs) <- oldlabs[,1]
+                rownames(newlabs) <-
+                    sapply(overlaps2, function(i) paste(as.character(coldf[i,1]),collapse='\n'))
+            }
+            return(rbind(oldlabs,newlabs))
+        } else
+            return(coldf)
     }
     
     # left-side labels
-    l <- overlaps(df[,1,drop=FALSE])
+    l <- overlaps(df[order(df[,1]),1,drop=FALSE])
     text(1-offset.lab, l[,1],
          col=col.lab, rownames(l), pos=labpos.left, cex=cex.lab, font=font.lab)
     
     # right-side labels
-    r <- overlaps(df[,ncol(df),drop=FALSE])
+    r <- overlaps(df[order(df[,ncol(df)]),ncol(df),drop=FALSE])
     text(ncol(df)+offset.lab, r[,1], 
          col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab)
     
     # numeric value labels
-    # deal with duplicate value labels (i.e., not double printing anything)
-    df2 <- do.call(cbind,lapply(df, function(y) {y[duplicated(y)] <- ''; y}))
-    # print them
-    apply(cbind(df,df2),1, function(y){
-        text(1:ncol(df), as.numeric(y[1:ncol(df)]), y[(ncol(df)+1):(2*ncol(df))],
-             col=col.num, cex=cex.num, font=font.num)
-    })
+    valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[,i]),i,drop=FALSE], cat='values'))
+    for(i in 1:length(valslist)){
+        text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
+            col=col.num, cex=cex.num, font=font.num)
+    }
     
     # draw lines
     offset.x <- .1 # small offset for `segments`
