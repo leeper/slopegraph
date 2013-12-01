@@ -67,44 +67,37 @@ mai = NULL,
         list(lengths = diff(c(0L,i)),
              values = x[head(c(0L,i)+1L,-1L)]) 
     } 
+    overlaps <- function(coldf){
+        # function to fix overlaps
+        overlaps <- which(abs(diff(coldf[,1]))<(1.5*h))
+        runs <- seqle(overlaps) # use seqle function
+        overlaps2 <- mapply(function(i,j) seq(i,length.out=j+1), runs$values, runs$lengths)
+        
+        newlabs <- data.frame(sapply(overlaps2, function(i) mean(coldf[i,1])))
+        names(newlabs) <- names(coldf)
+        rownames(newlabs) <- 
+            sapply(overlaps2, function(i) paste(rownames(coldf)[i],collapse='\n'))
+        return(rbind(coldf[-unique(c(overlaps,overlaps+1)),,drop=FALSE],newlabs))
+    }
     
     # left-side labels
-    l <- df[,1,drop=FALSE]
-    
-    # fix overlaps (NOT DONE YET)
-    overlaps <- which(abs(diff(l[,1]))<(1.5*h))
-    
-    overlaps2 <- sort(unique(c(overlaps,overlaps+1)))
-    # NEED TO DEFINE overlaps2 DIFFERENTLY
-    
-    runs <- seqle(overlaps2)$lengths
-    overlaps3 <- split(overlaps2,rep(seq_along(runs),runs))
-    newlabs <- data.frame(sapply(overlaps3, function(i) mean(l[i,1])))
-    names(newlabs) <- names(l)
-    rownames(newlabs) <- 
-        sapply(overlaps3, function(i) paste(rownames(l)[i],collapse='\n'))
-    l <- rbind(l[-unique(c(overlaps,overlaps+1)),,drop=FALSE],newlabs)
-    
-    leftlabs <- lapply(split(rownames(l),l), paste, collapse=', ')
-    
-    print(leftlabs)
-    
-    text(1-offset.lab, as.numeric(names(leftlabs)),
-         col=col.lab, leftlabs, pos=labpos.left, cex=cex.lab, font=font.lab)
+    l <- overlaps(df[,1,drop=FALSE])
+    text(1-offset.lab, l[,1],
+         col=col.lab, rownames(l), pos=labpos.left, cex=cex.lab, font=font.lab)
     
     # right-side labels
-    r <- df[,ncol(df)] # I MAY WANT TO BIN THESE SO THAT CLOSE VALUES DON'T OVERLAP
-    rightlabs <- lapply(split(rownames(df),r), paste, collapse=',')
-    text(ncol(df)+offset.lab, as.numeric(names(rightlabs)), 
-         col=col.lab, rightlabs, pos=labpos.right, cex=cex.lab, font=font.lab)
+    r <- overlaps(df[,ncol(df),drop=FALSE])
+    text(ncol(df)+offset.lab, r[,1], 
+         col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab)
     
     # numeric value labels
     # deal with duplicate value labels (i.e., not double printing anything)
     df2 <- do.call(cbind,lapply(df, function(y) {y[duplicated(y)] <- ''; y}))
     # print them
-    apply(cbind(df,df2),1, function(y)
+    apply(cbind(df,df2),1, function(y){
         text(1:ncol(df), as.numeric(y[1:ncol(df)]), y[(ncol(df)+1):(2*ncol(df))],
-             col=col.num, cex=cex.num, font=font.num))
+             col=col.num, cex=cex.num, font=font.num)
+    })
     
     # draw lines
     offset.x <- .1 # small offset for `segments`
