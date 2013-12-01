@@ -110,8 +110,8 @@ dev.off()
 
 
 ## Tufte's GNP Graph
-gnp <- read.csv('tufte-cancer-survival-data.csv')
-rownames(gnp) <- cancer[,1]
+gnp <- read.csv('tufte-gnp-data.csv')
+rownames(gnp) <- gnp[,1]
 gnp <- gnp [,-1]
 pdf('tufte-gnp-plot.pdf',height=12, width=8)
 slopegraph(gnp, col.line='gray', xlim=c(-.5,1.5), labels=c('1970','1979'))
