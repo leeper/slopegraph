@@ -22,6 +22,7 @@ col.num = par('fg'),
 col.xaxt = par('fg'),
 offset.x = .1, # THIS DOESN'T SEEM TO WORK???
 offset.lab = .1,
+binval = 1.5, # threshold at which to force binning of labels and values (multiplier of the height of an "m")
 cex.lab = 1,
 cex.num = 1,
 font.lab = 1,
@@ -63,14 +64,6 @@ mai = NULL,
              values = x[head(c(0L,i)+1L,-1L)]) 
     } 
     
-    # deal with duplicate value labels (i.e., not double printing anything)
-    #df2 <- do.call(cbind,lapply(df, function(y) {y[duplicated(y)] <- ''; y}))
-    # print them
-    #apply(cbind(df,df2),1, function(y){
-     #   text(1:ncol(df), as.numeric(y[1:ncol(df)]), y[(ncol(df)+1):(2*ncol(df))],
-      #       col=col.num, cex=cex.num, font=font.num)
-    #})
-    
     overlaps <- function(coldf, cat='rownames'){
         # conditionally remove exactly duplicated values
         if(any(duplicated(coldf[,1]))){
@@ -84,7 +77,7 @@ mai = NULL,
             coldf <- out[order(out[,1]),,drop=FALSE]
         }
         # function to fix overlaps
-        overlaps <- which(abs(diff(coldf[,1]))<(1.5*h))
+        overlaps <- which(abs(diff(coldf[,1]))<(binval*h))
         if(length(overlaps)){
             runs <- seqle(overlaps) # use seqle function
             overlaps2 <- mapply(function(i,j) seq(i,length.out=j+1), runs$values, runs$lengths)
@@ -93,11 +86,11 @@ mai = NULL,
             names(newlabs) <- names(coldf)
             if(cat=='rownames'){
                 rownames(newlabs) <- 
-                    sapply(overlaps2, function(i) paste(rownames(coldf)[i],collapse='\n'))
+                    sapply(overlaps2, function(i) paste(rownames(coldf)[rev(i)],collapse='\n'))
             } else if(cat=='values'){
                 rownames(oldlabs) <- oldlabs[,1]
                 rownames(newlabs) <-
-                    sapply(overlaps2, function(i) paste(as.character(coldf[i,1]),collapse='\n'))
+                    sapply(overlaps2, function(i) paste(as.character(coldf[rev(i),1]),collapse='\n'))
             }
             return(rbind(oldlabs,newlabs))
         } else
@@ -158,7 +151,7 @@ cancer <- read.csv('tufte-cancer-survival-data.csv')
 rownames(cancer) <- cancer[,1]
 cancer <- cancer [,-1]
 pdf('tufte-cancer-survival-plot.pdf',height=16, width=12, family='Palatino')
-slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), labels=c('5 Year','10 Year','15 Year','20 Year'))
+slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), labels=c('5 Year','10 Year','15 Year','20 Year'), binval=2.5)
 dev.off()
 
 
@@ -167,5 +160,5 @@ gnp <- read.csv('tufte-gnp-data.csv')
 gnp[,3] <- NULL
 pdf('tufte-gnp-plot.pdf',height=12, width=8, family='Palatino')
 slopegraph(gnp, col.line='gray', labels=c('1970','1979'), 
-    main='Current Receipts of Goverment as a Percentage of Gross Domestic Product')
+    main='Current Receipts of Goverment as a Percentage of Gross Domestic Product', binval=3.75)
 dev.off()
