@@ -16,7 +16,8 @@ yaxt = 'n',
 xaxt = 'n',
 xlab = '',
 ylab = '',
-add.exp = NULL, # an expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph)
+add.before = NULL, # an expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph)
+add.after = NULL, # an expression to add something after adding the plot content
 labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
@@ -24,7 +25,7 @@ col.lines = par('fg'),
 col.lab = par('fg'),
 col.num = par('fg'),
 col.xaxt = par('fg'),
-offset.x = .1, # THIS DOESN'T SEEM TO WORK
+offset.x = .1, # THIS DOESN'T SEEM TO WORK???
 offset.lab = .1,
 cex.lab = 1,
 cex.num = 1,
@@ -46,8 +47,8 @@ mai = NULL,
     plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main,
          bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
     # optional expression
-    if(!is.null(add.exp))
-        eval(add.exp)
+    if(!is.null(add.before))
+        eval(add.before)
     
     # x-axis
     axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt)
@@ -93,6 +94,10 @@ mai = NULL,
                )
     }
     
+    # optional expression
+    if(!is.null(add.after))
+        eval(add.after)
+    
     # return invisibly
     invisible(NULL)
 }
@@ -104,15 +109,15 @@ mai = NULL,
 cancer <- read.csv('tufte-cancer-survival-data.csv')
 rownames(cancer) <- cancer[,1]
 cancer <- cancer [,-1]
-pdf('tufte-cancer-survival-plot.pdf',height=16, width=12)
+pdf('tufte-cancer-survival-plot.pdf',height=16, width=12, family='Palatino')
 slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), labels=c('5 Year','10 Year','15 Year','20 Year'))
 dev.off()
 
 
 ## Tufte's GNP Graph
 gnp <- read.csv('tufte-gnp-data.csv')
-rownames(gnp) <- gnp[,1]
-gnp <- gnp [,-1]
-pdf('tufte-gnp-plot.pdf',height=12, width=8)
-slopegraph(gnp, col.line='gray', xlim=c(-.5,1.5), labels=c('1970','1979'))
+gnp[,3] <- NULL
+pdf('tufte-gnp-plot.pdf',height=12, width=8, family='Palatino')
+slopegraph(gnp, col.line='gray', labels=c('1970','1979'), 
+    main='Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 dev.off()
