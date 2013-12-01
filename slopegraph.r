@@ -53,9 +53,42 @@ mai = NULL,
     # x-axis
     axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt)
     
+    # height and width of 'm' on plotting device
+    h <- strheight('m')
+    w <- strwidth('m')
+    
+    # function for finding consecutive indices
+    # from: http://stackoverflow.com/a/16118320/2338862
+    seqle <- function(x,incr=1) { 
+        if(!is.numeric(x)) x <- as.numeric(x) 
+        n <- length(x)  
+        y <- x[-1L] != x[-n] + incr 
+        i <- c(which(y|is.na(y)),n) 
+        list(lengths = diff(c(0L,i)),
+             values = x[head(c(0L,i)+1L,-1L)]) 
+    } 
+    
     # left-side labels
-    l <- df[,1] # I MAY WANT TO BIN THESE SO THAT CLOSE VALUES DON'T OVERLAP
-    leftlabs <- lapply(split(rownames(df),l), paste, collapse=', ')
+    l <- df[,1,drop=FALSE]
+    
+    # fix overlaps (NOT DONE YET)
+    overlaps <- which(abs(diff(l[,1]))<(1.5*h))
+    
+    overlaps2 <- sort(unique(c(overlaps,overlaps+1)))
+    # NEED TO DEFINE overlaps2 DIFFERENTLY
+    
+    runs <- seqle(overlaps2)$lengths
+    overlaps3 <- split(overlaps2,rep(seq_along(runs),runs))
+    newlabs <- data.frame(sapply(overlaps3, function(i) mean(l[i,1])))
+    names(newlabs) <- names(l)
+    rownames(newlabs) <- 
+        sapply(overlaps3, function(i) paste(rownames(l)[i],collapse='\n'))
+    l <- rbind(l[-unique(c(overlaps,overlaps+1)),,drop=FALSE],newlabs)
+    
+    leftlabs <- lapply(split(rownames(l),l), paste, collapse=', ')
+    
+    print(leftlabs)
+    
     text(1-offset.lab, as.numeric(names(leftlabs)),
          col=col.lab, leftlabs, pos=labpos.left, cex=cex.lab, font=font.lab)
     
