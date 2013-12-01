@@ -98,9 +98,9 @@ mai = NULL,
 }
 
 
-# EXAMPLE
+# EXAMPLES
 
-## Tufte's original graph (to the correct scale)
+## Tufte's Cancer Graph (to the correct scale)
 cancer <- read.csv('tufte-cancer-survival-data.csv')
 rownames(cancer) <- cancer[,1]
 cancer <- cancer [,-1]
@@ -108,3 +108,11 @@ pdf('tufte-cancer-survival-plot.pdf',height=16, width=12)
 slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), labels=c('5 Year','10 Year','15 Year','20 Year'))
 dev.off()
 
+
+## Tufte's GNP Graph
+gnp <- read.csv('tufte-cancer-survival-data.csv')
+rownames(gnp) <- cancer[,1]
+gnp <- gnp [,-1]
+pdf('tufte-gnp-plot.pdf',height=12, width=8)
+slopegraph(gnp, col.line='gray', xlim=c(-.5,1.5), labels=c('1970','1979'))
+dev.off()
