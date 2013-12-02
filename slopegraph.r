@@ -16,7 +16,7 @@ add.after = NULL, # an expression to add something after adding the plot content
 labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
-decimals = 1,
+decimals = NULL,
 binval = 1.5, # threshold at which to force binning of labels and values (multiplier of the height of an "m")
 col.lines = par('fg'),
 col.lab = par('fg'),
@@ -46,6 +46,18 @@ mai = NULL,
     # optional expression
     if(!is.null(add.before))
         eval(add.before)
+    
+    # calculate decimals from data
+    if(is.null(decimals)){
+        decimals <- 
+        max(sapply(as.vector(sapply(df, as.character)),function(i) {
+            a <- strsplit(i, '.', fixed=TRUE)[[1]][2]
+            if(!is.na(a))
+                nchar(a)
+            else
+                0
+        }), na.rm=TRUE)
+    }
     
     # x-axis
     axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt)
@@ -89,9 +101,10 @@ mai = NULL,
                 rownames(newlabs) <- 
                     sapply(overlaps2, function(i) paste(rownames(coldf)[rev(i)],collapse='\n'))
             } else if(cat=='values'){
-                rownames(oldlabs) <- oldlabs[,1]
+                rownames(oldlabs) <- sprintf(paste('%.',decimals,'f',sep=''),oldlabs[,1])
                 rownames(newlabs) <-
-                    sapply(overlaps2, function(i) paste(as.character(coldf[rev(i),1]),collapse='\n'))
+                    sapply(overlaps2, function(i)
+                        paste(sprintf(paste('%.',decimals,'f',sep=''),coldf[rev(i),1]),collapse='\n'))
             }
             return(rbind(oldlabs,newlabs))
         } else
@@ -111,8 +124,7 @@ mai = NULL,
     # numeric value labels
     valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[,i]),i,drop=FALSE], cat='values'))
     for(i in 1:length(valslist)){
-        text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1],
-            sprintf(paste('%.',decimals,'f',sep=''),rownames(valslist[[i]])),
+        text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
             col=col.num, cex=cex.num, font=font.num)
     }
     

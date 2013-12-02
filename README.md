@@ -6,6 +6,6 @@ This is very much a work in progress. Pull requests welcome. Once it's more stab
 
 Here is the current output:
 
-![Cancer Survival](http://i.imgur.com/vSXfU46.png)
+![Cancer Survival](tufte-cancer-survival-plot.png)
 
-![GNP](http://i.imgur.com/VI8MBMu.png)
+![GNP](tufte-gnp-plot.png)
