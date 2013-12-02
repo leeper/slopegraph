@@ -16,13 +16,14 @@ add.after = NULL, # an expression to add something after adding the plot content
 labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
+decimals = 1,
+binval = 1.5, # threshold at which to force binning of labels and values (multiplier of the height of an "m")
 col.lines = par('fg'),
 col.lab = par('fg'),
 col.num = par('fg'),
 col.xaxt = par('fg'),
 offset.x = .1, # THIS DOESN'T SEEM TO WORK???
 offset.lab = .1,
-binval = 1.5, # threshold at which to force binning of labels and values (multiplier of the height of an "m")
 cex.lab = 1,
 cex.num = 1,
 font.lab = 1,
@@ -110,7 +111,8 @@ mai = NULL,
     # numeric value labels
     valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[,i]),i,drop=FALSE], cat='values'))
     for(i in 1:length(valslist)){
-        text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
+        text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1],
+            sprintf(paste('%.',decimals,'f',sep=''),rownames(valslist[[i]])),
             col=col.num, cex=cex.num, font=font.num)
     }
     
