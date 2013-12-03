@@ -22,7 +22,7 @@ col.lines = par('fg'),
 col.lab = par('fg'),
 col.num = par('fg'),
 col.xaxt = par('fg'),
-offset.x = .1, # THIS DOESN'T SEEM TO WORK???
+offset.x = .1, # small offset for `segments`
 offset.lab = .1,
 cex.lab = 1,
 cex.num = 1,
@@ -129,7 +129,6 @@ mai = NULL,
     }
     
     # draw lines
-    offset.x <- .1 # small offset for `segments`
     col.lines <- rep(col.lines, length.out=nrow(df))
     lty <- rep(lty, length.out=nrow(df))
     lwd <- rep(lwd, length.out=nrow(df))
