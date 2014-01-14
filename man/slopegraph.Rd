@@ -1,5 +1,6 @@
 \name{slopegraph}
 \alias{slopegraph}
+\alias{slopegraph-package}
 \title{Create Slopegraph from Dataframe}
 \description{Convert an R dataframe (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.}
 \usage{
@@ -8,22 +9,22 @@ xlim = c(.5,ncol(df)+.5),
 ylim = c(min(df)-diff(range(df))/100,max(df)+diff(range(df))/100),
 main = NULL,
 bty = 'n',
-yaxt = 'n',
 xaxt = 'n',
+yaxt = 'n',
 xlab = '',
 ylab = '',
-add.before = NULL, # an expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph)
-add.after = NULL, # an expression to add something after adding the plot content
+add.before = NULL,
+add.after = NULL,
 labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
 decimals = NULL,
-binval = 1.5, # threshold at which to force binning of labels and values (multiplier of the height of an "m")
+binval = 1.5,
 col.lines = par('fg'),
 col.lab = par('fg'),
 col.num = par('fg'),
 col.xaxt = par('fg'),
-offset.x = .1, # small offset for `segments`
+offset.x = .1,
 offset.lab = .1,
 cex.lab = 1,
 cex.num = 1,
@@ -49,6 +50,7 @@ mai = NULL,
     \item{add.after}{An expression to add something after adding the plot content. Default is \code{NULL}.}
     \item{labels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.}
     \item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{? par}.}
+    \item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{? par}.}
     \item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
     \item{binval}{Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.}
     \item{col.lines}{A vector of colors for the slopegraph lines. Default is \code{par('fg')}.}
