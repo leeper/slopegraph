@@ -1,5 +1,3 @@
-# R Function to Draw Edward Tufte-style Slopeplots
-
 slopegraph <-
 function(
 df,
@@ -7,8 +5,8 @@ xlim = c(.5,ncol(df)+.5),
 ylim = c(min(df)-diff(range(df))/100,max(df)+diff(range(df))/100),
 main = NULL,
 bty = 'n',
-yaxt = 'n',
 xaxt = 'n',
+yaxt = 'n',
 xlab = '',
 ylab = '',
 add.before = NULL, # an expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph)

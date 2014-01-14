@@ -1,0 +1,13 @@
+citHeader("To cite the slopegraph package in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+ 
+citEntry(entry="Manual",
+         title = "slopegraph: Edward Tufte-inspired Slopegraphs",
+         author = personList(as.person("Thomas J. Leeper")),
+         year = year,
+         note = vers,
+		 textVersion = paste("Thomas J. Leeper (",year,
+                             "). slopegraph: Edward Tufte-inspired Slopegraphs. ",
+                             vers, ".", sep=""))
