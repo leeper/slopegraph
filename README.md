@@ -6,6 +6,6 @@ This is very much a work in progress. Pull requests welcome. Once it's more stab
 
 Here is the current output of the `slopegraph` function:
 
-![Cancer Survival](inst/examples/cancer-survival-plot.png)
+![Cancer Survival](inst/examples/cancer-survival.png)
 
 ![GNP](inst/examples/gdp.png)
