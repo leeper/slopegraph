@@ -2,7 +2,7 @@ slopegraph <-
 function(
 df,
 xlim = c(.5,ncol(df)+.5),
-ylim = c(min(df)-diff(range(df))/100,max(df)+diff(range(df))/100),
+ylim = c(min(df,na.rm=TRUE)-diff(range(df,na.rm=TRUE))/100,max(df,na.rm=TRUE)+diff(range(df,na.rm=TRUE))/100),
 main = NULL,
 bty = 'n',
 xaxt = 'n',
