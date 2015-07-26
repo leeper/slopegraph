@@ -24,6 +24,7 @@ offset.x = .1, # small offset for `segments`
 offset.lab = .1,
 cex.lab = 1,
 cex.num = 1,
+family="serif",
 font.lab = 1,
 font.num = 1,
 lty = par("lty"),
@@ -39,7 +40,7 @@ mai = NULL,
     else
         par(mai=mai)
     
-    plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main,
+    plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main, family=family,
          bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
     # optional expression
     if(!is.null(add.before))
@@ -58,7 +59,7 @@ mai = NULL,
     }
     
     # x-axis
-    axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt)
+    axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt, family=family)
     
     # height and width of 'm' on plotting device
     h <- strheight('m')
@@ -112,18 +113,18 @@ mai = NULL,
     # left-side labels
     l <- overlaps(df[order(df[,1]),1,drop=FALSE])
     text(1-offset.lab, l[,1],
-         col=col.lab, rownames(l), pos=labpos.left, cex=cex.lab, font=font.lab)
+         col=col.lab, rownames(l), pos=labpos.left, cex=cex.lab, font=font.lab, family=family)
     
     # right-side labels
     r <- overlaps(df[order(df[,ncol(df)]),ncol(df),drop=FALSE])
     text(ncol(df)+offset.lab, r[,1], 
-         col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab)
+         col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab, family=family)
     
     # numeric value labels
     valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[,i]),i,drop=FALSE], cat='values'))
     for(i in 1:length(valslist)){
         text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
-            col=col.num, cex=cex.num, font=font.num)
+            col=col.num, cex=cex.num, font=font.num, family=family)
     }
     
     # draw lines
