@@ -6,7 +6,7 @@
 \usage{
 slopegraph(df,
 xlim = c(.5,ncol(df)+.5),
-ylim = c(min(df)-diff(range(df))/100,max(df)+diff(range(df))/100),
+ylim = c(min(df,na.rm=TRUE)-diff(range(df,na.rm=TRUE))/100,max(df,na.rm=TRUE)+diff(range(df,na.rm=TRUE))/100),
 main = NULL,
 bty = 'n',
 xaxt = 'n',
@@ -28,6 +28,7 @@ offset.x = .1,
 offset.lab = .1,
 cex.lab = 1,
 cex.num = 1,
+family = "serif",
 font.lab = 1,
 font.num = 1,
 lty = par("lty"),
@@ -61,6 +62,7 @@ mai = NULL,
     \item{offset.lab}{A small offset for the observation labels. Default is \code{.1}.}
     \item{cex.lab}{Default is \code{1}. See \code{? par}.}
     \item{cex.num}{Default is \code{1}. See \code{? par}.}
+    \item{family}{The font family to use in the plots. Set to \dQuote{serif} by default.}
     \item{font.lab}{Default is \code{1}. See \code{? text}.}
     \item{font.num}{Default is \code{1}. See \code{? text}.}
     \item{lty}{A vector of line type values for the slopegraph lines. Default is \code{par("lty")}. See \code{? par}.}

@@ -1,36 +1,35 @@
-slopegraph <-
-function(
-df,
-xlim = c(.5,ncol(df)+.5),
-ylim = c(min(df,na.rm=TRUE)-diff(range(df,na.rm=TRUE))/100,max(df,na.rm=TRUE)+diff(range(df,na.rm=TRUE))/100),
-main = NULL,
-bty = 'n',
-xaxt = 'n',
-yaxt = 'n',
-xlab = '',
-ylab = '',
-add.before = NULL, # an expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph)
-add.after = NULL, # an expression to add something after adding the plot content
-labels = names(df),
-labpos.left = 2,
-labpos.right = 4,
-decimals = NULL,
-binval = 1.5, # threshold at which to force binning of labels and values (multiplier of the height of an "m")
-col.lines = par('fg'),
-col.lab = par('fg'),
-col.num = par('fg'),
-col.xaxt = par('fg'),
-offset.x = .1, # small offset for `segments`
-offset.lab = .1,
-cex.lab = 1,
-cex.num = 1,
-family="serif",
-font.lab = 1,
-font.num = 1,
-lty = par("lty"),
-lwd = par("lwd"),
-mai = NULL,
-...)
+slopegraph <- function(
+    df,
+    xlim = c(.5,ncol(df)+.5),
+    ylim = c(min(df,na.rm=TRUE)-diff(range(df,na.rm=TRUE))/100,max(df,na.rm=TRUE)+diff(range(df,na.rm=TRUE))/100),
+    main = NULL,
+    bty = 'n',
+    xaxt = 'n',
+    yaxt = 'n',
+    xlab = '',
+    ylab = '',
+    add.before = NULL,
+    add.after = NULL,
+    labels = names(df),
+    labpos.left = 2,
+    labpos.right = 4,
+    decimals = NULL,
+    binval = 1.5,
+    col.lines = par('fg'),
+    col.lab = par('fg'),
+    col.num = par('fg'),
+    col.xaxt = par('fg'),
+    offset.x = .1,
+    offset.lab = .1,
+    cex.lab = 1,
+    cex.num = 1,
+    family = "serif",
+    font.lab = 1,
+    font.num = 1,
+    lty = par("lty"),
+    lwd = par("lwd"),
+    mai = NULL,
+    ...)
 {
     if(ncol(df) < 2)
         stop('`df` must have at least two columns')
