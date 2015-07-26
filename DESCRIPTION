@@ -1,11 +1,11 @@
 Package: slopegraph
-Version: 0.1
-Title: Edward Tufte-inspired Slopegraphs
-Date: 2013-12-07
+Version: 0.1.1
+Title: Edward Tufte-Inspired Slopegraphs
+Date: 2015-07-26
 Authors@R: c(person("Thomas", "Leeper", role = c("aut","cre"),
 					email = "thosjleeper@gmail.com"))
-Description: Convert an R dataframe (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.
-Depends: R (>= 2.0)
+Maintainer: Thomas J. Leeper <thosjleeper@gmail.com>
+Description: Convert a data.frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired slopegraph.
 License: GPL-2
 URL: https://github.com/leeper/slopegraph
 BugReports: https://github.com/leeper/slopegraph/issues
