@@ -1,5 +1,5 @@
 Package: slopegraph
-Version: 0.1.1
+Version: 0.1.2
 Title: Edward Tufte-Inspired Slopegraphs
 Date: 2015-07-26
 Authors@R: c(person("Thomas", "Leeper", role = c("aut","cre"),

@@ -10,6 +10,19 @@ Pull requests welcome. Please report any issues on the [issues page](https://git
 
 The package currently includes only one function (`slopegraph`), which produces a slopegraph from an observation-by-period dataframe. Everything is more or less drawn automatically, but is highly customizable in terms of line and text colors, font sizes and styles, axes, titles, and plotting behind and in front of the slopegraph lines.
 
+## Installation ##
+
+[![travis-ci](https://travis-ci.org/leeper/slopegraph.svg)](https://travis-ci.org/leeper/slopegraph) ![CRAN](http://www.r-pkg.org/badges/version/slopegraph)
+
+To install the latest development version of **slopegraph** from GitHub:
+
+```R
+if(!require("devtools")){
+    install.packages("devtools")
+    library("devtools")
+}
+install_github("leeper/slopegraph")
+```
 
 ## Examples ##
 
@@ -19,9 +32,29 @@ The examples aim to mimic the plots drawn by Tufte (but to correct scale) and th
 
 ### Cancer Survival Data ###
 
+```R
+slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5),
+           labels=c('5 Year','10 Year','15 Year','20 Year'), binval=2.5)
+```
+
 ![Cancer Survival](inst/examples/cancer-survival.png)
 
 
 ### GDP Data ###
 
+```R
+slopegraph(gdp, col.line='gray', labels=c('1970','1979'), 
+           main='Current Receipts of Goverment as a Percentage of Gross Domestic Product',
+           binval=3.75)
+```
+
 ![GDP](inst/examples/gdp.png)
+
+
+### State Population Ranks ###
+
+```R
+slopegraph(states, col.line='black', 
+           main='Relative rank of U.S. state populations, 1790-1870')
+```
+
