@@ -1,7 +1,5 @@
 # Tufte-Inspired Slopegraphs in R #
 
-[![Build Status](https://travis-ci.org/leeper/slopegraph.png?branch=master)](https://travis-ci.org/leeper/slopegraph)
-
 This repository holds some working code for creating slopegraphs in R.
 
 *This is very much a work in progress. Once it's more stable, I will release the package to CRAN.*
