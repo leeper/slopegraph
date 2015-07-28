@@ -8,8 +8,8 @@ slopegraph <- function(
     yaxt = 'n',
     xlab = '',
     ylab = '',
-    add.before = NULL,
-    add.after = NULL,
+    panel.first = NULL,
+    panel.last = NULL,
     labels = names(df),
     labpos.left = 2,
     labpos.right = 4,
@@ -42,8 +42,8 @@ slopegraph <- function(
     plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main, family=family,
          bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
     # optional expression
-    if(!is.null(add.before))
-        eval(add.before)
+    if(!is.null(panel.first))
+        eval(panel.first)
     
     # calculate decimals from data
     if(is.null(decimals)){
@@ -147,8 +147,8 @@ slopegraph <- function(
     }
     
     # optional expression
-    if(!is.null(add.after))
-        eval(add.after)
+    if(!is.null(panel.last))
+        eval(panel.last)
     
     # return invisibly
     invisible(NULL)

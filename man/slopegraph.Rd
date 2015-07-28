@@ -13,8 +13,8 @@ xaxt = 'n',
 yaxt = 'n',
 xlab = '',
 ylab = '',
-add.before = NULL,
-add.after = NULL,
+panel.first = NULL,
+panel.last = NULL,
 labels = names(df),
 labpos.left = 2,
 labpos.right = 4,
@@ -47,8 +47,8 @@ mai = NULL,
     \item{yaxt}{The y-axis type for the plot. Default is \code{'n'} (none). See \code{? par}.}
     \item{xlab}{The x-axis label for the plot. Default is \code{''} (none). See \code{? par}.}
     \item{ylab}{The y-axis label for the plot. Default is \code{''} (none). See \code{? par}.}
-    \item{add.before}{An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.}
-    \item{add.after}{An expression to add something after adding the plot content. Default is \code{NULL}.}
+    \item{panel.first}{An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.}
+    \item{panel.last}{An expression to add something after adding the plot content. Default is \code{NULL}.}
     \item{labels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.}
     \item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{? par}.}
     \item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{? par}.}
