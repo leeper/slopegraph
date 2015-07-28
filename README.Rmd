@@ -10,7 +10,9 @@ The package currently includes only one function (`slopegraph`), which produces 
 
 ## Installation ##
 
-[![travis-ci](https://travis-ci.org/leeper/slopegraph.svg)](https://travis-ci.org/leeper/slopegraph) ![CRAN](http://www.r-pkg.org/badges/version/slopegraph)
+[![travis-ci](https://travis-ci.org/leeper/slopegraph.svg)](https://travis-ci.org/leeper/slopegraph) 
+![CRAN](http://www.r-pkg.org/badges/version/slopegraph)
+[![Project Status: Wip - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)
 
 To install the latest development version of **slopegraph** from GitHub:
 
