@@ -34,7 +34,8 @@ Note: In order to obtain the desired look and feel, the examples below rely on t
 
 ### Cancer Survival Data ###
 
-```{r, results='hide'}
+
+```r
 pdf('inst/examples/cancer-survival.pdf',height=16, width=12, family='Palatino')
 slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), binval=2.5, 
            labels=c('5 Year','10 Year','15 Year','20 Year'))
@@ -49,7 +50,8 @@ shell("convert -resize 900x1800 -density 300 inst/examples/cancer-survival.pdf i
 
 ### GDP Data ###
 
-```{r gdp, results='hide'}
+
+```r
 pdf('inst/examples/gdp.pdf',height=12, width=8, family='Palatino')
 slopegraph(gdp, col.line='gray', labels=c('1970','1979'), binval=3.75, 
            main='Current Receipts of Goverment as a Percentage of Gross Domestic Product')
@@ -66,7 +68,8 @@ shell("convert -resize 900x1200 -density 300 inst/examples/gdp.pdf inst/examples
 
 This example shows a use case when there is missing data in the data.frame:
 
-```{r states, eval=FALSE}
+
+```r
 slopegraph(states, col.line='black', 
            main='Relative rank of U.S. state populations, 1790-1870')
 ```
