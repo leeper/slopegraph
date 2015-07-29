@@ -68,6 +68,6 @@ dev.off()
 shell("convert -resize 1200x1200 -density 300 inst/examples/states.pdf inst/examples/states.png")
 ```
 
-![states](inst/examples/gdp.png)
+![states](inst/examples/states.png)
 
 Note: In order to obtain the desired look and feel, the examples above rely on the `pdf()` graphics device and are then converted to PNG format using the `convert` utility from [ImageMagick](http://www.imagemagick.org/script/index.php). This mostly relates to the handling of fonts, aspect ratio, and image resolution.
