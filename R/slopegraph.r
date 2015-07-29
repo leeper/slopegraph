@@ -110,12 +110,12 @@ slopegraph <- function(
     }
     
     # left-side labels
-    l <- overlaps(df[order(df[,1]),1,drop=FALSE])
+    l <- overlaps(df[order(df[!is.na(df[,1]),1]),1,drop=FALSE])
     text(1-offset.lab, l[,1],
          col=col.lab, rownames(l), pos=labpos.left, cex=cex.lab, font=font.lab, family=family)
     
     # right-side labels
-    r <- overlaps(df[order(df[,ncol(df)]),ncol(df),drop=FALSE])
+    r <- overlaps(df[order(df[!is.na(df[,ncol(df)]),ncol(df)]),ncol(df),drop=FALSE])
     text(ncol(df)+offset.lab, r[,1], 
          col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab, family=family)
     
