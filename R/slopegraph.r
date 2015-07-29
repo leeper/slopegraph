@@ -130,21 +130,40 @@ slopegraph <- function(
     col.lines <- rep(col.lines, length.out=nrow(df))
     lty <- rep(lty, length.out=nrow(df))
     lwd <- rep(lwd, length.out=nrow(df))
-    for(i in 1:nrow(df)){
-        mapply(function(x1,y1,x2,y2,...){
+    
+    # break data down into set of segments
+    todraw <- do.call("rbind", lapply(1:nrow(df), function(n) {
+        datarow <- as.numeric(df[n,])
+        # drop consecutive NAs
+        r <- !is.na(datarow)
+        w <- which(r)
+        if(length(w) > 1) {
+            # create matrix of pairs of observed datapoints
+            e <- embed(w, 2)
+            eok <- apply(e, 1, diff) == -1
+            # produce matrix of segments args (x0,y0,x1,y1)
+            x1 <- e[eok, 2]
+            x2 <- e[eok, 1]
+            y1 <- datarow[x1]
+            y2 <- datarow[x2]
+            cbind(x1, y1, x2, y2)
+        } else {
+            NULL
+        }
+    }))
+    
+    apply(todraw, 1, function(rowdata){
+            x1 <- rowdata[1]
+            y1 <- rowdata[2]
+            x2 <- rowdata[3]
+            y2 <- rowdata[4]
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
                      x2-offset.x, if(y1==y2) y2 else (y2-ysloped),
                      col=col.lines[i],
                      lty=lty[i],
-                     lwd=lwd[i]
-                    )},
-               1:(length(df[i,])-1), # x1-positions
-               df[i,][-length(df[i,])], # y1-positions
-               2:(length(df[i,])), # x2-positions
-               df[i,][-1] # y2-positions
-               )
-    }
+                     lwd=lwd[i])
+    })
     
     # optional expression
     if(!is.null(panel.last))

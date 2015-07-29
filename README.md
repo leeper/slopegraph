@@ -52,7 +52,7 @@ shell("convert -resize 900x1800 -density 300 inst/examples/cancer-survival.pdf i
 
 
 ```r
-pdf('inst/examples/gdp.pdf',height=12, width=8, family='Palatino')
+pdf('inst/examples/gdp.pdf', height=12, width=8, family='Palatino')
 slopegraph(gdp, col.line='gray', labels=c('1970','1979'), binval=3.75, 
            main='Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 dev.off()
@@ -70,8 +70,13 @@ This example shows a use case when there is missing data in the data.frame:
 
 
 ```r
+pdf('inst/examples/states.pdf', height=10, width=12, family='Palatino')
 slopegraph(states, col.line='black', 
-           main='Relative rank of U.S. state populations, 1790-1870')
+           main='Relative Rank of U.S. State Populations, 1790-1870')
+dev.off()
+
+# convert to png for web display
+shell("convert -resize 1200x1000 -density 300 inst/examples/states.pdf inst/examples/states.png")
 ```
 
 Coming soon!
