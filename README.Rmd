@@ -11,8 +11,7 @@ The package currently includes only one function (`slopegraph`), which produces 
 ## Installation ##
 
 [![travis-ci](https://travis-ci.org/leeper/slopegraph.svg)](https://travis-ci.org/leeper/slopegraph) 
-![CRAN](http://www.r-pkg.org/badges/version/slopegraph)
-[![Project Status: Wip - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/0.1.0/wip.svg)](http://www.repostatus.org/#wip)
+[![CRAN](http://www.r-pkg.org/badges/version/slopegraph)](http://cran.r-project.org/package=slopegraph)
 
 To install the latest development version of **slopegraph** from GitHub:
 
@@ -26,15 +25,11 @@ install_github("leeper/slopegraph")
 
 ## Examples ##
 
-The current output of the `slopegraph` function (for the examples included in documentation) is shown below. The two examples use the GDP and cancer survival data described [here](http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk) and in Tufte's books.
+The current output of the `slopegraph` function (for the examples included in documentation) are shown below. 
 
-The examples aim to mimic the plots drawn by Tufte (but to correct scale) and thus do not showcase the customizability of the package.
+Tufte's most famous slopegraph example is probably the ["cancer survival graph,"](http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk) depicting 5, 10, 15, and 20 year survival rates for various cancers. The first example mimics this result but draws it to the correct scale (unlike Tufte's original):
 
-Note: In order to obtain the desired look and feel, the examples below rely on the `pdf()` graphics device and are then converted to PNG format using the `convert` utility from [ImageMagick](http://www.imagemagick.org/script/index.php). This mostly relates to the handling of fonts, aspect ratio, and image resolution.
-
-### Cancer Survival Data ###
-
-```{r, results='hide'}
+```{r, results='hide', cache=TRUE}
 pdf('inst/examples/cancer-survival.pdf',height=16, width=12, family='Palatino')
 slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), binval=2.5, 
            labels=c('5 Year','10 Year','15 Year','20 Year'))
@@ -47,9 +42,9 @@ shell("convert -resize 900x1800 -density 300 inst/examples/cancer-survival.pdf i
 ![Cancer Survival](inst/examples/cancer-survival.png)
 
 
-### GDP Data ###
+The second example, also from Tufte, shows changes in gross domestic product for a small set of countries over two points in time:
 
-```{r gdp, results='hide'}
+```{r gdp, results='hide', cache=TRUE}
 pdf('inst/examples/gdp.pdf', height=12, width=8, family='Palatino')
 slopegraph(gdp, col.line='gray', labels=c('1970','1979'), binval=3.75, 
            main='Current Receipts of Goverment as a Percentage of Gross Domestic Product')
@@ -61,19 +56,18 @@ shell("convert -resize 900x1200 -density 300 inst/examples/gdp.pdf inst/examples
 
 ![GDP](inst/examples/gdp.png)
 
+This third example comes from an 1878 publication ([a copy of which is available here](http://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~207741~3003452:Chart-Exhibiting-the-Relative-Rank-)), showing the relative ranking of the population of various U.S. states. This example features a reversed y-axis to better display the ranking:
 
-### State Population Ranks ###
-
-This example shows a use case when there is missing data in the data.frame:
-
-```{r states, eval=FALSE}
-pdf('inst/examples/states.pdf', height=10, width=12, family='Palatino')
-slopegraph(states, col.line='black', 
+```{r states, results='hide', cache=TRUE}
+pdf('inst/examples/states.pdf', height=15, width=15, family='Palatino')
+slopegraph(states, col.line='black', ylim = c(38,0),
            main='Relative Rank of U.S. State Populations, 1790-1870')
 dev.off()
 
 # convert to png for web display
-shell("convert -resize 1200x1000 -density 300 inst/examples/states.pdf inst/examples/states.png")
+shell("convert -resize 1200x1200 -density 300 inst/examples/states.pdf inst/examples/states.png")
 ```
 
-Coming soon!
+![states](inst/examples/gdp.png)
+
+Note: In order to obtain the desired look and feel, the examples above rely on the `pdf()` graphics device and are then converted to PNG format using the `convert` utility from [ImageMagick](http://www.imagemagick.org/script/index.php). This mostly relates to the handling of fonts, aspect ratio, and image resolution.

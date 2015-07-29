@@ -1,8 +1,8 @@
 \name{slopegraph}
 \alias{slopegraph}
 \alias{slopegraph-package}
-\title{Create Slopegraph from Dataframe}
-\description{Convert an R dataframe (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.}
+\title{Create Slopegraph from a data.frame}
+\description{Convert an R data.frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.}
 \usage{
 slopegraph(df,
 xlim = c(.5,ncol(df)+.5),
@@ -38,7 +38,7 @@ mai = NULL,
 }
 
 \arguments{
-    \item{df}{An observation-by-period dataframe, with at least two columns.}
+    \item{df}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
 	\item{xlim}{The x-axis limits of the plot. Automatically calculated by default.}
     \item{ylim}{The y-axis limits of the plot. Automatically calculated by default.}
     \item{main}{The main title of the plot. Default is \code{NULL} (none). See \code{? par}.}
@@ -70,9 +70,9 @@ mai = NULL,
     \item{mai}{A margin specification. Default is \code{NULL}. See \code{? par}.}
     \item{\ldots}{Additional arguments to \code{plot}.}
 }
-\details{Convert an observation-by-period dataframe into a slopegraph.}
+\details{Convert an observation-by-period data.frame into a slopegraph.}
 
-\value{\code{NULL}}
+\value{\code{NULL}, invisibly.}
 
 \references{
 \url{http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk}
@@ -82,28 +82,22 @@ Tufte, Edward. \emph{The Visual Display of Quantitative Information}. Graphics P
 Tufte, Edward. \emph{Beautiful Evidence}. Graphics Press.
 }
 \examples{
-
-## The two examples below are included in the inst/examples directory
-
-\dontrun{
 ## Tufte's Cancer Graph (to the correct scale)
 data(cancer)
-pdf('cancer-survival.pdf', height=16, width=12, family='Palatino')
 slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5),
            labels=c('5 Year','10 Year','15 Year','20 Year'), binval=2.5)
-dev.off()
-}
 
-\dontrun{
 ## Tufte's GDP Graph
 data(gdp)
-pdf('gdp.pdf', height=12, width=8, family='Palatino')
 slopegraph(gdp, col.line='gray', labels=c('1970','1979'), 
     main='Current Receipts of Goverment as a Percentage of Gross Domestic Product',
     binval=3.75)
-dev.off()
-}
+
+## Ranking of U.S. State populations
+data(states)
+slopegraph(states, col.line='black', ylim = c(38,0),
+           main='Relative Rank of U.S. State Populations, 1790-1870')
 }
 \author{Thomas J. Leeper.}
 %\keyword{}
-%\seealso{}
+\seealso{\code{\link{cancer}}, \code{\link{gdp}}, \code{\link{states}}}

@@ -77,7 +77,7 @@ slopegraph <- function(
     
     overlaps <- function(coldf, cat='rownames'){
         # conditionally remove exactly duplicated values
-        if(any(duplicated(coldf[,1]))){
+        if (any(duplicated(coldf[,1]))){
             u <- unique(coldf[,1])
             out <- cbind.data.frame(t(sapply(u, function(i)
                 c(paste(rownames(coldf)[coldf[,1]==i],collapse='\n'),i))))
@@ -89,13 +89,13 @@ slopegraph <- function(
         }
         # function to fix overlaps
         overlaps <- which(abs(diff(coldf[,1]))<(binval*h))
-        if(length(overlaps)){
+        if (length(overlaps)){
             runs <- seqle(overlaps) # use seqle function
             overlaps2 <- mapply(function(i,j) seq(i,length.out=j+1), runs$values, runs$lengths)
             oldlabs <- coldf[-unique(c(overlaps,overlaps+1)),,drop=FALSE]
             newlabs <- data.frame(sapply(overlaps2, function(i) mean(coldf[i,1])))
             names(newlabs) <- names(coldf)
-            if(cat=='rownames'){
+            if (cat=='rownames'){
                 rownames(newlabs) <- 
                     sapply(overlaps2, function(i) paste(rownames(coldf)[rev(i)],collapse='\n'))
             } else if(cat=='values'){
@@ -105,8 +105,10 @@ slopegraph <- function(
                         paste(sprintf(paste('%.',decimals,'f',sep=''),coldf[rev(i),1]),collapse='\n'))
             }
             return(rbind(oldlabs,newlabs))
-        } else
+        } else {
+            if (cat=='values') rownames(coldf) <- coldf[,1]
             return(coldf)
+        }
     }
     
     # left-side labels
@@ -120,10 +122,10 @@ slopegraph <- function(
          col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab, family=family)
     
     # numeric value labels
-    valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[,i]),i,drop=FALSE], cat='values'))
+    valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[!is.na(df[,i]),i]),i,drop=FALSE], cat='values'))
     for(i in 1:length(valslist)){
         text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
-            col=col.num, cex=cex.num, font=font.num, family=family)
+             col=col.num, cex=cex.num, font=font.num, family=family)
     }
     
     # draw lines
