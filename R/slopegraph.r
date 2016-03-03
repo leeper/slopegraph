@@ -148,7 +148,7 @@ slopegraph <- function(
             x2 <- e[eok, 1]
             y1 <- datarow[x1]
             y2 <- datarow[x2]
-            cbind(x1, y1, x2, y2)
+            cbind(x1, y1, x2, y2, n)
         } else {
             NULL
         }
@@ -159,6 +159,7 @@ slopegraph <- function(
             y1 <- rowdata[2]
             x2 <- rowdata[3]
             y2 <- rowdata[4]
+            i <- rowdata[5]
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
                      x2-offset.x, if(y1==y2) y2 else (y2-ysloped),
