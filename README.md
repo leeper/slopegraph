@@ -24,7 +24,7 @@ slopegraph(cancer, col.line = 'gray', xlim = c(-.5,5.5), binval = 2.5,
 
 ![plot of chunk cancer-survival](inst/examples/cancer-survival-1.svg)
 
-![Cancer Survival](inst/examples/cancer-survival.svg)
+![Cancer Survival](https://rawgithub.com/leeper/slopegraph/master/inst/examples/cancer-survival-1.svg)
 
 
 The second example, also from Tufte, shows changes in gross domestic product for a small set of countries over two points in time:
@@ -38,7 +38,7 @@ slopegraph(gdp, col.line = 'gray', labels = c('1970','1979'), binval = 3.75,
 
 ![plot of chunk gdp](inst/examples/gdp-1.svg)
 
-![GDP](inst/examples/gdp.svg)
+![GDP](https://rawgithub.com/leeper/slopegraph/master/inst/examples/gdp-1.svg)
 
 This third example comes from an 1878 publication ([a copy of which is available here](http://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~207741~3003452:Chart-Exhibiting-the-Relative-Rank-)), showing the relative ranking of the population of various U.S. states. This example features a reversed y-axis to better display the ranking:
 
@@ -51,7 +51,7 @@ slopegraph(states, ylim = c(37,0), offset.x = 0.06,
 
 ![plot of chunk states](inst/examples/states-1.svg)
 
-![states](inst/examples/states.svg)
+![states](https://rawgithub.com/leeper/slopegraph/master/inst/examples/states-1.svg)
 
 ## Installation
 
