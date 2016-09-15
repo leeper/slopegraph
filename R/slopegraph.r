@@ -31,30 +31,28 @@ slopegraph <- function(
     mai = NULL,
     ...)
 {
-    if(ncol(df) < 2)
+    if (ncol(df) < 2) {
         stop('`df` must have at least two columns')
+    }
     # draw margins
-    if(is.null(mai))
+    if (is.null(mai)) {
         par(mai=c(1, 0, if(is.null(main)) 0 else 1, 0))
-    else
+    } else {
         par(mai=mai)
-    
+    }
     plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main, family=family,
          bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
     # optional expression
-    if(!is.null(panel.first))
+    if (!is.null(panel.first)) {
         eval(panel.first)
-    
+    }
     # calculate decimals from data
-    if(is.null(decimals)){
+    if (is.null(decimals)) {
         decimals <- 
-        max(sapply(as.vector(sapply(df, as.character)),function(i) {
-            a <- strsplit(i, '.', fixed=TRUE)[[1]][2]
-            if(!is.na(a))
-                nchar(a)
-            else
-                0
-        }), na.rm=TRUE)
+        max(sapply(as.vector(sapply(df, as.character)), function(i) {
+            a <- strsplit(i, '.', fixed = TRUE)[[1]][2]
+            if (!is.na(a)) { nchar(a) } else { 0 }
+        }), na.rm = TRUE)
     }
     
     # x-axis
@@ -77,10 +75,11 @@ slopegraph <- function(
     
     overlaps <- function(coldf, cat='rownames'){
         # conditionally remove exactly duplicated values
-        if (any(duplicated(coldf[,1]))){
+        if (any(duplicated(coldf[,1]))) {
             u <- unique(coldf[,1])
-            out <- cbind.data.frame(t(sapply(u, function(i)
-                c(paste(rownames(coldf)[coldf[,1]==i],collapse='\n'),i))))
+            out <- cbind.data.frame(t(sapply(u, function(i) {
+                c(paste(rownames(coldf)[coldf[,1]==i],collapse='\n'),i)
+            })))
             rownames(out) <- out[,1]
             out[,1] <- NULL
             names(out) <- names(coldf)
@@ -89,24 +88,29 @@ slopegraph <- function(
         }
         # function to fix overlaps
         overlaps <- which(abs(diff(coldf[,1]))<(binval*h))
-        if (length(overlaps)){
+        if (length(overlaps)) {
             runs <- seqle(overlaps) # use seqle function
             overlaps2 <- mapply(function(i,j) seq(i,length.out=j+1), runs$values, runs$lengths)
             oldlabs <- coldf[-unique(c(overlaps,overlaps+1)),,drop=FALSE]
             newlabs <- data.frame(sapply(overlaps2, function(i) mean(coldf[i,1])))
             names(newlabs) <- names(coldf)
-            if (cat=='rownames'){
+            if (cat == 'rownames') {
                 rownames(newlabs) <- 
-                    sapply(overlaps2, function(i) paste(rownames(coldf)[rev(i)],collapse='\n'))
-            } else if(cat=='values'){
-                rownames(oldlabs) <- sprintf(paste('%.',decimals,'f',sep=''),oldlabs[,1])
+                    sapply(overlaps2, function(i) {
+                        paste(rownames(coldf)[rev(i)],collapse='\n')
+                    })
+            } else if(cat == 'values') {
+                rownames(oldlabs) <- sprintf(paste0('%.',decimals,'f'),oldlabs[,1])
                 rownames(newlabs) <-
-                    sapply(overlaps2, function(i)
-                        paste(sprintf(paste('%.',decimals,'f',sep=''),coldf[rev(i),1]),collapse='\n'))
+                    sapply(overlaps2, function(i) {
+                        paste(sprintf(paste0('%.',decimals,'f'),coldf[rev(i),1]),collapse='\n')
+                    })
             }
             return(rbind(oldlabs,newlabs))
         } else {
-            if (cat=='values') rownames(coldf) <- coldf[,1]
+            if (cat == 'values') {
+                rownames(coldf) <- coldf[,1]
+            }
             return(coldf)
         }
     }
@@ -123,13 +127,13 @@ slopegraph <- function(
     
     # numeric value labels
     valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[!is.na(df[,i]),i]),i,drop=FALSE], cat='values'))
-    for(i in 1:length(valslist)){
+    for (i in 1:length(valslist)) {
         text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
              col=col.num, cex=cex.num, font=font.num, family=family)
     }
     
     # draw lines
-    col.lines <- rep(col.lines, length.out=nrow(df))
+    #col.lines <- rep(col.lines, length.out=nrow(df))
     lty <- rep(lty, length.out=nrow(df))
     lwd <- rep(lwd, length.out=nrow(df))
     
@@ -139,7 +143,7 @@ slopegraph <- function(
         # drop consecutive NAs
         r <- !is.na(datarow)
         w <- which(r)
-        if(length(w) > 1) {
+        if (length(w) > 1) {
             # create matrix of pairs of observed datapoints
             e <- embed(w, 2)
             eok <- apply(e, 1, diff) == -1
@@ -169,9 +173,9 @@ slopegraph <- function(
     })
     
     # optional expression
-    if(!is.null(panel.last))
+    if (!is.null(panel.last)) {
         eval(panel.last)
-    
-    # return invisibly
+    }
+    # return NULL invisibly
     invisible(NULL)
 }

@@ -1,7 +1,7 @@
 Package: slopegraph
-Version: 0.1.6
+Version: 0.1.7
 Title: Edward Tufte-Inspired Slopegraphs
-Date: 2015-07-29
+Date: 2016-09-15
 Authors@R: c(person("Thomas", "Leeper", role = c("aut","cre"),
                     email = "thosjleeper@gmail.com"))
 Description: Convert a data.frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired slopegraph.
