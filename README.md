@@ -1,4 +1,4 @@
-# Tufte-Inspired Slopegraphs in R #
+# Tufte-Inspired Slopegraphs in R
 
 This repository holds some working code for creating slopegraphs in R.
 
@@ -8,22 +8,7 @@ Pull requests welcome. Please report any issues on the [issues page](https://git
 
 The package currently includes only one function (`slopegraph`), which produces a slopegraph from an observation-by-period dataframe. Everything is more or less drawn automatically, but is highly customizable in terms of line and text colors, font sizes and styles, axes, titles, and plotting behind and in front of the slopegraph lines.
 
-## Installation ##
-
-[![travis-ci](https://travis-ci.org/leeper/slopegraph.svg)](https://travis-ci.org/leeper/slopegraph) 
-[![CRAN](http://www.r-pkg.org/badges/version/slopegraph)](http://cran.r-project.org/package=slopegraph)
-
-To install the latest development version of **slopegraph** from GitHub:
-
-```R
-if(!require("devtools")){
-    install.packages("devtools")
-    library("devtools")
-}
-install_github("leeper/slopegraph")
-```
-
-## Examples ##
+## Examples
 
 The current output of the `slopegraph` function (for the examples included in documentation) are shown below. 
 
@@ -31,46 +16,57 @@ Tufte's most famous slopegraph example is probably the ["cancer survival graph,"
 
 
 ```r
-pdf('inst/examples/cancer-survival.pdf',height=16, width=12, family='Palatino')
-slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5), binval=2.5, 
-           labels=c('5 Year','10 Year','15 Year','20 Year'))
-dev.off()
-
-# convert to png for web display
-shell("convert -resize 900x1800 -density 300 inst/examples/cancer-survival.pdf inst/examples/cancer-survival.png")
+library("slopegraph")
+data(cancer)
+slopegraph(cancer, col.line = 'gray', xlim = c(-.5,5.5), binval = 2.5, 
+           labels = c('5 Year','10 Year','15 Year','20 Year'))
 ```
 
-![Cancer Survival](inst/examples/cancer-survival.png)
+![plot of chunk cancer-survival](inst/examples/cancer-survival-1.svg)
+
+![Cancer Survival](inst/examples/cancer-survival.svg)
 
 
 The second example, also from Tufte, shows changes in gross domestic product for a small set of countries over two points in time:
 
 
 ```r
-pdf('inst/examples/gdp.pdf', height=12, width=8, family='Palatino')
-slopegraph(gdp, col.line='gray', labels=c('1970','1979'), binval=3.75, 
-           main='Current Receipts of Goverment as a Percentage of Gross Domestic Product')
-dev.off()
-
-# convert to png for web display
-shell("convert -resize 900x1200 -density 300 inst/examples/gdp.pdf inst/examples/gdp.png")
+data(gdp)
+slopegraph(gdp, col.line = 'gray', labels = c('1970','1979'), binval = 3.75, 
+           main = 'Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 ```
 
-![GDP](inst/examples/gdp.png)
+![plot of chunk gdp](inst/examples/gdp-1.svg)
+
+![GDP](inst/examples/gdp.svg)
 
 This third example comes from an 1878 publication ([a copy of which is available here](http://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~207741~3003452:Chart-Exhibiting-the-Relative-Rank-)), showing the relative ranking of the population of various U.S. states. This example features a reversed y-axis to better display the ranking:
 
 
 ```r
-pdf('inst/examples/states.pdf', height=15, width=15, family='Palatino')
-slopegraph(states, col.line='black', ylim = c(38,0),
-           main='Relative Rank of U.S. State Populations, 1790-1870')
-dev.off()
-
-# convert to png for web display
-shell("convert -resize 1200x1200 -density 300 inst/examples/states.pdf inst/examples/states.png")
+data(states)
+slopegraph(states, ylim = c(37,0), offset.x = 0.06,
+           main = 'Relative Rank of U.S. State Populations, 1790-1870')
 ```
 
-![states](inst/examples/states.png)
+![plot of chunk states](inst/examples/states-1.svg)
 
-Note: In order to obtain the desired look and feel, the examples above rely on the `pdf()` graphics device and are then converted to PNG format using the `convert` utility from [ImageMagick](http://www.imagemagick.org/script/index.php). This mostly relates to the handling of fonts, aspect ratio, and image resolution.
+![states](inst/examples/states.svg)
+
+## Installation
+
+[![CRAN](http://www.r-pkg.org/badges/version/slopegraph)](http://cran.r-project.org/package=slopegraph)
+[![Build Status](https://travis-ci.org/leeper/slopegraph.svg?branch=master)](https://travis-ci.org/leeper/slopegraph)
+[![Build status](https://ci.appveyor.com/api/projects/status/t6nxndmvvcw3gw7f/branch/master?svg=true)](https://ci.appveyor.com/project/leeper/slopegraph/branch/master)
+[![codecov.io](http://codecov.io/github/leeper/slopegraph/coverage.svg?branch=master)](http://codecov.io/github/leeper/slopegraph?branch=master)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+
+To install the latest development version of **slopegraph** from GitHub:
+
+```R
+if (!require("ghit")) {
+    install.packages("ghit")
+}
+ghite::install_github("leeper/slopegraph")
+```
+

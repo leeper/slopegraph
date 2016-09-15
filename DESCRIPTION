@@ -3,9 +3,10 @@ Version: 0.1.6
 Title: Edward Tufte-Inspired Slopegraphs
 Date: 2015-07-29
 Authors@R: c(person("Thomas", "Leeper", role = c("aut","cre"),
-					email = "thosjleeper@gmail.com"))
-Maintainer: Thomas J. Leeper <thosjleeper@gmail.com>
+                    email = "thosjleeper@gmail.com"))
 Description: Convert a data.frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired slopegraph.
+Imports: stats, graphics
+Suggests: svglite
 License: GPL-2
 URL: https://github.com/leeper/slopegraph
 BugReports: https://github.com/leeper/slopegraph/issues

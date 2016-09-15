@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 720.00 864.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<text x='51.83' y='42.36' style='font-size: 14.40pt; font-weight: bold; font-family: Times New Roman;'>Current Receipts of Goverment as a Percentage of Gross Domestic Product</text>
+<line x1='193.33' y1='792.00' x2='526.67' y2='792.00' style='stroke-width: 0.75;' />
+<line x1='193.33' y1='792.00' x2='193.33' y2='799.20' style='stroke-width: 0.75;' />
+<line x1='526.67' y1='792.00' x2='526.67' y2='799.20' style='stroke-width: 0.75;' />
+<text x='177.33' y='817.92' style='font-size: 12.00pt; font-family: Times New Roman;'>1970</text>
+<text x='510.67' y='817.92' style='font-size: 12.00pt; font-family: Times New Roman;'>1979</text>
+<defs>
+  <clipPath id='cp1'>
+    <rect x='0.00' y='72.00' width='720.00' height='720.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cp1)'><text x='102.14' y='295.73' style='font-size: 12.00pt; font-family: Times New Roman;'>Sweden</text></g>
+<g clip-path='url(#cp1)'><text x='116.35' y='736.70' style='font-size: 12.00pt; font-family: Times New Roman;'>Spain</text></g>
+<g clip-path='url(#cp1)'><text x='116.37' y='751.10' style='font-size: 12.00pt; font-family: Times New Roman;'>Japan</text></g>
+<g clip-path='url(#cp1)'><text x='107.51' y='646.76' style='font-size: 12.00pt; font-family: Times New Roman;'>Greece</text></g>
+<g clip-path='url(#cp1)'><text x='76.38' y='661.16' style='font-size: 12.00pt; font-family: Times New Roman;'>Switzerland</text></g>
+<g clip-path='url(#cp1)'><text x='123.48' y='580.87' style='font-size: 12.00pt; font-family: Times New Roman;'>Italy</text></g>
+<g clip-path='url(#cp1)'><text x='132.35' y='595.27' style='font-size: 12.00pt; font-family: Times New Roman;'>US</text></g>
+<g clip-path='url(#cp1)'><text x='97.69' y='487.57' style='font-size: 12.00pt; font-family: Times New Roman;'>Belgium</text></g>
+<g clip-path='url(#cp1)'><text x='104.82' y='501.97' style='font-size: 12.00pt; font-family: Times New Roman;'>Canada</text></g>
+<g clip-path='url(#cp1)'><text x='103.91' y='516.37' style='font-size: 12.00pt; font-family: Times New Roman;'>Finland</text></g>
+<g clip-path='url(#cp1)'><text x='108.36' y='416.03' style='font-size: 12.00pt; font-family: Times New Roman;'>Britain</text></g>
+<g clip-path='url(#cp1)'><text x='109.27' y='430.43' style='font-size: 12.00pt; font-family: Times New Roman;'>France</text></g>
+<g clip-path='url(#cp1)'><text x='93.27' y='444.83' style='font-size: 12.00pt; font-family: Times New Roman;'>Germany</text></g>
+<g clip-path='url(#cp1)'><text x='75.50' y='342.23' style='font-size: 12.00pt; font-family: Times New Roman;'>Netherlands</text></g>
+<g clip-path='url(#cp1)'><text x='101.26' y='356.63' style='font-size: 12.00pt; font-family: Times New Roman;'>Norway</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='586.02' style='font-size: 12.00pt; font-family: Times New Roman;'>Greece</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='201.34' style='font-size: 12.00pt; font-family: Times New Roman;'>Norway</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='643.20' style='font-size: 12.00pt; font-family: Times New Roman;'>Spain</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='657.60' style='font-size: 12.00pt; font-family: Times New Roman;'>Japan</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='536.35' style='font-size: 12.00pt; font-family: Times New Roman;'>Switzerland</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='550.75' style='font-size: 12.00pt; font-family: Times New Roman;'>US</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='484.70' style='font-size: 12.00pt; font-family: Times New Roman;'>Canada</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='499.10' style='font-size: 12.00pt; font-family: Times New Roman;'>Italy</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='433.94' style='font-size: 12.00pt; font-family: Times New Roman;'>Britain</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='448.34' style='font-size: 12.00pt; font-family: Times New Roman;'>Finland</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='343.02' style='font-size: 12.00pt; font-family: Times New Roman;'>France</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='357.42' style='font-size: 12.00pt; font-family: Times New Roman;'>Belgium</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='371.82' style='font-size: 12.00pt; font-family: Times New Roman;'>Germany</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='113.38' style='font-size: 12.00pt; font-family: Times New Roman;'>Sweden</text></g>
+<g clip-path='url(#cp1)'><text x='567.20' y='127.78' style='font-size: 12.00pt; font-family: Times New Roman;'>Netherlands</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='297.50' style='font-size: 12.00pt; font-family: Times New Roman;'>46.9</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='740.87' style='font-size: 12.00pt; font-family: Times New Roman;'>22.5</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='755.27' style='font-size: 12.00pt; font-family: Times New Roman;'>20.7</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='650.93' style='font-size: 12.00pt; font-family: Times New Roman;'>26.8</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='665.33' style='font-size: 12.00pt; font-family: Times New Roman;'>26.5</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='585.04' style='font-size: 12.00pt; font-family: Times New Roman;'>30.4</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='599.44' style='font-size: 12.00pt; font-family: Times New Roman;'>30.3</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='501.33' style='font-size: 12.00pt; font-family: Times New Roman;'>35.2</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='515.73' style='font-size: 12.00pt; font-family: Times New Roman;'>34.9</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='422.60' style='font-size: 12.00pt; font-family: Times New Roman;'>40.7</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='437.00' style='font-size: 12.00pt; font-family: Times New Roman;'>39.0</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='451.40' style='font-size: 12.00pt; font-family: Times New Roman;'>37.5</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='346.39' style='font-size: 12.00pt; font-family: Times New Roman;'>44.0</text></g>
+<g clip-path='url(#cp1)'><text x='179.33' y='360.79' style='font-size: 12.00pt; font-family: Times New Roman;'>43.5</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='587.78' style='font-size: 12.00pt; font-family: Times New Roman;'>30.6</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='203.11' style='font-size: 12.00pt; font-family: Times New Roman;'>52.2</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='647.37' style='font-size: 12.00pt; font-family: Times New Roman;'>27.1</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='661.77' style='font-size: 12.00pt; font-family: Times New Roman;'>26.6</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='540.51' style='font-size: 12.00pt; font-family: Times New Roman;'>33.2</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='554.91' style='font-size: 12.00pt; font-family: Times New Roman;'>32.5</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='488.87' style='font-size: 12.00pt; font-family: Times New Roman;'>35.8</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='503.27' style='font-size: 12.00pt; font-family: Times New Roman;'>35.7</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='438.11' style='font-size: 12.00pt; font-family: Times New Roman;'>39.0</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='452.51' style='font-size: 12.00pt; font-family: Times New Roman;'>38.2</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='349.58' style='font-size: 12.00pt; font-family: Times New Roman;'>43.4</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='363.98' style='font-size: 12.00pt; font-family: Times New Roman;'>43.2</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='378.38' style='font-size: 12.00pt; font-family: Times New Roman;'>42.9</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='117.55' style='font-size: 12.00pt; font-family: Times New Roman;'>57.4</text></g>
+<g clip-path='url(#cp1)'><text x='512.67' y='131.95' style='font-size: 12.00pt; font-family: Times New Roman;'>55.8</text></g>
+<line x1='226.67' y1='273.50' x2='493.33' y2='123.90' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='322.83' x2='493.33' y2='154.71' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='337.26' x2='493.33' y2='213.30' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='405.64' x2='493.33' y2='429.86' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='425.05' x2='493.33' y2='362.37' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='449.99' x2='493.33' y2='373.05' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='486.32' x2='493.33' y2='372.34' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='499.50' x2='493.33' y2='490.95' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='500.03' x2='493.33' y2='453.01' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='576.61' x2='493.33' y2='501.10' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='583.91' x2='493.33' y2='552.57' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='643.39' x2='493.33' y2='589.25' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='643.57' x2='493.33' y2='548.12' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='718.55' x2='493.33' y2='653.01' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+<line x1='226.67' y1='748.29' x2='493.33' y2='664.23' style='stroke-width: 0.75; stroke: #BEBEBE;' clip-path='url(#cp1)' />
+</svg>

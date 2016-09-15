@@ -1,2 +1,3 @@
 export(slopegraph)
+import(graphics)
 importFrom(stats, embed)
