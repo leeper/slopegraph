@@ -22,8 +22,6 @@ slopegraph(cancer, col.line = 'gray', xlim = c(-.5,5.5), binval = 2.5,
            labels = c('5 Year','10 Year','15 Year','20 Year'))
 ```
 
-![plot of chunk cancer-survival](inst/examples/cancer-survival-1.svg)
-
 ![Cancer Survival](https://rawgithub.com/leeper/slopegraph/master/inst/examples/cancer-survival-1.svg)
 
 
@@ -36,8 +34,6 @@ slopegraph(gdp, col.line = 'gray', labels = c('1970','1979'), binval = 3.75,
            main = 'Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 ```
 
-![plot of chunk gdp](inst/examples/gdp-1.svg)
-
 ![GDP](https://rawgithub.com/leeper/slopegraph/master/inst/examples/gdp-1.svg)
 
 This third example comes from an 1878 publication ([a copy of which is available here](http://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~207741~3003452:Chart-Exhibiting-the-Relative-Rank-)), showing the relative ranking of the population of various U.S. states. This example features a reversed y-axis to better display the ranking:
@@ -48,8 +44,6 @@ data(states)
 slopegraph(states, ylim = c(37,0), offset.x = 0.06,
            main = 'Relative Rank of U.S. State Populations, 1790-1870')
 ```
-
-![plot of chunk states](inst/examples/states-1.svg)
 
 ![states](https://rawgithub.com/leeper/slopegraph/master/inst/examples/states-1.svg)
 
