@@ -80,7 +80,7 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 \item{\ldots}{Additional arguments to \code{plot}.}
 }
 \value{
-\code{NULL}, invisibly.
+A matrix of , invisibly.
 }
 \description{
 Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.

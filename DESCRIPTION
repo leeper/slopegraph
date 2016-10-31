@@ -9,6 +9,7 @@ Description: Convert a data frame (containing a panel dataset, where rows
     "slopegraph".
 Imports:
     stats,
+    utils,
     graphics
 Suggests:
     svglite

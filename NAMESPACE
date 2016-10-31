@@ -3,3 +3,5 @@
 export(slopegraph)
 import(graphics)
 importFrom(stats,embed)
+importFrom(stats,na.omit)
+importFrom(utils,head)

@@ -33,7 +33,7 @@
 #' @param lwd A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{? par}.
 #' @param mai A margin specification. Default is \code{NULL}. See \code{? par}.
 #' @param \ldots Additional arguments to \code{plot}.
-#' @return \code{NULL}, invisibly.
+#' @return A matrix of , invisibly.
 #' @examples
 #' ## Tufte's Cancer Graph (to the correct scale)
 #' data(cancer)
@@ -60,7 +60,8 @@
 #' @seealso \code{\link{cancer}}, \code{\link{gdp}}, \code{\link{states}}
 #' @author Thomas J. Leeper
 #' @import graphics
-#' @importFrom stats embed
+#' @importFrom utils head
+#' @importFrom stats embed na.omit
 #' @export
 slopegraph <- function(
     df,
@@ -95,36 +96,36 @@ slopegraph <- function(
     mai = NULL,
     ...)
 {
+    # check data
     if (ncol(df) < 2) {
         stop('`df` must have at least two columns')
     }
-    # draw margins
-    if (is.null(mai)) {
-        par(mai=c(1, 0, if(is.null(main)) 0 else 1, 0))
-    } else {
-        par(mai=mai)
+    # create structure that is row, x1, x2, y1, y2
+    # for every pair of contiguous points
+    segmentize <- function(dat) {
+        # segment-by-values matrix
+        if (ncol(dat) == 2) {
+            pairsmat <- matrix(1:2, nrow = 1L)
+        } else {
+            pairsmat <- embed(seq_len(ncol(dat)), 2)[,2:1]
+        }
+        # output
+        out <- matrix(NA_real_, nrow = nrow(dat) * nrow(pairsmat), ncol = 5L)
+        k <- 1L
+        for (i in seq_len(nrow(dat))) {
+            for (j in seq_len(nrow(pairsmat))) {
+                out[k,] <- c(i, 
+                             pairsmat[j,1], 
+                             pairsmat[j,2], 
+                             dat[i, pairsmat[j,1]], 
+                             dat[i, pairsmat[j,2]])
+                k <- k + 1L
+            }
+        }
+        # return, dropping missing values
+        na.omit(out)
     }
-    plot(NA, y=NULL, xlim=xlim, ylim=ylim, main=main, family=family,
-         bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
-    # optional expression
-    if (!is.null(panel.first)) {
-        eval(panel.first)
-    }
-    # calculate decimals from data
-    if (is.null(decimals)) {
-        decimals <- 
-        max(sapply(as.vector(sapply(df, as.character)), function(i) {
-            a <- strsplit(i, '.', fixed = TRUE)[[1]][2]
-            if (!is.na(a)) { nchar(a) } else { 0 }
-        }), na.rm = TRUE)
-    }
-    
-    # x-axis
-    axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt, family=family)
-    
-    # height and width of 'm' on plotting device
-    h <- strheight('m')
-    w <- strwidth('m')
+    to_draw <- segmentize(as.matrix(df))
     
     # function for finding consecutive indices
     # from: http://stackoverflow.com/a/16118320/2338862
@@ -137,6 +138,7 @@ slopegraph <- function(
              values = x[head(c(0L,i)+1L,-1L)]) 
     } 
     
+    # function for eliminating overlaps
     overlaps <- function(coldf, cat='rownames'){
         # conditionally remove exactly duplicated values
         if (any(duplicated(coldf[,1]))) {
@@ -179,67 +181,86 @@ slopegraph <- function(
         }
     }
     
-    # left-side labels
-    l <- overlaps(df[order(df[!is.na(df[,1]),1]),1,drop=FALSE])
-    text(1-offset.lab, l[,1],
-         col=col.lab, rownames(l), pos=labpos.left, cex=cex.lab, font=font.lab, family=family)
     
-    # right-side labels
-    r <- overlaps(df[order(df[!is.na(df[,ncol(df)]),ncol(df)]),ncol(df),drop=FALSE])
-    text(ncol(df)+offset.lab, r[,1], 
-         col=col.lab, rownames(r), pos=labpos.right, cex=cex.lab, font=font.lab, family=family)
+    # PLOTTING
     
-    # numeric value labels
-    valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[!is.na(df[,i]),i]),i,drop=FALSE], cat='values'))
-    for (i in 1:length(valslist)) {
-        text(rep(i,nrow(valslist[[i]])), valslist[[i]][,1], rownames(valslist[[i]]),
-             col=col.num, cex=cex.num, font=font.num, family=family)
+    # draw margins
+    if (is.null(mai)) {
+        par(mai=c(1, 0, if(is.null(main)) 0 else 1, 0))
+    } else {
+        par(mai=mai)
+    }
+    plot(NA, xlim=xlim, ylim=ylim, main=main, family=family,
+         bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
+    # optional expression
+    if (!is.null(panel.first)) {
+        eval(panel.first)
+    }
+    # calculate decimals from data
+    if (is.null(decimals)) {
+        decimals <- 
+        max(sapply(as.vector(sapply(df, as.character)), function(i) {
+            a <- strsplit(i, '.', fixed = TRUE)[[1]][2]
+            if (!is.na(a)) { nchar(a) } else { 0 }
+        }), na.rm = TRUE)
     }
     
-    # draw lines
-    #col.lines <- rep(col.lines, length.out=nrow(df))
-    lty <- rep(lty, length.out=nrow(df))
-    lwd <- rep(lwd, length.out=nrow(df))
+    # x-axis
+    axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt, family=family)
     
-    # break data down into set of segments
-    todraw <- do.call("rbind", lapply(1:nrow(df), function(n) {
-        datarow <- as.numeric(df[n,])
-        # drop consecutive NAs
-        r <- !is.na(datarow)
-        w <- which(r)
-        if (length(w) > 1) {
-            # create matrix of pairs of observed datapoints
-            e <- embed(w, 2)
-            eok <- apply(e, 1, diff) == -1
-            # produce matrix of segments args (x0,y0,x1,y1)
-            x1 <- e[eok, 2]
-            x2 <- e[eok, 1]
-            y1 <- datarow[x1]
-            y2 <- datarow[x2]
-            cbind(x1, y1, x2, y2, n)
-        } else {
-            NULL
-        }
-    }))
+    # height and width of 'm' on plotting device
+    h <- strheight('m')
+    w <- strwidth('m')
     
-    apply(todraw, 1, function(rowdata){
-            x1 <- rowdata[1]
-            y1 <- rowdata[2]
+    # left-side labels
+    leftlabs <- df[!is.na(df[,1]),1, drop = FALSE]
+    text(1-offset.lab, leftlabs[,1],
+         col=col.lab, rownames(leftlabs), pos=labpos.left, 
+         cex=cex.lab, font=font.lab, family=family)
+    
+    # right-side labels
+    rightlabs <- df[!is.na(df[,ncol(df)]),ncol(df), drop = FALSE]
+    text(ncol(df)+offset.lab, rightlabs[,1], 
+         col=col.lab, rownames(rightlabs), pos=labpos.right, 
+         cex=cex.lab, font=font.lab, family=family)
+    
+    # draw numeric value labels
+    # valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[!is.na(df[,i]),i]),i,drop=FALSE], cat='values'))
+    apply(to_draw, 1, function(rowdata){
+            i <- rowdata[1]
+            x1 <- rowdata[2]
             x2 <- rowdata[3]
-            y2 <- rowdata[4]
-            i <- rowdata[5]
+            y1 <- rowdata[4]
+            y2 <- rowdata[5]
+            ysloped <- (y2-y1)*offset.x
+            text(x1, y1, y1, col = col.num, cex = cex.num, font = font.num, family = family)
+            text(x2, y2, y2, col = col.num, cex = cex.num, font = font.num, family = family)
+    })
+    
+    # draw lines
+    if (length(col.lines) == 1L) {
+        col.lines <- rep(col.lines, length.out = nrow(df))
+    }
+    lty <- rep(lty, length.out = nrow(df))
+    lwd <- rep(lwd, length.out = nrow(df))
+    apply(to_draw, 1, function(rowdata){
+            i <- rowdata[1]
+            x1 <- rowdata[2]
+            x2 <- rowdata[3]
+            y1 <- rowdata[4]
+            y2 <- rowdata[5]
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
                      x2-offset.x, if(y1==y2) y2 else (y2-ysloped),
-                     col=col.lines[i],
-                     lty=lty[i],
-                     lwd=lwd[i])
+                     col = col.lines[i],
+                     lty = lty[i],
+                     lwd = lwd[i])
     })
     
     # optional expression
     if (!is.null(panel.last)) {
         eval(panel.last)
     }
-    # return NULL invisibly
-    invisible(NULL)
+    # return `to_draw` invisibly
+    invisible(structure(to_draw, dimnames = list(seq_len(nrow(to_draw)), c("row", "x1", "x2", "y1", "y2"))))
 }
