@@ -11,7 +11,7 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
   xlab = "", ylab = "", panel.first = NULL, panel.last = NULL,
   labels = names(df), labpos.left = 2, labpos.right = 4,
   decimals = NULL, binval = 1.5, col.lines = par("fg"),
-  col.lab = par("fg"), col.num = par("fg"), col.xaxt = par("fg"),
+  col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
   offset.x = 0.1, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
   family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
   lwd = par("lwd"), mai = NULL, ...)

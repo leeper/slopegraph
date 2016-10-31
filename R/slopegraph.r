@@ -81,8 +81,8 @@ slopegraph <- function(
     decimals = NULL,
     binval = 1.5,
     col.lines = par('fg'),
-    col.lab = par('fg'),
-    col.num = par('fg'),
+    col.lab = col.lines,
+    col.num = col.lines,
     col.xaxt = par('fg'),
     offset.x = .1,
     offset.lab = .1,
@@ -215,29 +215,15 @@ slopegraph <- function(
     # left-side labels
     leftlabs <- df[!is.na(df[,1]),1, drop = FALSE]
     text(1-offset.lab, leftlabs[,1],
-         col=col.lab, rownames(leftlabs), pos=labpos.left, 
+         col=col.lab[which(!is.na(df[,1]))], rownames(leftlabs), pos=labpos.left, 
          cex=cex.lab, font=font.lab, family=family)
     
     # right-side labels
     rightlabs <- df[!is.na(df[,ncol(df)]),ncol(df), drop = FALSE]
     text(ncol(df)+offset.lab, rightlabs[,1], 
-         col=col.lab, rownames(rightlabs), pos=labpos.right, 
+         col=col.lab[which(!is.na(df[,ncol(df)]))], rownames(rightlabs), pos=labpos.right, 
          cex=cex.lab, font=font.lab, family=family)
     
-    # draw numeric value labels
-    # valslist <- lapply(seq_along(df), function(i) overlaps(df[order(df[!is.na(df[,i]),i]),i,drop=FALSE], cat='values'))
-    apply(to_draw, 1, function(rowdata){
-            i <- rowdata[1]
-            x1 <- rowdata[2]
-            x2 <- rowdata[3]
-            y1 <- rowdata[4]
-            y2 <- rowdata[5]
-            ysloped <- (y2-y1)*offset.x
-            text(x1, y1, y1, col = col.num, cex = cex.num, font = font.num, family = family)
-            text(x2, y2, y2, col = col.num, cex = cex.num, font = font.num, family = family)
-    })
-    
-    # draw lines
     if (length(col.lines) == 1L) {
         col.lines <- rep(col.lines, length.out = nrow(df))
     }
@@ -249,6 +235,10 @@ slopegraph <- function(
             x2 <- rowdata[3]
             y1 <- rowdata[4]
             y2 <- rowdata[5]
+            # draw numeric value labels
+            text(x1, y1, y1, col = col.num[i], cex = cex.num, font = font.num, family = family)
+            text(x2, y2, y2, col = col.num[i], cex = cex.num, font = font.num, family = family)
+            # draw lines
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
                      x2-offset.x, if(y1==y2) y2 else (y2-ysloped),
