@@ -1,7 +1,9 @@
 # slopegraph 0.1.8
 
-* Switched to roxygen documentation and devtools-based development workflow.
 * Modified the internal code of slopegraph to work with a matrix of line segments created from the original data, which is now returned invisibly.
+* Fixed a bug in printing of decimals. (#11, h/t Tony Ladson)
+* Colors of lines and labels now match by default. (#11, h/t Tony Ladson)
+* Switched to roxygen documentation and devtools-based development workflow.
 
 # slopegraph 0.1.1
 

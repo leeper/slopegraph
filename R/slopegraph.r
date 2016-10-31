@@ -204,6 +204,7 @@ slopegraph <- function(
             if (!is.na(a)) { nchar(a) } else { 0 }
         }), na.rm = TRUE)
     }
+    decfmt <- paste0("%0.", decimals, "f")
     
     # x-axis
     axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt, family=family)
@@ -236,8 +237,8 @@ slopegraph <- function(
             y1 <- rowdata[4]
             y2 <- rowdata[5]
             # draw numeric value labels
-            text(x1, y1, y1, col = col.num[i], cex = cex.num, font = font.num, family = family)
-            text(x2, y2, y2, col = col.num[i], cex = cex.num, font = font.num, family = family)
+            text(x1, y1, sprintf(decfmt, y1), col = col.num[i], cex = cex.num, font = font.num, family = family)
+            text(x2, y2, sprintf(decfmt, y2), col = col.num[i], cex = cex.num, font = font.num, family = family)
             # draw lines
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
