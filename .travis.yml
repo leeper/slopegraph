@@ -1,5 +1,7 @@
 language: r
-sudo: required
-notifications:
-  email:
-    on_failure: change
+sudo: false
+cache: packages
+r_packages:
+- covr
+after_success:
+- Rscript -e 'library("covr");codecov()'
