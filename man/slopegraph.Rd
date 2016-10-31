@@ -114,5 +114,6 @@ Tufte, Edward. \emph{Beautiful Evidence}. Graphics Press.
 }
 \seealso{
 \code{\link{cancer}}, \code{\link{gdp}}, \code{\link{states}}
+For a ggplot2 version, use \code{\link{ggslopegraph}}.
 }
 

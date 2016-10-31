@@ -1,3 +1,7 @@
+# slopegraph 0.1.9
+
+* Added a new function, `ggslopegraph()` that produces a ggplot2-based slopegraph.
+
 # slopegraph 0.1.8
 
 * Modified the internal code of slopegraph to work with a matrix of line segments created from the original data, which is now returned invisibly.
