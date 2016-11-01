@@ -33,7 +33,7 @@
 #' @param lwd A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{? par}.
 #' @param mai A margin specification. Default is \code{NULL}. See \code{? par}.
 #' @param \ldots Additional arguments to \code{plot}.
-#' @return A matrix of , invisibly.
+#' @return A five-column matrix, where each row contains: the row number from \code{df}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 #' @examples
 #' ## Tufte's Cancer Graph (to the correct scale)
 #' data(cancer)
@@ -149,7 +149,8 @@ slopegraph <- function(
     }
     lty <- rep(lty, length.out = nrow(df))
     lwd <- rep(lwd, length.out = nrow(df))
-    apply(to_draw, 1, function(rowdata){
+    to_draw2 <- to_draw[!duplicated(to_draw),]
+    apply(to_draw2, 1, function(rowdata){
             i <- rowdata[1]
             x1 <- rowdata[2]
             x2 <- rowdata[3]
