@@ -13,7 +13,7 @@ segmentize(data)
 A five-column matrix containing: the row from the original data frame, and x1, x2, y1, y2 positions for each segment.
 }
 \description{
-Convert an observation-by-period data frame into a segment matrix, where each row represents a line segment connecting two time points from the original data.
+Convert an observation-by-period data frame into a matrix of line segment coordinates, where each row represents a line segment connecting two time points from the original data.
 }
 \examples{
 data(gdp)

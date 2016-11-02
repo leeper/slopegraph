@@ -5,19 +5,19 @@
 \alias{slopegraph-package}
 \title{Create Slopegraph from a data frame}
 \usage{
-slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
-  - diff(range(df, na.rm = TRUE))/100, max(df, na.rm = TRUE) + diff(range(df,
-  na.rm = TRUE))/100), main = NULL, bty = "n", xaxt = "n", yaxt = "n",
-  xlab = "", ylab = "", panel.first = NULL, panel.last = NULL,
-  xlabels = names(df), labpos.left = 2, labpos.right = 4,
-  decimals = NULL, col.lines = par("fg"), col.lab = col.lines,
-  col.num = col.lines, col.xaxt = par("fg"), offset.x = 0.1,
-  offset.lab = 0.1, cex.lab = 1, cex.num = 1, family = "serif",
-  font.lab = 1, font.num = 1, lty = par("lty"), lwd = par("lwd"),
-  mai = NULL, ...)
+slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
+  TRUE) - diff(range(data, na.rm = TRUE))/100, max(data, na.rm = TRUE) +
+  diff(range(data, na.rm = TRUE))/100), main = NULL, bty = "n",
+  xaxt = "n", yaxt = "n", xlab = "", ylab = "", panel.first = NULL,
+  panel.last = NULL, xlabels = names(data), labpos.left = 2,
+  labpos.right = 4, decimals = NULL, col.lines = par("fg"),
+  col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
+  offset.x = 0.1, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
+  family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
+  lwd = par("lwd"), mai = NULL, ...)
 }
 \arguments{
-\item{df}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
+\item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
 
 \item{xlim}{The x-axis limits of the plot. Automatically calculated by default.}
 
@@ -39,7 +39,7 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 
 \item{panel.last}{An expression to add something after adding the plot content. Default is \code{NULL}.}
 
-\item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.}
+\item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(data)}.}
 
 \item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
 
@@ -78,7 +78,7 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 \item{\ldots}{Additional arguments to \code{plot}.}
 }
 \value{
-A five-column matrix, where each row contains: the row number from \code{df}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
+A five-column matrix, where each row contains: the row number from \code{data}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 }
 \description{
 Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.
@@ -87,7 +87,7 @@ Convert an R data frame (containing a panel dataset, where rows are observations
 ## Tufte's Cancer Graph (to the correct scale)
 data(cancer)
 slopegraph(cancer, col.lines = 'gray', xlim = c(-.5,5.5),
-           labels = c('5 Year','10 Year','15 Year','20 Year'))
+           xlabels = c('5 Year','10 Year','15 Year','20 Year'))
 
 ## Tufte's GDP Graph
 data(gdp)

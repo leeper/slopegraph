@@ -2,7 +2,7 @@
 #' @aliases slopegraph-package
 #' @title Create Slopegraph from a data frame
 #' @description Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.
-#' @param df An observation-by-period data.frame, with at least two columns. Missing values are allowed.
+#' @param data An observation-by-period data.frame, with at least two columns. Missing values are allowed.
 #' @param xlim The x-axis limits of the plot. Automatically calculated by default.
 #' @param ylim The y-axis limits of the plot. Automatically calculated by default.
 #' @param main The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.
@@ -13,7 +13,7 @@
 #' @param ylab The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
 #' @param panel.first An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.
 #' @param panel.last An expression to add something after adding the plot content. Default is \code{NULL}.
-#' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(df)}.
+#' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(data)}.
 #' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
 #' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{NULL} (none).
@@ -33,7 +33,7 @@
 #' @param lwd A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{\link[graphics]{par}}.
 #' @param mai A margin specification. Default is \code{NULL}. See \code{\link[graphics]{par}}.
 #' @param \ldots Additional arguments to \code{plot}.
-#' @return A five-column matrix, where each row contains: the row number from \code{df}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
+#' @return A five-column matrix, where each row contains: the row number from \code{data}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 #' @examples
 #' ## Tufte's Cancer Graph (to the correct scale)
 #' data(cancer)
@@ -63,9 +63,9 @@
 #' @importFrom utils head
 #' @export
 slopegraph <- function(
-    df,
-    xlim = c(.5,ncol(df)+.5),
-    ylim = c(min(df,na.rm=TRUE)-diff(range(df,na.rm=TRUE))/100,max(df,na.rm=TRUE)+diff(range(df,na.rm=TRUE))/100),
+    data,
+    xlim = c(.5,ncol(data)+.5),
+    ylim = c(min(data,na.rm=TRUE)-diff(range(data,na.rm=TRUE))/100,max(data,na.rm=TRUE)+diff(range(data,na.rm=TRUE))/100),
     main = NULL,
     bty = 'n',
     xaxt = 'n',
@@ -74,7 +74,7 @@ slopegraph <- function(
     ylab = '',
     panel.first = NULL,
     panel.last = NULL,
-    xlabels = names(df),
+    xlabels = names(data),
     labpos.left = 2,
     labpos.right = 4,
     decimals = NULL,
@@ -95,10 +95,10 @@ slopegraph <- function(
     ...)
 {
     # check data
-    if (ncol(df) < 2) {
-        stop('`df` must have at least two columns')
+    if (ncol(data) < 2) {
+        stop('`data` must have at least two columns')
     }
-    to_draw <- segmentize(as.matrix(df))
+    to_draw <- segmentize(as.matrix(data))
     
     # draw margins
     if (is.null(mai)) {
@@ -113,28 +113,40 @@ slopegraph <- function(
         eval(panel.first)
     }
     
+    # check decimal formatting
     fmt <- if (is.null(decimals)) "%0.0f" else paste0("%0.", decimals, "f")
+    # expand formatting arguments
+        if (length(col.lab) == 1L) {
+        col.lab <- rep(col.lab, length.out = nrow(data))
+    }
+    if (length(col.num) == 1L) {
+        col.num <- rep(col.num, length.out = nrow(data))
+    }
+    if (length(col.lines) == 1L) {
+        col.lines <- rep(col.lines, length.out = nrow(data))
+    }
+    if (length(lwd) == 1) {
+        lwd <- rep(lwd, nrow(data))
+    }
+    if (length(lty) == 1) {
+        lty <- rep(lty, nrow(data))
+    }
     
     # x-axis
-    axis(1, 1:ncol(df), labels = xlabels, col = col.xaxt, col.ticks = col.xaxt, family = family)
+    axis(1, 1:ncol(data), labels = xlabels, col = col.xaxt, col.ticks = col.xaxt, family = family)
     
     # left-side labels
-    leftlabs <- df[!is.na(df[,1]),1, drop = FALSE]
+    leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
     text(1-offset.lab, leftlabs[,1],
-         col=col.lab[which(!is.na(df[,1]))], rownames(leftlabs), pos=labpos.left, 
+         col=col.lab[which(!is.na(data[,1]))], rownames(leftlabs), pos=labpos.left, 
          cex=cex.lab, font=font.lab, family=family)
     
     # right-side labels
-    rightlabs <- df[!is.na(df[,ncol(df)]), ncol(df), drop = FALSE]
-    text(ncol(df)+offset.lab, rightlabs[,1], 
-         col=col.lab[which(!is.na(df[,ncol(df)]))], rownames(rightlabs), pos=labpos.right, 
+    rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
+    text(ncol(data)+offset.lab, rightlabs[,1], 
+         col=col.lab[which(!is.na(data[,ncol(data)]))], rownames(rightlabs), pos=labpos.right, 
          cex=cex.lab, font=font.lab, family=family)
     
-    if (length(col.lines) == 1L) {
-        col.lines <- rep(col.lines, length.out = nrow(df))
-    }
-    lty <- rep(lty, length.out = nrow(df))
-    lwd <- rep(lwd, length.out = nrow(df))
     to_draw2 <- to_draw[!duplicated(to_draw),]
     apply(to_draw2, 1, function(rowdata){
             i <- rowdata[1]
