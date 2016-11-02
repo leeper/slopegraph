@@ -5,7 +5,10 @@
 \title{Create Slopegraph from a data frame using ggplot2}
 \usage{
 ggslopegraph(data, title = as.character(substitute(data)), xlab = "",
-  ylab = "", yrev = FALSE, size = 3)
+  ylab = "", xlim = c(-1L, ncol(data) + 2L), ylim = range(data, na.rm =
+  TRUE), xbreaks = NULL, ybreaks = NULL, yrev = ylim[1] > ylim[2],
+  decimals = NULL, col.lines = "black", col.lab = "black",
+  col.num = "black", lwd = 0.5, cex.lab = 3L, cex.num = 3L)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -14,11 +17,33 @@ ggslopegraph(data, title = as.character(substitute(data)), xlab = "",
 
 \item{xlab}{A character string specifying an x-axis label. Passed to \code{\link[ggplot2]{scale_x_continuous}}.}
 
-\item{ylab}{A character string specifying an y-axis label. Passed to \code{\link[ggplot2]{scale_y_continuous}}.}
+\item{ylab}{A character string specifying an y-axis label. Passed to \code{\link[ggplot2]{scale_y_continuous}}, or \code{\link[ggplot2]{scale_y_reverse}} if \code{yrev = TRUE}.}
+
+\item{xlim}{A two-element numeric vector specifying the y-axis limits.}
+
+\item{ylim}{A two-element numeric vector specifying the y-axis limits.}
+
+\item{xbreaks}{Passed to \code{breaks} in \code{\link[ggplot2]{scale_x_continuous}}.}
+
+\item{ybreaks}{Passed to \code{breaks} in \code{\link[ggplot2]{scale_y_continuous}}.}
 
 \item{yrev}{A logical indicating whether to use \code{\link[ggplot2]{scale_y_reverse}} rather than the default \code{\link[ggplot2]{scale_y_continuous}}.}
 
-\item{size}{A numeric value indicating the size of numeric labels.}
+\item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
+
+\item{col.lines}{A vector of colors for the slopegraph lines. Default is \code{par('fg')}.}
+
+\item{col.lab}{A vector of colors for the observation labels. Default is \code{par('fg')}.}
+
+\item{col.num}{A vector of colors for the number values. Default is \code{par('fg')}.}
+
+\item{lwd}{A vector of line width values for the slopegraph lines.}
+
+\item{cex.lab}{A numeric value indicating the size of row labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.}
+
+\item{cex.num}{A numeric value indicating the size of numeric labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.}
+
+\item{labels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.#' @param xlab A character string specifying an x-axis label. Passed to \code{\link[ggplot2]{scale_x_continuous}}.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.
@@ -29,7 +54,12 @@ Convert an R data frame (containing a panel dataset, where rows are observations
 \examples{
 ## Ranking of U.S. State populations
 data(states)
-ggslopegraph(states, title = 'Relative Rank of U.S. State Populations, 1790-1870') + scale_y_reverse()
+ggslopegraph(states, title = 'Relative Rank of U.S. State Populations, 1790-1870', yrev = TRUE)
+
+cls <- rep("black", nrow(states))
+cls[rownames(states) == "South Carolina"] <- "red"
+cls[rownames(states) == "Tennessee"] <- "blue"
+ggslopegraph(states, title = 'Relative Rank of U.S. State Populations, 1790-1870', yrev = TRUE, col.lines = cls, col.lab = cls)
 }
 \seealso{
 For a base graphics version, use \code{\link{slopegraph}}.

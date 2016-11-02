@@ -23,17 +23,17 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 
 \item{ylim}{The y-axis limits of the plot. Automatically calculated by default.}
 
-\item{main}{The main title of the plot. Default is \code{NULL} (none). See \code{? par}.}
+\item{main}{The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.}
 
-\item{bty}{The box type for the plot. Default is \code{'n'} (none). See \code{? par}.}
+\item{bty}{The box type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.}
 
-\item{xaxt}{The x-axis type for the plot. Default is \code{'n'} (none). See \code{? par}.}
+\item{xaxt}{The x-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.}
 
-\item{yaxt}{The y-axis type for the plot. Default is \code{'n'} (none). See \code{? par}.}
+\item{yaxt}{The y-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.}
 
-\item{xlab}{The x-axis label for the plot. Default is \code{''} (none). See \code{? par}.}
+\item{xlab}{The x-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.}
 
-\item{ylab}{The y-axis label for the plot. Default is \code{''} (none). See \code{? par}.}
+\item{ylab}{The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.}
 
 \item{panel.first}{An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.}
 
@@ -41,9 +41,9 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 
 \item{labels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.}
 
-\item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{? par}.}
+\item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
 
-\item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{? par}.}
+\item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
 
 \item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
 
@@ -61,9 +61,9 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 
 \item{offset.lab}{A small offset for the observation labels. Default is \code{.1}.}
 
-\item{cex.lab}{Default is \code{1}. See \code{? par}.}
+\item{cex.lab}{A numeric value indicating the size of row labels. Default is \code{1}. See \code{\link[graphics]{par}}.}
 
-\item{cex.num}{Default is \code{1}. See \code{? par}.}
+\item{cex.num}{A numeric value indicating the size of numeric labels. Default is \code{1}. See \code{\link[graphics]{par}}.}
 
 \item{family}{The font family to use in the plots. Set to \dQuote{serif} by default.}
 
@@ -71,16 +71,16 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 
 \item{font.num}{Default is \code{1}. See \code{? text}.}
 
-\item{lty}{A vector of line type values for the slopegraph lines. Default is \code{par("lty")}. See \code{? par}.}
+\item{lty}{A vector of line type values for the slopegraph lines. Default is \code{par("lty")}. See \code{\link[graphics]{par}}.}
 
-\item{lwd}{A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{? par}.}
+\item{lwd}{A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{\link[graphics]{par}}.}
 
-\item{mai}{A margin specification. Default is \code{NULL}. See \code{? par}.}
+\item{mai}{A margin specification. Default is \code{NULL}. See \code{\link[graphics]{par}}.}
 
 \item{\ldots}{Additional arguments to \code{plot}.}
 }
 \value{
-A matrix of , invisibly.
+A five-column matrix, where each row contains: the row number from \code{df}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 }
 \description{
 Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.

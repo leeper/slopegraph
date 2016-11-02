@@ -5,17 +5,17 @@
 #' @param df An observation-by-period data.frame, with at least two columns. Missing values are allowed.
 #' @param xlim The x-axis limits of the plot. Automatically calculated by default.
 #' @param ylim The y-axis limits of the plot. Automatically calculated by default.
-#' @param main The main title of the plot. Default is \code{NULL} (none). See \code{? par}.
-#' @param bty The box type for the plot. Default is \code{'n'} (none). See \code{? par}.
-#' @param xaxt The x-axis type for the plot. Default is \code{'n'} (none). See \code{? par}.
-#' @param yaxt The y-axis type for the plot. Default is \code{'n'} (none). See \code{? par}.
-#' @param xlab The x-axis label for the plot. Default is \code{''} (none). See \code{? par}.
-#' @param ylab The y-axis label for the plot. Default is \code{''} (none). See \code{? par}.
+#' @param main The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.
+#' @param bty The box type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.
+#' @param xaxt The x-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.
+#' @param yaxt The y-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.
+#' @param xlab The x-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
+#' @param ylab The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
 #' @param panel.first An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.
 #' @param panel.last An expression to add something after adding the plot content. Default is \code{NULL}.
 #' @param labels The labels to use for the slopegraph periods. Default is \code{names(df)}.
-#' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{? par}.
-#' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{? par}.
+#' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
+#' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{NULL} (none).
 #' @param binval Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
@@ -24,14 +24,14 @@
 #' @param col.xaxt A character string containing the x-axis color. Default is \code{par('fg')}.
 #' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{.1}.
 #' @param offset.lab A small offset for the observation labels. Default is \code{.1}.
-#' @param cex.lab Default is \code{1}. See \code{? par}.
-#' @param cex.num Default is \code{1}. See \code{? par}.
+#' @param cex.lab A numeric value indicating the size of row labels. Default is \code{1}. See \code{\link[graphics]{par}}.
+#' @param cex.num A numeric value indicating the size of numeric labels. Default is \code{1}. See \code{\link[graphics]{par}}.
 #' @param family The font family to use in the plots. Set to \dQuote{serif} by default.
 #' @param font.lab Default is \code{1}. See \code{? text}.
 #' @param font.num Default is \code{1}. See \code{? text}.
-#' @param lty A vector of line type values for the slopegraph lines. Default is \code{par("lty")}. See \code{? par}.
-#' @param lwd A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{? par}.
-#' @param mai A margin specification. Default is \code{NULL}. See \code{? par}.
+#' @param lty A vector of line type values for the slopegraph lines. Default is \code{par("lty")}. See \code{\link[graphics]{par}}.
+#' @param lwd A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{\link[graphics]{par}}.
+#' @param mai A margin specification. Default is \code{NULL}. See \code{\link[graphics]{par}}.
 #' @param \ldots Additional arguments to \code{plot}.
 #' @return A five-column matrix, where each row contains: the row number from \code{df}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 #' @examples
@@ -139,7 +139,7 @@ slopegraph <- function(
          cex=cex.lab, font=font.lab, family=family)
     
     # right-side labels
-    rightlabs <- df[!is.na(df[,ncol(df)]),ncol(df), drop = FALSE]
+    rightlabs <- df[!is.na(df[,ncol(df)]), ncol(df), drop = FALSE]
     text(ncol(df)+offset.lab, rightlabs[,1], 
          col=col.lab[which(!is.na(df[,ncol(df)]))], rownames(rightlabs), pos=labpos.right, 
          cex=cex.lab, font=font.lab, family=family)
