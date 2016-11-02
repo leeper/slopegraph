@@ -60,6 +60,7 @@
 #' For a ggplot2 version, use \code{\link{ggslopegraph}}.
 #' @author Thomas J. Leeper
 #' @import graphics
+#' @importFrom stats reshape
 #' @importFrom utils head
 #' @export
 slopegraph <- function(
@@ -98,7 +99,10 @@ slopegraph <- function(
     if (ncol(data) < 2) {
         stop('`data` must have at least two columns')
     }
+    # segmentize
     to_draw <- segmentize(as.matrix(data))
+    # reshape for printing numeric value labels
+    long <- reshape(data, direction = "long", varying = names(data), v.names = "value", sep = "")
     
     # draw margins
     if (is.null(mai)) {
@@ -131,6 +135,7 @@ slopegraph <- function(
     if (length(lty) == 1) {
         lty <- rep(lty, nrow(data))
     }
+    col.num <- col.num[long[["id"]]]
     
     # x-axis
     axis(1, 1:ncol(data), labels = xlabels, col = col.xaxt, col.ticks = col.xaxt, family = family)
@@ -154,9 +159,6 @@ slopegraph <- function(
             x2 <- rowdata[3]
             y1 <- rowdata[4]
             y2 <- rowdata[5]
-            # draw numeric value labels
-            text(x1, y1, sprintf(fmt, y1), col = col.num[i], cex = cex.num, font = font.num, family = family)
-            text(x2, y2, sprintf(fmt, y2), col = col.num[i], cex = cex.num, font = font.num, family = family)
             # draw lines
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
@@ -165,6 +167,9 @@ slopegraph <- function(
                      lty = lty[i],
                      lwd = lwd[i])
     })
+    # numeric value labels 
+    text(long[["time"]], long[["value"]], sprintf(fmt, long[["value"]]), 
+         col = col.num, cex = cex.num, font = font.num, family = family)
     
     # optional expression
     if (!is.null(panel.last)) {

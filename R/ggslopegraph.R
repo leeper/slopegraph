@@ -47,6 +47,7 @@
 #'
 #' @seealso For a base graphics version, use \code{\link{slopegraph}}.
 #' @import ggplot2
+#' @importFrom stats reshape
 #' @export
 ggslopegraph <- 
 function(data, 
@@ -72,9 +73,13 @@ function(data,
     if (ncol(data) < 2) {
         stop("'data' must have at least two columns")
     }
+    # segmentize
     to_draw <- segmentize(as.matrix(data))
     colnames(to_draw) <- c("row", "x1", "x2", "y1", "y2")
     to_draw <- as.data.frame(to_draw)
+    
+    # reshape for printing numeric value labels
+    long <- reshape(data, direction = "long", varying = names(data), v.names = "value", sep = "")
     
     # check decimal formatting
     fmt <- if (is.null(decimals)) "%0.0f" else paste0("%0.", decimals, "f")
@@ -91,7 +96,7 @@ function(data,
     if (length(col.lab) == 1) {
         col.lab <- rep(col.lab, nrow(data))
     }
-    col.num <- col.num[to_draw[["row"]]]
+    col.num <- col.num[long[["id"]]]
     col.lines <- col.lines[to_draw[["row"]]]
     lwd <- lwd[to_draw[["row"]]]
     
@@ -104,13 +109,9 @@ function(data,
                          yend = ifelse(y1 == y2, y2, (y2-((y2-y1)*offset.x)))), 
                      col = col.lines,
                      data = to_draw, inherit.aes = FALSE) + guides(fill = FALSE) + 
-        # x1 labels 
-        geom_text(aes(x = x1, y = y1, label = sprintf(fmt, y1)), color = col.num, 
-                  data = to_draw, inherit.aes = FALSE,
-                  size = cex.num, hjust = 0.5) +
-        # x2 labels 
-        geom_text(aes(x = x2, y = y2, label = sprintf(fmt, y2)), color = col.num, 
-                  data = to_draw, inherit.aes = FALSE,
+        # numeric value labels 
+        geom_text(aes(x = time, y = value, label = sprintf(fmt, value)), color = col.num, 
+                  data = long, inherit.aes = FALSE,
                   size = cex.num, hjust = 0.5) +
         # x-axis labels
         scale_x_continuous(name = xlab, breaks = xbreaks, 
