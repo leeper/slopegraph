@@ -17,7 +17,7 @@ Tufte's most famous slopegraph example is probably the ["cancer survival graph,"
 ```{r cancer-survival, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 10, dev='svglite', cache=TRUE}
 library("slopegraph")
 data(cancer)
-slopegraph(cancer, col.line = 'gray', xlim = c(-.5,5.5), binval = 2.5, 
+slopegraph(cancer, col.lines = 'gray', xlim = c(-.5,5.5), 
            labels = c('5 Year','10 Year','15 Year','20 Year'))
 ```
 
@@ -28,7 +28,7 @@ The second example, also from Tufte, shows changes in gross domestic product for
 
 ```{r gdp, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 10, dev='svglite', cache=TRUE}
 data(gdp)
-slopegraph(gdp, col.line = 'gray', labels = c('1970','1979'), binval = 3.75, 
+slopegraph(gdp, col.lines = 'gray', labels = c('1970','1979'),  
            main = 'Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 ```
 
@@ -45,6 +45,21 @@ slopegraph(states, ylim = c(37,0), offset.x = 0.06,
 ```
 
 ![states](https://rawgithub.com/leeper/slopegraph/master/inst/examples/states-1.svg)
+
+As of v0.1.9, there is also a ggplot2-based function, `ggslopegraph()` that produces a similar representation but using ggplot2 graphics:
+
+```{r ggstates, fig.show='hide', fig.path='inst/examples/', fig.height = 15, fig.width = 15, dev='svglite', cache=TRUE}
+data(states)
+cols <- `[<-`(rep("black", 37), 7, "red")
+ggslopegraph(states, offset.x = 0.06, yrev = TRUE,
+  col.lines = cols, col.lab = cols, 
+  main = 'Relative Rank of U.S. State Populations, 1790-1870') +
+ theme_bw()    
+```
+
+![ggstates](https://rawgithub.com/leeper/slopegraph/master/inst/examples/ggstates-1.svg)
+
+
 
 ## Installation
 

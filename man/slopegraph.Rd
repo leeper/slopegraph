@@ -9,12 +9,12 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
   - diff(range(df, na.rm = TRUE))/100, max(df, na.rm = TRUE) + diff(range(df,
   na.rm = TRUE))/100), main = NULL, bty = "n", xaxt = "n", yaxt = "n",
   xlab = "", ylab = "", panel.first = NULL, panel.last = NULL,
-  labels = names(df), labpos.left = 2, labpos.right = 4,
-  decimals = NULL, binval = 1.5, col.lines = par("fg"),
-  col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
-  offset.x = 0.1, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
-  family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
-  lwd = par("lwd"), mai = NULL, ...)
+  xlabels = names(df), labpos.left = 2, labpos.right = 4,
+  decimals = NULL, col.lines = par("fg"), col.lab = col.lines,
+  col.num = col.lines, col.xaxt = par("fg"), offset.x = 0.1,
+  offset.lab = 0.1, cex.lab = 1, cex.num = 1, family = "serif",
+  font.lab = 1, font.num = 1, lty = par("lty"), lwd = par("lwd"),
+  mai = NULL, ...)
 }
 \arguments{
 \item{df}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -39,15 +39,13 @@ slopegraph(df, xlim = c(0.5, ncol(df) + 0.5), ylim = c(min(df, na.rm = TRUE)
 
 \item{panel.last}{An expression to add something after adding the plot content. Default is \code{NULL}.}
 
-\item{labels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.}
+\item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(df)}.}
 
 \item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
 
 \item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
 
 \item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
-
-\item{binval}{Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.}
 
 \item{col.lines}{A vector of colors for the slopegraph lines. Default is \code{par('fg')}.}
 
@@ -88,19 +86,18 @@ Convert an R data frame (containing a panel dataset, where rows are observations
 \examples{
 ## Tufte's Cancer Graph (to the correct scale)
 data(cancer)
-slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5),
-           labels=c('5 Year','10 Year','15 Year','20 Year'), binval=2.5)
+slopegraph(cancer, col.lines = 'gray', xlim = c(-.5,5.5),
+           labels = c('5 Year','10 Year','15 Year','20 Year'))
 
 ## Tufte's GDP Graph
 data(gdp)
-slopegraph(gdp, col.line='gray', labels=c('1970','1979'), 
-    main='Current Receipts of Goverment as a Percentage of Gross Domestic Product',
-    binval=3.75)
+slopegraph(gdp, col.line='gray', xlabels = c('1970','1979'), 
+    main = 'Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 
 ## Ranking of U.S. State populations
 data(states)
 slopegraph(states, col.line='black', ylim = c(38,0),
-           main='Relative Rank of U.S. State Populations, 1790-1870')
+           main = 'Relative Rank of U.S. State Populations, 1790-1870')
 }
 \author{
 Thomas J. Leeper

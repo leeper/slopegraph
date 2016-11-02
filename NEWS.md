@@ -1,6 +1,7 @@
 # slopegraph 0.1.9
 
 * Added a new function, `ggslopegraph()` that produces a ggplot2-based slopegraph.
+* Exported the internal function, `segmentize()`, which converts an input data frame into a matrix of line segment coordinates.
 
 # slopegraph 0.1.8
 

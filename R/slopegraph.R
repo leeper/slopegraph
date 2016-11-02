@@ -13,11 +13,11 @@
 #' @param ylab The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
 #' @param panel.first An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.
 #' @param panel.last An expression to add something after adding the plot content. Default is \code{NULL}.
-#' @param labels The labels to use for the slopegraph periods. Default is \code{names(df)}.
+#' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(df)}.
 #' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
 #' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{NULL} (none).
-#' @param binval Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.
+# @param binval Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
 #' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
@@ -37,19 +37,18 @@
 #' @examples
 #' ## Tufte's Cancer Graph (to the correct scale)
 #' data(cancer)
-#' slopegraph(cancer, col.line='gray', xlim=c(-.5,5.5),
-#'            labels=c('5 Year','10 Year','15 Year','20 Year'), binval=2.5)
+#' slopegraph(cancer, col.lines = 'gray', xlim = c(-.5,5.5),
+#'            xlabels = c('5 Year','10 Year','15 Year','20 Year'))
 #' 
 #' ## Tufte's GDP Graph
 #' data(gdp)
-#' slopegraph(gdp, col.line='gray', labels=c('1970','1979'), 
-#'     main='Current Receipts of Goverment as a Percentage of Gross Domestic Product',
-#'     binval=3.75)
+#' slopegraph(gdp, col.line='gray', xlabels = c('1970','1979'), 
+#'     main = 'Current Receipts of Goverment as a Percentage of Gross Domestic Product')
 #' 
 #' ## Ranking of U.S. State populations
 #' data(states)
 #' slopegraph(states, col.line='black', ylim = c(38,0),
-#'            main='Relative Rank of U.S. State Populations, 1790-1870')
+#'            main = 'Relative Rank of U.S. State Populations, 1790-1870')
 #' @references
 #' \url{http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk}
 #' 
@@ -62,7 +61,6 @@
 #' @author Thomas J. Leeper
 #' @import graphics
 #' @importFrom utils head
-#' @importFrom stats embed na.omit
 #' @export
 slopegraph <- function(
     df,
@@ -76,11 +74,10 @@ slopegraph <- function(
     ylab = '',
     panel.first = NULL,
     panel.last = NULL,
-    labels = names(df),
+    xlabels = names(df),
     labpos.left = 2,
     labpos.right = 4,
     decimals = NULL,
-    binval = 1.5,
     col.lines = par('fg'),
     col.lab = col.lines,
     col.num = col.lines,
@@ -115,22 +112,11 @@ slopegraph <- function(
     if (!is.null(panel.first)) {
         eval(panel.first)
     }
-    # calculate decimals from data
-    if (is.null(decimals)) {
-        decimals <- 
-        max(sapply(as.vector(sapply(df, as.character)), function(i) {
-            a <- strsplit(i, '.', fixed = TRUE)[[1]][2]
-            if (!is.na(a)) { nchar(a) } else { 0 }
-        }), na.rm = TRUE)
-    }
-    decfmt <- paste0("%0.", decimals, "f")
+    
+    fmt <- if (is.null(decimals)) "%0.0f" else paste0("%0.", decimals, "f")
     
     # x-axis
-    axis(1, 1:ncol(df), labels=labels, col=col.xaxt, col.ticks=col.xaxt, family=family)
-    
-    # height and width of 'm' on plotting device
-    h <- strheight('m')
-    w <- strwidth('m')
+    axis(1, 1:ncol(df), labels = xlabels, col = col.xaxt, col.ticks = col.xaxt, family = family)
     
     # left-side labels
     leftlabs <- df[!is.na(df[,1]),1, drop = FALSE]
@@ -157,8 +143,8 @@ slopegraph <- function(
             y1 <- rowdata[4]
             y2 <- rowdata[5]
             # draw numeric value labels
-            text(x1, y1, sprintf(decfmt, y1), col = col.num[i], cex = cex.num, font = font.num, family = family)
-            text(x2, y2, sprintf(decfmt, y2), col = col.num[i], cex = cex.num, font = font.num, family = family)
+            text(x1, y1, sprintf(fmt, y1), col = col.num[i], cex = cex.num, font = font.num, family = family)
+            text(x2, y2, sprintf(fmt, y2), col = col.num[i], cex = cex.num, font = font.num, family = family)
             # draw lines
             ysloped <- (y2-y1)*offset.x
             segments(x1+offset.x, if(y1==y2) y1 else (y1+ysloped),
