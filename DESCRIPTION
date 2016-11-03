@@ -1,7 +1,7 @@
 Package: slopegraph
-Version: 0.1.9
+Version: 0.1.10
 Title: Edward Tufte-Inspired Slopegraphs
-Date: 2016-10-31
+Date: 2016-11-03
 Authors@R: c(person("Thomas", "Leeper", role = c("aut","cre"),
                     email = "thosjleeper@gmail.com"))
 Description: Convert a data frame (containing a panel dataset, where rows

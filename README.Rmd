@@ -18,7 +18,7 @@ Tufte's most famous slopegraph example is probably the ["cancer survival graph,"
 library("slopegraph")
 data(cancer)
 slopegraph(cancer, col.lines = 'gray', col.lab = "black", 
-           xlim = c(-.5,5.5), 
+           xlim = c(-.5,5.5), cex.lab = 0.5, cex.num = 0.5,
            xlabels = c('5 Year','10 Year','15 Year','20 Year'))
 ```
 
@@ -69,7 +69,7 @@ ggslopegraph(states, offset.x = 0.06, yrev = TRUE,
 [![Build Status](https://travis-ci.org/leeper/slopegraph.svg?branch=master)](https://travis-ci.org/leeper/slopegraph)
 [![Build status](https://ci.appveyor.com/api/projects/status/t6nxndmvvcw3gw7f/branch/master?svg=true)](https://ci.appveyor.com/project/leeper/slopegraph/branch/master)
 [![codecov.io](http://codecov.io/github/leeper/slopegraph/coverage.svg?branch=master)](http://codecov.io/github/leeper/slopegraph?branch=master)
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Work in Progress](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
 To install the latest development version of **slopegraph** from GitHub:
 

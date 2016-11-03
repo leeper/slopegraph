@@ -14,8 +14,8 @@
 #' @param panel.first An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.
 #' @param panel.last An expression to add something after adding the plot content. Default is \code{NULL}.
 #' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(data)}.
-#' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
-#' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.
+#' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.
+#' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{NULL} (none).
 # @param binval Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
@@ -32,8 +32,9 @@
 #' @param lty A vector of line type values for the slopegraph lines. Default is \code{par("lty")}. See \code{\link[graphics]{par}}.
 #' @param lwd A vector of line width values for the slopegraph lines. Default is \code{par("lwd")}. See \code{\link[graphics]{par}}.
 #' @param mai A margin specification. Default is \code{NULL}. See \code{\link[graphics]{par}}.
+#' @param na.span A logical indicating whether line segments should span periods with missing values. The default is \code{FALSE}, such that some segments are not drawn.
 #' @param \ldots Additional arguments to \code{plot}.
-#' @return A five-column matrix, where each row contains: the row number from \code{data}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
+#' @return A five-variable data frame, where each row contains: the row number from \code{data}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 #' @examples
 #' ## Tufte's Cancer Graph (to the correct scale)
 #' data(cancer)
@@ -93,6 +94,7 @@ slopegraph <- function(
     lty = par("lty"),
     lwd = par("lwd"),
     mai = NULL,
+    na.span = FALSE,
     ...)
 {
     # check data
@@ -141,16 +143,19 @@ slopegraph <- function(
     axis(1, 1:ncol(data), labels = xlabels, col = col.xaxt, col.ticks = col.xaxt, family = family)
     
     # left-side labels
-    leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
-    text(1-offset.lab, leftlabs[,1],
-         col=col.lab[which(!is.na(data[,1]))], rownames(leftlabs), pos=labpos.left, 
-         cex=cex.lab, font=font.lab, family=family)
-    
+    if (!is.null(labpos.left)) {
+        leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
+        text(1-offset.lab, leftlabs[,1],
+             col=col.lab[which(!is.na(data[,1]))], rownames(leftlabs), pos=labpos.left, 
+             cex=cex.lab, font=font.lab, family=family)
+    }
     # right-side labels
-    rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
-    text(ncol(data)+offset.lab, rightlabs[,1], 
-         col=col.lab[which(!is.na(data[,ncol(data)]))], rownames(rightlabs), pos=labpos.right, 
-         cex=cex.lab, font=font.lab, family=family)
+    if (!is.null(labpos.right)) {
+        rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
+        text(ncol(data)+offset.lab, rightlabs[,1], 
+             col=col.lab[which(!is.na(data[,ncol(data)]))], rownames(rightlabs), pos=labpos.right, 
+             cex=cex.lab, font=font.lab, family=family)
+    }
     
     to_draw2 <- to_draw[!duplicated(to_draw),]
     apply(to_draw2, 1, function(rowdata){
@@ -176,5 +181,5 @@ slopegraph <- function(
         eval(panel.last)
     }
     # return `to_draw` invisibly
-    invisible(structure(to_draw, dimnames = list(seq_len(nrow(to_draw)), c("row", "x1", "x2", "y1", "y2"))))
+    invisible(to_draw)
 }

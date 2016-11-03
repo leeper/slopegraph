@@ -6,10 +6,11 @@
 \usage{
 ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
   ncol(data) + 2L), ylim = range(data, na.rm = TRUE), xlab = "",
-  ylab = "", xlabels = names(data), xbreaks = seq_along(xlabels),
+  ylab = "", xlabels = names(data), labpos.left = 0.8,
+  labpos.right = ncol(data) + 0.2, xbreaks = seq_along(xlabels),
   ybreaks = NULL, yrev = ylim[1] > ylim[2], decimals = NULL,
   col.lines = "black", col.lab = "black", col.num = "black", lwd = 0.5,
-  offset.x = 0.1, cex.lab = 3L, cex.num = 3L)
+  offset.x = 0.1, cex.lab = 3L, cex.num = 3L, na.span = FALSE)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -25,6 +26,10 @@ ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
 \item{ylab}{A character string specifying an y-axis label. Passed to \code{\link[ggplot2]{scale_y_continuous}}, or \code{\link[ggplot2]{scale_y_reverse}} if \code{yrev = TRUE}.}
 
 \item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(data)}.}
+
+\item{labpos.left}{A numeric value specifying the x-axis position of the left-side observation labels. If \code{NULL}, labels are omitted.}
+
+\item{labpos.right}{A numeric value specifying the x-axis position of the right-side observation labels. If \code{NULL}, labels are omitted.}
 
 \item{xbreaks}{Passed to \code{breaks} in \code{\link[ggplot2]{scale_x_continuous}}.}
 
@@ -47,12 +52,25 @@ ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
 \item{cex.lab}{A numeric value indicating the size of row labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.}
 
 \item{cex.num}{A numeric value indicating the size of numeric labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.}
+
+\item{na.span}{A logical indicating whether line segments should span periods with missing values. The default is \code{FALSE}, such that some segments are not drawn.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.
 }
 \description{
 Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph using ggplot2
+}
+\details{
+A slopegraph is an interesting visualization because it involves the representation of a simple observation-by-period matrix of data values as a plot but the production of that visualization entails a number of data transformations that are not immediately obvious from the visual simplicity of the graph itself.
+
+Specifically, a slopegraph involves three distinct visual components, each of which must be drawn using a slightly different data structure. Those elements are: (1) the observation labels, (2) the numeric value labels of each observation-period data point, and (3) the line segments connecting the numeric labels. To draw these three elements requires transforming the input into three different data structures.
+
+First, to draw the observation labels requires constructing a new data frame containing the observation labels (from the input data frame's \code{rownames} attribute), the constant x-left and x-right label positions, and the vertical positions of the left- and right-side labels.
+
+Second, to draw the numeric value labels requires creating a \dQuote{tidy} data frame based upon the positions of the values in the input data frame. Specifically, a tidy representation of the data is a two-column data frame containing: (1) the column value of each data point (identified by \code{\link[base]{col}}) to specify horizontal position, and (2) the value of the data point itself which is also its vertical position. This consists of a basic wide-to-long reshape procedure (using \code{\link[stats]{reshape}}).
+
+Third, to draw the line segments requires creating a \dQuote{tidy} data frame that consists of one row for each segment, by identifying row-adjacent values and identifying variables for x1 and x2 and y1 and y2 end-points of each segment. Another \dQuote{row} identifying variable is needed to relationally map this data frame back to the original observations (e.g., to color the segments). This step is performed by \code{\link{segmentize}}.
 }
 \examples{
 require("ggplot2")

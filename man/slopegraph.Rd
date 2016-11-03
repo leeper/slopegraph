@@ -14,7 +14,7 @@ slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
   col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
   offset.x = 0.1, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
   family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
-  lwd = par("lwd"), mai = NULL, ...)
+  lwd = par("lwd"), mai = NULL, na.span = FALSE, ...)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -41,9 +41,9 @@ slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
 
 \item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(data)}.}
 
-\item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
+\item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.}
 
-\item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}.}
+\item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.}
 
 \item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
 
@@ -75,10 +75,12 @@ slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
 
 \item{mai}{A margin specification. Default is \code{NULL}. See \code{\link[graphics]{par}}.}
 
+\item{na.span}{A logical indicating whether line segments should span periods with missing values. The default is \code{FALSE}, such that some segments are not drawn.}
+
 \item{\ldots}{Additional arguments to \code{plot}.}
 }
 \value{
-A five-column matrix, where each row contains: the row number from \code{data}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
+A five-variable data frame, where each row contains: the row number from \code{data}, \samp{x1}, \samp{x2}, \samp{y1}, and \samp{y2} coordinates for each drawn segment, invisibly.
 }
 \description{
 Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.

@@ -8,6 +8,8 @@
 #' @param xlab A character string specifying an x-axis label. Passed to \code{\link[ggplot2]{scale_x_continuous}}.
 #' @param ylab A character string specifying an y-axis label. Passed to \code{\link[ggplot2]{scale_y_continuous}}, or \code{\link[ggplot2]{scale_y_reverse}} if \code{yrev = TRUE}.
 #' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(data)}.
+#' @param labpos.left A numeric value specifying the x-axis position of the left-side observation labels. If \code{NULL}, labels are omitted.
+#' @param labpos.right A numeric value specifying the x-axis position of the right-side observation labels. If \code{NULL}, labels are omitted.
 #' @param xbreaks Passed to \code{breaks} in \code{\link[ggplot2]{scale_x_continuous}}.
 #' @param ybreaks Passed to \code{breaks} in \code{\link[ggplot2]{scale_y_continuous}}.
 #' @param yrev A logical indicating whether to use \code{\link[ggplot2]{scale_y_reverse}} rather than the default \code{\link[ggplot2]{scale_y_continuous}}.
@@ -15,10 +17,21 @@
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
 #' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
+#' @param lwd A vector of line width values for the slopegraph lines.
 #' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{.1}.
 #' @param cex.lab A numeric value indicating the size of row labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.
 #' @param cex.num A numeric value indicating the size of numeric labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.
-#' @param lwd A vector of line width values for the slopegraph lines.
+#' @param na.span A logical indicating whether line segments should span periods with missing values. The default is \code{FALSE}, such that some segments are not drawn.
+#' @details A slopegraph is an interesting visualization because it involves the representation of a simple observation-by-period matrix of data values as a plot but the production of that visualization entails a number of data transformations that are not immediately obvious from the visual simplicity of the graph itself.
+#' 
+#' Specifically, a slopegraph involves three distinct visual components, each of which must be drawn using a slightly different data structure. Those elements are: (1) the observation labels, (2) the numeric value labels of each observation-period data point, and (3) the line segments connecting the numeric labels. To draw these three elements requires transforming the input into three different data structures.
+#' 
+#' First, to draw the observation labels requires constructing a new data frame containing the observation labels (from the input data frame's \code{rownames} attribute), the constant x-left and x-right label positions, and the vertical positions of the left- and right-side labels.
+#'
+#' Second, to draw the numeric value labels requires creating a \dQuote{tidy} data frame based upon the positions of the values in the input data frame. Specifically, a tidy representation of the data is a two-column data frame containing: (1) the column value of each data point (identified by \code{\link[base]{col}}) to specify horizontal position, and (2) the value of the data point itself which is also its vertical position. This consists of a basic wide-to-long reshape procedure (using \code{\link[stats]{reshape}}).
+#' 
+#' Third, to draw the line segments requires creating a \dQuote{tidy} data frame that consists of one row for each segment, by identifying row-adjacent values and identifying variables for x1 and x2 and y1 and y2 end-points of each segment. Another \dQuote{row} identifying variable is needed to relationally map this data frame back to the original observations (e.g., to color the segments). This step is performed by \code{\link{segmentize}}.
+#' 
 #' @return A \code{\link[ggplot2]{ggplot}} object.
 #' @examples
 #' require("ggplot2")
@@ -57,6 +70,8 @@ function(data,
          xlab = "", 
          ylab = "", 
          xlabels = names(data),
+         labpos.left = 0.8,
+         labpos.right = ncol(data) + 0.2,
          xbreaks = seq_along(xlabels),
          ybreaks = NULL,
          yrev = ylim[1] > ylim[2], 
@@ -67,16 +82,15 @@ function(data,
          lwd = 0.5,
          offset.x = 0.1,
          cex.lab = 3L,
-         cex.num = 3L)
+         cex.num = 3L,
+         na.span = FALSE)
 {
     # check data
     if (ncol(data) < 2) {
         stop("'data' must have at least two columns")
     }
     # segmentize
-    to_draw <- segmentize(as.matrix(data))
-    colnames(to_draw) <- c("row", "x1", "x2", "y1", "y2")
-    to_draw <- as.data.frame(to_draw)
+    to_draw <- segmentize(data, na.span = na.span)
     
     # reshape for printing numeric value labels
     long <- reshape(data, direction = "long", varying = names(data), v.names = "value", sep = "")
@@ -126,16 +140,19 @@ function(data,
         
         leftlabs <- data[!is.na(data[,1]), 1, drop = FALSE]
         which_right <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
-        g <- g + # left-side row labels
-                 geom_text(aes(x = 0.8, y = leftlabs[,1], 
-                               label = rownames(leftlabs)), 
-                           color = col.lab[!is.na(data[,1])],
-                           data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 1L) +
-                 # right-side row labels
-                 geom_text(aes(x = ncol(data) + 0.2, y = which_right[,1], 
-                               label = rownames(which_right)), 
-                           color = col.lab[!is.na(data[,ncol(data)])],
-                           data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 0L)
-            
+        # left-side row labels
+        if (!is.null(labpos.left)) {
+            g <- g + geom_text(aes(x = labpos.left, y = leftlabs[,1], 
+                                   label = rownames(leftlabs)), 
+                               color = col.lab[!is.na(data[,1])],
+                               data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 1L)
+        }
+        # right-side row labels
+        if (!is.null(labpos.left)) {
+            g <- g + geom_text(aes(x = labpos.right, y = which_right[,1], 
+                                   label = rownames(which_right)), 
+                               color = col.lab[!is.na(data[,ncol(data)])],
+                               data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 0L)
+        }
     return(g + theme(legend.position="none") + guides(fill = FALSE))
 }
