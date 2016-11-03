@@ -145,14 +145,14 @@ slopegraph <- function(
     # left-side labels
     if (!is.null(labpos.left)) {
         leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
-        text(1-offset.lab, leftlabs[,1],
+        text(1-offset.lab, bump_overlaps(leftlabs[,1]),
              col=col.lab[which(!is.na(data[,1]))], rownames(leftlabs), pos=labpos.left, 
              cex=cex.lab, font=font.lab, family=family)
     }
     # right-side labels
     if (!is.null(labpos.right)) {
         rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
-        text(ncol(data)+offset.lab, rightlabs[,1], 
+        text(ncol(data)+offset.lab, bump_overlaps(rightlabs[,1]), 
              col=col.lab[which(!is.na(data[,ncol(data)]))], rownames(rightlabs), pos=labpos.right, 
              cex=cex.lab, font=font.lab, family=family)
     }
@@ -176,7 +176,7 @@ slopegraph <- function(
                      lwd = lwd[i])
     })
     # numeric value labels 
-    text(long[["time"]], long[["value"]], sprintf(fmt, long[["value"]]), 
+    text(long[["time"]], bump_overlaps(long[["value"]]), sprintf(fmt, long[["value"]]), 
          col = col.num, cex = cex.num, font = font.num, family = family)
     
     # optional expression

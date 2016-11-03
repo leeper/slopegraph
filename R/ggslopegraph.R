@@ -139,7 +139,7 @@ function(data,
                  col = col.lines,
                  data = to_draw, inherit.aes = FALSE) + guides(fill = FALSE) + 
         # numeric value labels 
-        geom_text(aes(x = time, y = value, label = sprintf(fmt, value)), color = col.num, 
+        geom_text(aes(x = time, y = bump_overlaps(value), label = sprintf(fmt, value)), color = col.num, 
                   data = long, inherit.aes = FALSE,
                   size = cex.num, hjust = 0.5)
     
@@ -147,14 +147,14 @@ function(data,
     which_right <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
     # left-side row labels
     if (!is.null(labpos.left)) {
-        g <- g + geom_text(aes(x = labpos.left, y = leftlabs[,1], 
+        g <- g + geom_text(aes(x = labpos.left, y = bump_overlaps(leftlabs[,1]), 
                                label = rownames(leftlabs)), 
                            color = col.lab[!is.na(data[,1])],
                            data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 1L)
     }
     # right-side row labels
     if (!is.null(labpos.left)) {
-        g <- g + geom_text(aes(x = labpos.right, y = which_right[,1], 
+        g <- g + geom_text(aes(x = labpos.right, y = bump_overlaps(which_right[,1]), 
                                label = rownames(which_right)), 
                            color = col.lab[!is.na(data[,ncol(data)])],
                            data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 0L)
