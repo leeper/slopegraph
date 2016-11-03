@@ -1,7 +1,7 @@
 # function for eliminating overlaps
 bump_overlaps <- function(yvec, h = strheight('M'), w = strwidth('M')){
     
-    #return(yvec)
+    return(yvec)
     
     upper <- yvec + (0.5 * h)
     lower <- yvec - (0.5 * h)
