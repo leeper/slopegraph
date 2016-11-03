@@ -81,6 +81,6 @@ To install the latest development version of **slopegraph** from GitHub:
 if (!require("ghit")) {
     install.packages("ghit")
 }
-ghite::install_github("leeper/slopegraph")
+ghit::install_github("leeper/slopegraph")
 ```
 
