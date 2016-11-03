@@ -1,6 +1,6 @@
 # function for finding consecutive indices
 # from: http://stackoverflow.com/a/16118320/2338862
-seqle <- function(x, incr=1) { 
+seqle <- function(x, incr = 1) { 
     if(!is.numeric(x)) x <- as.numeric(x) 
     n <- length(x)  
     y <- x[-1L] != x[-n] + incr 
@@ -8,9 +8,9 @@ seqle <- function(x, incr=1) {
     list(lengths = diff(c(0L,i)),
          values = x[head(c(0L,i)+1L,-1L)]) 
 } 
-    
+
 # function for eliminating overlaps
-overlaps <- function(coldf, binval, h = strheight('m'), w = strwidth('m'), decimals, cat='rownames'){
+overlaps <- function(coldf, binval, h = strheight('m'), w = strwidth('m'), cat='rownames'){
     # conditionally remove exactly duplicated values
     if (any(duplicated(coldf[,1]))) {
         u <- unique(coldf[,1])
@@ -31,18 +31,6 @@ overlaps <- function(coldf, binval, h = strheight('m'), w = strwidth('m'), decim
         oldlabs <- coldf[-unique(c(overlaps,overlaps+1)),,drop=FALSE]
         newlabs <- data.frame(sapply(overlaps2, function(i) mean(coldf[i,1])))
         names(newlabs) <- names(coldf)
-        if (cat == 'rownames') {
-            rownames(newlabs) <- 
-                sapply(overlaps2, function(i) {
-                    paste(rownames(coldf)[rev(i)],collapse='\n')
-                })
-        } else if(cat == 'values') {
-            rownames(oldlabs) <- sprintf(paste0('%.',decimals,'f'),oldlabs[,1])
-            rownames(newlabs) <-
-                sapply(overlaps2, function(i) {
-                    paste(sprintf(paste0('%.',decimals,'f'),coldf[rev(i),1]),collapse='\n')
-                })
-        }
         return(rbind(oldlabs,newlabs))
     } else {
         if (cat == 'values') {

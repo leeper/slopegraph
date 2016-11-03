@@ -22,7 +22,7 @@
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
 #' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
 #' @param col.xaxt A character string containing the x-axis color. Default is \code{par('fg')}.
-#' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{.1}.
+#' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{NULL} (set automatically based on the data.
 #' @param offset.lab A small offset for the observation labels. Default is \code{.1}.
 #' @param cex.lab A numeric value indicating the size of row labels. Default is \code{1}. See \code{\link[graphics]{par}}.
 #' @param cex.num A numeric value indicating the size of numeric labels. Default is \code{1}. See \code{\link[graphics]{par}}.
@@ -84,7 +84,7 @@ slopegraph <- function(
     col.lab = col.lines,
     col.num = col.lines,
     col.xaxt = par('fg'),
-    offset.x = .1,
+    offset.x = NULL,
     offset.lab = .1,
     cex.lab = 1,
     cex.num = 1,
@@ -157,6 +157,9 @@ slopegraph <- function(
              cex=cex.lab, font=font.lab, family=family)
     }
     
+    if (is.null(offset.x)) {
+        offset.x <- (max(strwidth(sprintf(fmt, long[["value"]]))) + 0.02)/2L
+    }
     to_draw2 <- to_draw[!duplicated(to_draw),]
     apply(to_draw2, 1, function(rowdata){
             i <- rowdata[1]

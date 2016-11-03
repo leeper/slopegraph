@@ -18,7 +18,7 @@
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
 #' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
 #' @param lwd A vector of line width values for the slopegraph lines.
-#' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{.1}.
+#' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{NULL} (set automatically based on the data.
 #' @param cex.lab A numeric value indicating the size of row labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.
 #' @param cex.num A numeric value indicating the size of numeric labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.
 #' @param na.span A logical indicating whether line segments should span periods with missing values. The default is \code{FALSE}, such that some segments are not drawn.
@@ -80,7 +80,7 @@ function(data,
          col.lab = "black",
          col.num = "black",
          lwd = 0.5,
-         offset.x = 0.1,
+         offset.x = NULL,
          cex.lab = 3L,
          cex.num = 3L,
          na.span = FALSE)
@@ -116,17 +116,6 @@ function(data,
     
     # draw
     g <- ggplot() + 
-        # segments
-        geom_segment(aes(x = x1 + offset.x, 
-                         y = ifelse(y1 == y2, y1, (y1+((y2-y1)*offset.x))), 
-                         xend = x2 - offset.x, 
-                         yend = ifelse(y1 == y2, y2, (y2-((y2-y1)*offset.x)))), 
-                     col = col.lines,
-                     data = to_draw, inherit.aes = FALSE) + guides(fill = FALSE) + 
-        # numeric value labels 
-        geom_text(aes(x = time, y = value, label = sprintf(fmt, value)), color = col.num, 
-                  data = long, inherit.aes = FALSE,
-                  size = cex.num, hjust = 0.5) +
         # x-axis labels
         scale_x_continuous(name = xlab, breaks = xbreaks, 
                            labels = xlabels, limits = xlim) +
@@ -137,22 +126,38 @@ function(data,
         } else {
             scale_y_continuous(name = ylab, breaks = ybreaks, labels = NULL, limits = ylim)
         }
-        
-        leftlabs <- data[!is.na(data[,1]), 1, drop = FALSE]
-        which_right <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
-        # left-side row labels
-        if (!is.null(labpos.left)) {
-            g <- g + geom_text(aes(x = labpos.left, y = leftlabs[,1], 
-                                   label = rownames(leftlabs)), 
-                               color = col.lab[!is.na(data[,1])],
-                               data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 1L)
-        }
-        # right-side row labels
-        if (!is.null(labpos.left)) {
-            g <- g + geom_text(aes(x = labpos.right, y = which_right[,1], 
-                                   label = rownames(which_right)), 
-                               color = col.lab[!is.na(data[,ncol(data)])],
-                               data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 0L)
-        }
+    
+    if (is.null(offset.x)) {
+        offset.x <- (max(strwidth(sprintf(fmt, long[["value"]]))) + 0.02)/2L
+    }
+    
+    # segments
+    g <- g + geom_segment(aes(x = x1 + offset.x, 
+                     y = ifelse(y1 == y2, y1, (y1+((y2-y1)*offset.x))), 
+                     xend = x2 - offset.x, 
+                     yend = ifelse(y1 == y2, y2, (y2-((y2-y1)*offset.x)))), 
+                 col = col.lines,
+                 data = to_draw, inherit.aes = FALSE) + guides(fill = FALSE) + 
+        # numeric value labels 
+        geom_text(aes(x = time, y = value, label = sprintf(fmt, value)), color = col.num, 
+                  data = long, inherit.aes = FALSE,
+                  size = cex.num, hjust = 0.5)
+    
+    leftlabs <- data[!is.na(data[,1]), 1, drop = FALSE]
+    which_right <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
+    # left-side row labels
+    if (!is.null(labpos.left)) {
+        g <- g + geom_text(aes(x = labpos.left, y = leftlabs[,1], 
+                               label = rownames(leftlabs)), 
+                           color = col.lab[!is.na(data[,1])],
+                           data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 1L)
+    }
+    # right-side row labels
+    if (!is.null(labpos.left)) {
+        g <- g + geom_text(aes(x = labpos.right, y = which_right[,1], 
+                               label = rownames(which_right)), 
+                           color = col.lab[!is.na(data[,ncol(data)])],
+                           data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 0L)
+    }
     return(g + theme(legend.position="none") + guides(fill = FALSE))
 }

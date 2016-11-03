@@ -12,7 +12,7 @@ slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
   panel.last = NULL, xlabels = names(data), labpos.left = 2,
   labpos.right = 4, decimals = NULL, col.lines = par("fg"),
   col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
-  offset.x = 0.1, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
+  offset.x = NULL, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
   family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
   lwd = par("lwd"), mai = NULL, na.span = FALSE, ...)
 }
@@ -55,7 +55,7 @@ slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
 
 \item{col.xaxt}{A character string containing the x-axis color. Default is \code{par('fg')}.}
 
-\item{offset.x}{A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{.1}.}
+\item{offset.x}{A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{NULL} (set automatically based on the data.}
 
 \item{offset.lab}{A small offset for the observation labels. Default is \code{.1}.}
 

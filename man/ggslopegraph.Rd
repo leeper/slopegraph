@@ -10,7 +10,7 @@ ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
   labpos.right = ncol(data) + 0.2, xbreaks = seq_along(xlabels),
   ybreaks = NULL, yrev = ylim[1] > ylim[2], decimals = NULL,
   col.lines = "black", col.lab = "black", col.num = "black", lwd = 0.5,
-  offset.x = 0.1, cex.lab = 3L, cex.num = 3L, na.span = FALSE)
+  offset.x = NULL, cex.lab = 3L, cex.num = 3L, na.span = FALSE)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -47,7 +47,7 @@ ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
 
 \item{lwd}{A vector of line width values for the slopegraph lines.}
 
-\item{offset.x}{A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{.1}.}
+\item{offset.x}{A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{NULL} (set automatically based on the data.}
 
 \item{cex.lab}{A numeric value indicating the size of row labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.}
 
