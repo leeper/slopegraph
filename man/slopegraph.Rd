@@ -5,25 +5,31 @@
 \alias{slopegraph-package}
 \title{Create Slopegraph from a data frame}
 \usage{
-slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
-  TRUE) - diff(range(data, na.rm = TRUE))/100, max(data, na.rm = TRUE) +
-  diff(range(data, na.rm = TRUE))/100), main = NULL, bty = "n",
-  xaxt = "n", yaxt = "n", xlab = "", ylab = "", panel.first = NULL,
-  panel.last = NULL, xlabels = names(data), labpos.left = 2,
-  labpos.right = 4, decimals = NULL, col.lines = par("fg"),
-  col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
-  offset.x = NULL, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
-  family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
-  lwd = par("lwd"), mai = NULL, na.span = FALSE, ...)
+slopegraph(data, main = NULL, xlab = "", ylab = "",
+  xlabels = names(data), xlim = c(0.5, ncol(data) + 0.5),
+  ylim = c(min(data, na.rm = TRUE) - diff(range(data, na.rm = TRUE))/100,
+  max(data, na.rm = TRUE) + diff(range(data, na.rm = TRUE))/100), bty = "n",
+  xaxt = "n", yaxt = "n", panel.first = NULL, panel.last = NULL,
+  labpos.left = 2, labpos.right = 4, decimals = 0L,
+  col.lines = par("fg"), col.lab = col.lines, col.num = col.lines,
+  col.xaxt = par("fg"), offset.x = NULL, offset.lab = 0.1, cex.lab = 1,
+  cex.num = 1, family = "serif", font.lab = 1, font.num = 1,
+  lty = par("lty"), lwd = par("lwd"), mai = NULL, na.span = FALSE, ...)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
 
+\item{main}{The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.}
+
+\item{xlab}{The x-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.}
+
+\item{ylab}{The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.}
+
+\item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(data)}.}
+
 \item{xlim}{The x-axis limits of the plot. Automatically calculated by default.}
 
 \item{ylim}{The y-axis limits of the plot. Automatically calculated by default.}
-
-\item{main}{The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.}
 
 \item{bty}{The box type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.}
 
@@ -31,21 +37,15 @@ slopegraph(data, xlim = c(0.5, ncol(data) + 0.5), ylim = c(min(data, na.rm =
 
 \item{yaxt}{The y-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.}
 
-\item{xlab}{The x-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.}
-
-\item{ylab}{The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.}
-
 \item{panel.first}{An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.}
 
 \item{panel.last}{An expression to add something after adding the plot content. Default is \code{NULL}.}
-
-\item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(data)}.}
 
 \item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.}
 
 \item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.}
 
-\item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
+\item{decimals}{The number of decimals to display for values in the plot. Default is \code{0} (none).}
 
 \item{col.lines}{A vector of colors for the slopegraph lines. Default is \code{par('fg')}.}
 

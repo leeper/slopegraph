@@ -4,11 +4,11 @@
 \alias{ggslopegraph}
 \title{Create Slopegraph from a data frame using ggplot2}
 \usage{
-ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
-  ncol(data) + 2L), ylim = range(data, na.rm = TRUE), xlab = "",
-  ylab = "", xlabels = names(data), labpos.left = 0.8,
+ggslopegraph(data, main = NULL, xlab = "", ylab = "",
+  xlabels = names(data), xlim = c(-1L, ncol(data) + 2L),
+  ylim = range(data, na.rm = TRUE), labpos.left = 0.8,
   labpos.right = ncol(data) + 0.2, xbreaks = seq_along(xlabels),
-  ybreaks = NULL, yrev = ylim[1] > ylim[2], decimals = NULL,
+  ybreaks = NULL, yrev = ylim[1] > ylim[2], decimals = 0L,
   col.lines = "black", col.lab = "black", col.num = "black", lwd = 0.5,
   offset.x = NULL, cex.lab = 3L, cex.num = 3L, na.span = FALSE)
 }
@@ -17,15 +17,15 @@ ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
 
 \item{main}{A character string specifying a title. Passed to \code{\link[ggplot2]{ggtitle}}.}
 
-\item{xlim}{A two-element numeric vector specifying the y-axis limits.}
-
-\item{ylim}{A two-element numeric vector specifying the y-axis limits.}
-
 \item{xlab}{A character string specifying an x-axis label. Passed to \code{\link[ggplot2]{scale_x_continuous}}.}
 
 \item{ylab}{A character string specifying an y-axis label. Passed to \code{\link[ggplot2]{scale_y_continuous}}, or \code{\link[ggplot2]{scale_y_reverse}} if \code{yrev = TRUE}.}
 
 \item{xlabels}{The labels to use for the slopegraph periods. Default is \code{names(data)}.}
+
+\item{xlim}{A two-element numeric vector specifying the y-axis limits.}
+
+\item{ylim}{A two-element numeric vector specifying the y-axis limits.}
 
 \item{labpos.left}{A numeric value specifying the x-axis position of the left-side observation labels. If \code{NULL}, labels are omitted.}
 
@@ -37,7 +37,7 @@ ggslopegraph(data, main = as.character(substitute(data)), xlim = c(-1L,
 
 \item{yrev}{A logical indicating whether to use \code{\link[ggplot2]{scale_y_reverse}} rather than the default \code{\link[ggplot2]{scale_y_continuous}}.}
 
-\item{decimals}{The number of decimals to display for values in the plot. Default is \code{NULL} (none).}
+\item{decimals}{The number of decimals to display for values in the plot. Default is \code{0} (none).}
 
 \item{col.lines}{A vector of colors for the slopegraph lines. Default is \code{par('fg')}.}
 

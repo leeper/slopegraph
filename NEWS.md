@@ -1,3 +1,7 @@
+# slopegraph 0.1.12
+
+* The order of some formal arguments in both `slopegraph()` and `ggslopegraph()` has been changed.
+
 # slopegraph 0.1.10
 
 * `segmentize()` gains new argument `na.span`, a logical indicating whether line segments should span periods with missing values. The default remains to not do this and simply omit segments when missing values are present. This argument is cascaded through to `slopegraph()` and `ggslopegraph()`. (h/t Joran Elias)

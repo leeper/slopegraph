@@ -3,17 +3,17 @@
 #' @description Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph using ggplot2
 #' @param data An observation-by-period data.frame, with at least two columns. Missing values are allowed.
 #' @param main A character string specifying a title. Passed to \code{\link[ggplot2]{ggtitle}}.
-#' @param xlim A two-element numeric vector specifying the y-axis limits.
-#' @param ylim A two-element numeric vector specifying the y-axis limits.
 #' @param xlab A character string specifying an x-axis label. Passed to \code{\link[ggplot2]{scale_x_continuous}}.
 #' @param ylab A character string specifying an y-axis label. Passed to \code{\link[ggplot2]{scale_y_continuous}}, or \code{\link[ggplot2]{scale_y_reverse}} if \code{yrev = TRUE}.
 #' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(data)}.
+#' @param xlim A two-element numeric vector specifying the y-axis limits.
+#' @param ylim A two-element numeric vector specifying the y-axis limits.
 #' @param labpos.left A numeric value specifying the x-axis position of the left-side observation labels. If \code{NULL}, labels are omitted.
 #' @param labpos.right A numeric value specifying the x-axis position of the right-side observation labels. If \code{NULL}, labels are omitted.
 #' @param xbreaks Passed to \code{breaks} in \code{\link[ggplot2]{scale_x_continuous}}.
 #' @param ybreaks Passed to \code{breaks} in \code{\link[ggplot2]{scale_y_continuous}}.
 #' @param yrev A logical indicating whether to use \code{\link[ggplot2]{scale_y_reverse}} rather than the default \code{\link[ggplot2]{scale_y_continuous}}.
-#' @param decimals The number of decimals to display for values in the plot. Default is \code{NULL} (none).
+#' @param decimals The number of decimals to display for values in the plot. Default is \code{0} (none).
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
 #' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
@@ -64,18 +64,18 @@
 #' @export
 ggslopegraph <- 
 function(data, 
-         main = as.character(substitute(data)), 
-         xlim = c(-1L,ncol(data)+2L), 
-         ylim = range(data, na.rm = TRUE), 
+         main = NULL, 
          xlab = "", 
          ylab = "", 
          xlabels = names(data),
+         xlim = c(-1L,ncol(data)+2L), 
+         ylim = range(data, na.rm = TRUE), 
          labpos.left = 0.8,
          labpos.right = ncol(data) + 0.2,
          xbreaks = seq_along(xlabels),
          ybreaks = NULL,
          yrev = ylim[1] > ylim[2], 
-         decimals = NULL,
+         decimals = 0L,
          col.lines = "black",
          col.lab = "black",
          col.num = "black",
@@ -85,18 +85,19 @@ function(data,
          cex.num = 3L,
          na.span = FALSE)
 {
+    # check decimal formatting
+    fmt <- paste0("%0.", decimals, "f")
     # check data
     if (ncol(data) < 2) {
         stop("'data' must have at least two columns")
     }
+    data[] <- lapply(data, round, decimals)
     # segmentize
     to_draw <- segmentize(data, na.span = na.span)
     
     # reshape for printing numeric value labels
     long <- reshape(data, direction = "long", varying = names(data), v.names = "value", sep = "")
     
-    # check decimal formatting
-    fmt <- if (is.null(decimals)) "%0.0f" else paste0("%0.", decimals, "f")
     # expand formatting arguments
     if (length(col.lines) == 1) {
         col.lines <- rep(col.lines, nrow(data))

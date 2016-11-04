@@ -3,21 +3,20 @@
 #' @title Create Slopegraph from a data frame
 #' @description Convert an R data frame (containing a panel dataset, where rows are observations and columns are time periods) into an Edward Tufte-inspired Slopegraph.
 #' @param data An observation-by-period data.frame, with at least two columns. Missing values are allowed.
+#' @param main The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.
+#' @param xlab The x-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
+#' @param ylab The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
+#' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(data)}.
 #' @param xlim The x-axis limits of the plot. Automatically calculated by default.
 #' @param ylim The y-axis limits of the plot. Automatically calculated by default.
-#' @param main The main title of the plot. Default is \code{NULL} (none). See \code{\link[graphics]{par}}.
 #' @param bty The box type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.
 #' @param xaxt The x-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.
 #' @param yaxt The y-axis type for the plot. Default is \code{'n'} (none). See \code{\link[graphics]{par}}.
-#' @param xlab The x-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
-#' @param ylab The y-axis label for the plot. Default is \code{''} (none). See \code{\link[graphics]{par}}.
 #' @param panel.first An expression to add something between drawing the blank canvas and adding the plot content (i.e., behind the slopegraph). Default is \code{NULL}.
 #' @param panel.last An expression to add something after adding the plot content. Default is \code{NULL}.
-#' @param xlabels The labels to use for the slopegraph periods. Default is \code{names(data)}.
 #' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.
 #' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.
-#' @param decimals The number of decimals to display for values in the plot. Default is \code{NULL} (none).
-# @param binval Threshold at which to force binning of labels and values (multiplier of the height of an "m"). Default is \code{1.5}.
+#' @param decimals The number of decimals to display for values in the plot. Default is \code{0} (none).
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
 #' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
@@ -66,20 +65,20 @@
 #' @export
 slopegraph <- function(
     data,
+    main = NULL,
+    xlab = '',
+    ylab = '',
+    xlabels = names(data),
     xlim = c(.5,ncol(data)+.5),
     ylim = c(min(data,na.rm=TRUE)-diff(range(data,na.rm=TRUE))/100,max(data,na.rm=TRUE)+diff(range(data,na.rm=TRUE))/100),
-    main = NULL,
     bty = 'n',
     xaxt = 'n',
     yaxt = 'n',
-    xlab = '',
-    ylab = '',
     panel.first = NULL,
     panel.last = NULL,
-    xlabels = names(data),
     labpos.left = 2,
     labpos.right = 4,
-    decimals = NULL,
+    decimals = 0L,
     col.lines = par('fg'),
     col.lab = col.lines,
     col.num = col.lines,
@@ -97,10 +96,13 @@ slopegraph <- function(
     na.span = FALSE,
     ...)
 {
+    # check decimal formatting
+    fmt <- paste0("%0.", decimals, "f")
     # check data
     if (ncol(data) < 2) {
         stop('`data` must have at least two columns')
     }
+    data[] <- lapply(data, round, decimals)
     # segmentize
     to_draw <- segmentize(as.matrix(data))
     # reshape for printing numeric value labels
@@ -119,8 +121,6 @@ slopegraph <- function(
         eval(panel.first)
     }
     
-    # check decimal formatting
-    fmt <- if (is.null(decimals)) "%0.0f" else paste0("%0.", decimals, "f")
     # expand formatting arguments
         if (length(col.lab) == 1L) {
         col.lab <- rep(col.lab, length.out = nrow(data))
@@ -145,14 +145,14 @@ slopegraph <- function(
     # left-side labels
     if (!is.null(labpos.left)) {
         leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
-        text(1-offset.lab, bump_overlaps(leftlabs[,1]),
+        text(1-offset.lab, bump_overlaps(leftlabs[,1], decimals = decimals),
              col=col.lab[which(!is.na(data[,1]))], rownames(leftlabs), pos=labpos.left, 
              cex=cex.lab, font=font.lab, family=family)
     }
     # right-side labels
     if (!is.null(labpos.right)) {
         rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
-        text(ncol(data)+offset.lab, bump_overlaps(rightlabs[,1]), 
+        text(ncol(data)+offset.lab, bump_overlaps(rightlabs[,1], decimals = decimals), 
              col=col.lab[which(!is.na(data[,ncol(data)]))], rownames(rightlabs), pos=labpos.right, 
              cex=cex.lab, font=font.lab, family=family)
     }
