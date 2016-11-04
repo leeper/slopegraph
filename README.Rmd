@@ -14,7 +14,7 @@ The current output of the `slopegraph()` function (for the examples included in 
 
 Tufte's most famous slopegraph example is probably the ["cancer survival graph,"](http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk) depicting 5, 10, 15, and 20 year survival rates for various cancers. The first example mimics this result but draws it to the correct scale (unlike Tufte's original):
 
-```{r cancer-survival, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 10, dev='svglite', cache=TRUE}
+```{r cancer-survival, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 10, dev='svglite'}
 library("slopegraph")
 data(cancer)
 slopegraph(cancer, col.lines = 'gray', col.lab = "black", 
@@ -27,7 +27,7 @@ slopegraph(cancer, col.lines = 'gray', col.lab = "black",
 
 The second example, also from Tufte, shows changes in gross domestic product for a small set of countries over two points in time:
 
-```{r gdp, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 10, dev='svglite', cache=TRUE}
+```{r gdp, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 10, dev='svglite'}
 data(gdp)
 slopegraph(gdp, col.lines = 'gray', col.lab = "black", xlabels = c('1970','1979'),  
            main = 'Current Receipts of Goverment as a Percentage of Gross Domestic Product')
@@ -37,7 +37,7 @@ slopegraph(gdp, col.lines = 'gray', col.lab = "black", xlabels = c('1970','1979'
 
 This third example comes from an 1878 publication ([a copy of which is available here](http://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~207741~3003452:Chart-Exhibiting-the-Relative-Rank-)), showing the relative ranking of the population of various U.S. states. This example features a reversed y-axis to better display the ranking and I demonstrate the `col.lines` argument to highlight South Carolina:
 
-```{r states, fig.show='hide', fig.path='inst/examples/', fig.height = 15, fig.width = 15, dev='svglite', cache=TRUE}
+```{r states, fig.show='hide', fig.path='inst/examples/', fig.height = 15, fig.width = 15, dev='svglite'}
 data(states)
 cols <- `[<-`(rep("black", 37), 7, "red")
 slopegraph(states, xlim = c(-1, 12), ylim = c(37,0), offset.x = 0.06,
@@ -49,7 +49,7 @@ slopegraph(states, xlim = c(-1, 12), ylim = c(37,0), offset.x = 0.06,
 
 As of v0.1.9, there is also a ggplot2-based function, `ggslopegraph()` that produces a similar representation but using ggplot2 graphics:
 
-```{r ggstates, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 12, dev='svglite', cache=TRUE}
+```{r ggstates, fig.show='hide', fig.path='inst/examples/', fig.height = 12, fig.width = 12, dev='svglite'}
 require("ggplot2")
 data(states)
 cols <- `[<-`(rep("black", 37), 7, "red")
