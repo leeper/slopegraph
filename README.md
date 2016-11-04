@@ -55,12 +55,23 @@ As of v0.1.9, there is also a ggplot2-based function, `ggslopegraph()` that prod
 
 ```r
 require("ggplot2")
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```r
 data(states)
 cols <- `[<-`(rep("black", 37), 7, "red")
 ggslopegraph(states, offset.x = 0.06, yrev = TRUE,
   col.lines = cols, col.lab = cols, 
   main = 'Relative Rank of U.S. State Populations, 1790-1870') +
  theme_bw()    
+```
+
+```
+## Warning: Removed 84 rows containing missing values (geom_text).
 ```
 
 ![ggstates](https://rawgithub.com/leeper/slopegraph/master/inst/examples/ggstates-1.svg)

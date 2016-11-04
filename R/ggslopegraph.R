@@ -162,3 +162,5 @@ function(data,
     }
     return(g + theme(legend.position="none") + guides(fill = FALSE))
 }
+
+globalVariables(c("x1", "y1", "x2", "y2", "time", "value"))
