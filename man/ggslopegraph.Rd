@@ -43,7 +43,7 @@ ggslopegraph(data, main = NULL, xlab = "", ylab = "",
 
 \item{col.lab}{A vector of colors for the observation labels. Default is \code{par('fg')}.}
 
-\item{col.num}{A vector of colors for the number values. Default is \code{par('fg')}.}
+\item{col.num}{A vector of colors for the number values. Default is \code{par('fg')}. If \code{NA}, labels are not drawn.}
 
 \item{lwd}{A vector of line width values for the slopegraph lines.}
 
@@ -96,6 +96,12 @@ cls[rownames(states) == "South Carolina"] <- "red"
 cls[rownames(states) == "Tennessee"] <- "blue"
 ggslopegraph(states, main = 'Relative Rank of U.S. State Populations, 1790-1870', 
              yrev = TRUE, col.lines = cls, col.lab = cls)
+
+## ranking of U.S. Bachelors Degrees fields
+data(bachelors)
+bachelors[] <- lapply(bachelors, function(x) rank(x))
+names(bachelors) <- substring(names(bachelors), 3, 7)
+ggslopegraph(bachelors, offset.x = 0, xlim = c(1, 25), col.num = NA, labpos.left = NULL)
 
 }
 \seealso{

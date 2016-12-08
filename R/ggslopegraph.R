@@ -16,7 +16,7 @@
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{0} (none).
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
-#' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
+#' @param col.num A vector of colors for the number values. Default is \code{par('fg')}. If \code{NA}, labels are not drawn.
 #' @param lwd A vector of line width values for the slopegraph lines.
 #' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{NULL} (set automatically based on the data.
 #' @param cex.lab A numeric value indicating the size of row labels. Default is \code{3}. See \code{\link[ggplot2]{geom_text}}.
@@ -57,6 +57,12 @@
 #' cls[rownames(states) == "Tennessee"] <- "blue"
 #' ggslopegraph(states, main = 'Relative Rank of U.S. State Populations, 1790-1870', 
 #'              yrev = TRUE, col.lines = cls, col.lab = cls)
+#'
+#' ## ranking of U.S. Bachelors Degrees fields
+#' data(bachelors)
+#' bachelors[] <- lapply(bachelors, function(x) rank(x))
+#' names(bachelors) <- substring(names(bachelors), 3, 7)
+#' ggslopegraph(bachelors, offset.x = 0, xlim = c(1, 25), col.num = NA, labpos.left = NULL)
 #'
 #' @seealso For a base graphics version, use \code{\link{slopegraph}}.
 #' @import ggplot2
@@ -137,7 +143,7 @@ function(data,
                      y = ifelse(y1 == y2, y1, (y1+((y2-y1)*offset.x))), 
                      xend = x2 - offset.x, 
                      yend = ifelse(y1 == y2, y2, (y2-((y2-y1)*offset.x)))), 
-                 col = col.lines,
+                 col = col.lines, size = lwd,
                  data = to_draw, inherit.aes = FALSE) + guides(fill = FALSE) + 
         # numeric value labels 
         geom_text(aes(x = time, y = bump_overlaps(value), label = sprintf(fmt, value)), color = col.num, 
@@ -154,7 +160,7 @@ function(data,
                            data = NULL, inherit.aes = FALSE, size = cex.lab, hjust = 1L)
     }
     # right-side row labels
-    if (!is.null(labpos.left)) {
+    if (!is.null(labpos.right)) {
         g <- g + geom_text(aes(x = labpos.right, y = bump_overlaps(which_right[,1]), 
                                label = rownames(which_right)), 
                            color = col.lab[!is.na(data[,ncol(data)])],

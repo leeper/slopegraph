@@ -4,7 +4,7 @@
 \name{cancer}
 \alias{cancer}
 \title{Estimates of relative survival rates, by cancer site}
-\format{A dataframe containing twenty-four observations for four years.}
+\format{A data frame containing twenty-four observations for four years.}
 \source{
 Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
 }

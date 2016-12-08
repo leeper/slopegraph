@@ -19,7 +19,7 @@
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{0} (none).
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
-#' @param col.num A vector of colors for the number values. Default is \code{par('fg')}.
+#' @param col.num A vector of colors for the number values. Default is \code{par('fg')}. If \code{NULL}, labels are not drawn.
 #' @param col.xaxt A character string containing the x-axis color. Default is \code{par('fg')}.
 #' @param offset.x A small offset for \code{segments}, to be used when positioning the numeric values. Default is \code{NULL} (set automatically based on the data.
 #' @param offset.lab A small offset for the observation labels. Default is \code{.1}.
@@ -49,6 +49,7 @@
 #' data(states)
 #' slopegraph(states, col.line='black', ylim = c(38,0),
 #'            main = 'Relative Rank of U.S. State Populations, 1790-1870')
+#' 
 #' @references
 #' \url{http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk}
 #' 
@@ -110,9 +111,11 @@ slopegraph <- function(
     
     # draw margins
     if (is.null(mai)) {
-        par(mai=c(1, 0, if(is.null(main)) 0 else 1, 0))
+        op <- par(mai=c(1, 0, if(is.null(main)) 0 else 1, 0))
+        on.exit(par(op))
     } else {
-        par(mai=mai)
+        op <- par(mai=mai)
+        on.exit(par(op))
     }
     plot(NA, xlim=xlim, ylim=ylim, main=main, family=family,
          bty=bty, yaxt=yaxt, xaxt=xaxt, xlab=xlab, ylab=ylab, ...)
@@ -176,9 +179,10 @@ slopegraph <- function(
                      lwd = lwd[i])
     })
     # numeric value labels 
-    text(long[["time"]], bump_overlaps(long[["value"]]), sprintf(fmt, long[["value"]]), 
-         col = col.num, cex = cex.num, font = font.num, family = family)
-    
+    if (!is.null(col.num)) {
+        text(long[["time"]], bump_overlaps(long[["value"]]), sprintf(fmt, long[["value"]]), 
+             col = col.num, cex = cex.num, font = font.num, family = family)
+    }
     # optional expression
     if (!is.null(panel.last)) {
         eval(panel.last)

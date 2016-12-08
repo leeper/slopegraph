@@ -1,3 +1,8 @@
+# slopegraph 0.1.13
+
+* Added a new dataset, "bachelors", containing data on US Bachelors degrees conferred 1974-2013.
+* Fixed a few small bugs in handling of colors and line widths in `slopegraph()` and `ggslopegraph()`.
+
 # slopegraph 0.1.12
 
 * The order of some formal arguments in both `slopegraph()` and `ggslopegraph()` has been changed.

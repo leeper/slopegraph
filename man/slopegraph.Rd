@@ -51,7 +51,7 @@ slopegraph(data, main = NULL, xlab = "", ylab = "",
 
 \item{col.lab}{A vector of colors for the observation labels. Default is \code{par('fg')}.}
 
-\item{col.num}{A vector of colors for the number values. Default is \code{par('fg')}.}
+\item{col.num}{A vector of colors for the number values. Default is \code{par('fg')}. If \code{NULL}, labels are not drawn.}
 
 \item{col.xaxt}{A character string containing the x-axis color. Default is \code{par('fg')}.}
 
@@ -100,6 +100,7 @@ slopegraph(gdp, col.line='gray', xlabels = c('1970','1979'),
 data(states)
 slopegraph(states, col.line='black', ylim = c(38,0),
            main = 'Relative Rank of U.S. State Populations, 1790-1870')
+
 }
 \author{
 Thomas J. Leeper

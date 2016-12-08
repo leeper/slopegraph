@@ -4,7 +4,7 @@
 \name{gdp}
 \alias{gdp}
 \title{Current receipts of government as a percentage of Gross Domestic Product, 1970 and 1979}
-\format{A dataframe containing fifteen country observations for two years.}
+\format{A data frame containing fifteen country observations for two years.}
 \source{
 Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
 }
