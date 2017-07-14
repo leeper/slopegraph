@@ -125,7 +125,7 @@ slopegraph <- function(
     }
     
     # expand formatting arguments
-        if (length(col.lab) == 1L) {
+    if (length(col.lab) == 1L) {
         col.lab <- rep(col.lab, length.out = nrow(data))
     }
     if (length(col.num) == 1L) {
