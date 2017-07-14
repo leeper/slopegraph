@@ -1,3 +1,7 @@
+# slopegraph 0.1.14
+
+* Remove call to `strwidth()` in `ggslopegraph()`. (#17, h/t Boris Shor)
+
 # slopegraph 0.1.13
 
 * Added a new dataset, "bachelors", containing data on US Bachelors degrees conferred 1974-2013.

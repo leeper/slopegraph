@@ -135,7 +135,7 @@ function(data,
         }
     
     if (is.null(offset.x)) {
-        offset.x <- (max(strwidth(sprintf(fmt, long[["value"]]))) + 0.02)/2L
+        offset.x <- (max(nchar(sprintf(fmt, long[["value"]]))) + 0.02)/2L
     }
     
     # segments
