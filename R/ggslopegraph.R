@@ -10,6 +10,8 @@
 #' @param ylim A two-element numeric vector specifying the y-axis limits.
 #' @param labpos.left A numeric value specifying the x-axis position of the left-side observation labels. If \code{NULL}, labels are omitted.
 #' @param labpos.right A numeric value specifying the x-axis position of the right-side observation labels. If \code{NULL}, labels are omitted.
+#' @param leftlabels The parameter for the rightside observation labels. Default is using row indexes.
+#' @param rightlabels The parameter for the rightside observation labels. Default is using row indexes.
 #' @param xbreaks Passed to \code{breaks} in \code{\link[ggplot2]{scale_x_continuous}}.
 #' @param ybreaks Passed to \code{breaks} in \code{\link[ggplot2]{scale_y_continuous}}.
 #' @param yrev A logical indicating whether to use \code{\link[ggplot2]{scale_y_reverse}} rather than the default \code{\link[ggplot2]{scale_y_continuous}}.
@@ -78,6 +80,8 @@ function(data,
          ylim = range(data, na.rm = TRUE), 
          labpos.left = 0.8,
          labpos.right = ncol(data) + 0.2,
+         leftlabels = NULL,
+         rightlabels = NULL,
          xbreaks = seq_along(xlabels),
          ybreaks = NULL,
          yrev = ylim[1] > ylim[2], 
@@ -150,8 +154,16 @@ function(data,
                   data = long, inherit.aes = FALSE,
                   size = cex.num, hjust = 0.5)
     
-    leftlabs <- data[!is.na(data[,1]), 1, drop = FALSE]
-    which_right <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
+    if (is.null(leftlabels)) {
+        leftlabs <- data[!is.na(data[,1]), 1, drop = FALSE]
+    } else {
+        leftlabs <- leftlabels
+    }
+    if (is.null(rightlabels)) {
+        which_right <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE] 
+    } else {
+        which_right <- rightlabels
+    }
     # left-side row labels
     if (!is.null(labpos.left)) {
         g <- g + geom_text(aes(x = labpos.left, y = bump_overlaps(leftlabs[,1]), 

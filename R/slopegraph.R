@@ -16,6 +16,8 @@
 #' @param panel.last An expression to add something after adding the plot content. Default is \code{NULL}.
 #' @param labpos.left The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.
 #' @param labpos.right The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.
+#' @param leftlabels The parameter for the rightside observation labels. Default is using row indexes.
+#' @param rightlabels The parameter for the rightside observation labels. Default is using row indexes.
 #' @param decimals The number of decimals to display for values in the plot. Default is \code{0} (none).
 #' @param col.lines A vector of colors for the slopegraph lines. Default is \code{par('fg')}.
 #' @param col.lab A vector of colors for the observation labels. Default is \code{par('fg')}.
@@ -79,6 +81,8 @@ slopegraph <- function(
     panel.last = NULL,
     labpos.left = 2,
     labpos.right = 4,
+    leftlabels = NULL,
+    rightlabels = NULL,
     decimals = 0L,
     col.lines = par('fg'),
     col.lab = col.lines,
@@ -147,14 +151,22 @@ slopegraph <- function(
     
     # left-side labels
     if (!is.null(labpos.left)) {
-        leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
+        if (!is.null(leftlabels)) {
+            leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
+        } else {
+            leftlabs <- leftlabels
+        }
         text(1-offset.lab, bump_overlaps(leftlabs[,1], decimals = decimals),
              col=col.lab[which(!is.na(data[,1]))], rownames(leftlabs), pos=labpos.left, 
              cex=cex.lab, font=font.lab, family=family)
     }
     # right-side labels
     if (!is.null(labpos.right)) {
-        rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
+        if (!is.null(rightlabels)) {
+            rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
+        } else {
+            rightlabs <- rightlabels
+        }
         text(ncol(data)+offset.lab, bump_overlaps(rightlabs[,1], decimals = decimals), 
              col=col.lab[which(!is.na(data[,ncol(data)]))], rownames(rightlabs), pos=labpos.right, 
              cex=cex.lab, font=font.lab, family=family)
