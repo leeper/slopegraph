@@ -7,10 +7,11 @@
 ggslopegraph(data, main = NULL, xlab = "", ylab = "",
   xlabels = names(data), xlim = c(-1L, ncol(data) + 2L),
   ylim = range(data, na.rm = TRUE), labpos.left = 0.8,
-  labpos.right = ncol(data) + 0.2, xbreaks = seq_along(xlabels),
-  ybreaks = NULL, yrev = ylim[1] > ylim[2], decimals = 0L,
-  col.lines = "black", col.lab = "black", col.num = "black", lwd = 0.5,
-  offset.x = NULL, cex.lab = 3L, cex.num = 3L, na.span = FALSE)
+  labpos.right = ncol(data) + 0.2, leftlabels = NULL, rightlabels = NULL,
+  xbreaks = seq_along(xlabels), ybreaks = NULL, yrev = ylim[1] > ylim[2],
+  decimals = 0L, col.lines = "black", col.lab = "black",
+  col.num = "black", lwd = 0.5, offset.x = NULL, cex.lab = 3L,
+  cex.num = 3L, na.span = FALSE)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -30,6 +31,10 @@ ggslopegraph(data, main = NULL, xlab = "", ylab = "",
 \item{labpos.left}{A numeric value specifying the x-axis position of the left-side observation labels. If \code{NULL}, labels are omitted.}
 
 \item{labpos.right}{A numeric value specifying the x-axis position of the right-side observation labels. If \code{NULL}, labels are omitted.}
+
+\item{leftlabels}{The parameter for the rightside observation labels. Default is using row indexes.}
+
+\item{rightlabels}{The parameter for the rightside observation labels. Default is using row indexes.}
 
 \item{xbreaks}{Passed to \code{breaks} in \code{\link[ggplot2]{scale_x_continuous}}.}
 
@@ -107,4 +112,3 @@ ggslopegraph(bachelors, offset.x = 0, xlim = c(1, 25), col.num = NA, labpos.left
 \seealso{
 For a base graphics version, use \code{\link{slopegraph}}.
 }
-

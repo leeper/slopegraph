@@ -23,4 +23,3 @@ Convert an observation-by-period data frame into a data frame of line segment co
 data(gdp)
 head(segmentize(gdp))
 }
-

@@ -10,11 +10,12 @@ slopegraph(data, main = NULL, xlab = "", ylab = "",
   ylim = c(min(data, na.rm = TRUE) - diff(range(data, na.rm = TRUE))/100,
   max(data, na.rm = TRUE) + diff(range(data, na.rm = TRUE))/100), bty = "n",
   xaxt = "n", yaxt = "n", panel.first = NULL, panel.last = NULL,
-  labpos.left = 2, labpos.right = 4, decimals = 0L,
-  col.lines = par("fg"), col.lab = col.lines, col.num = col.lines,
-  col.xaxt = par("fg"), offset.x = NULL, offset.lab = 0.1, cex.lab = 1,
-  cex.num = 1, family = "serif", font.lab = 1, font.num = 1,
-  lty = par("lty"), lwd = par("lwd"), mai = NULL, na.span = FALSE, ...)
+  labpos.left = 2, labpos.right = 4, leftlabels = NULL,
+  rightlabels = NULL, decimals = 0L, col.lines = par("fg"),
+  col.lab = col.lines, col.num = col.lines, col.xaxt = par("fg"),
+  offset.x = NULL, offset.lab = 0.1, cex.lab = 1, cex.num = 1,
+  family = "serif", font.lab = 1, font.num = 1, lty = par("lty"),
+  lwd = par("lwd"), mai = NULL, na.span = FALSE, ...)
 }
 \arguments{
 \item{data}{An observation-by-period data.frame, with at least two columns. Missing values are allowed.}
@@ -44,6 +45,10 @@ slopegraph(data, main = NULL, xlab = "", ylab = "",
 \item{labpos.left}{The \code{pos} (positioning) parameter for the leftside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.}
 
 \item{labpos.right}{The \code{pos} (positioning) parameter for the rightside observation labels. Default is \code{2}. See \code{\link[graphics]{par}}. If \code{NULL}, labels are not drawn.}
+
+\item{leftlabels}{The parameter for the rightside observation labels. Default is using row indexes.}
+
+\item{rightlabels}{The parameter for the rightside observation labels. Default is using row indexes.}
 
 \item{decimals}{The number of decimals to display for values in the plot. Default is \code{0} (none).}
 
@@ -102,9 +107,6 @@ slopegraph(states, col.line='black', ylim = c(38,0),
            main = 'Relative Rank of U.S. State Populations, 1790-1870')
 
 }
-\author{
-Thomas J. Leeper
-}
 \references{
 \url{http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk}
 
@@ -116,4 +118,6 @@ Tufte, Edward. \emph{Beautiful Evidence}. Graphics Press.
 \code{\link{cancer}}, \code{\link{gdp}}, \code{\link{states}}
 For a ggplot2 version, use \code{\link{ggslopegraph}}.
 }
-
+\author{
+Thomas J. Leeper
+}

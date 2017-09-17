@@ -15,4 +15,3 @@ gdp
 Current receipts of fifteen national governments as a percentage of gross domestic product
 }
 \keyword{datasets}
-

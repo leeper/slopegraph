@@ -15,4 +15,3 @@ states
 The relative rank of U.S. state populations for nine decades (1790-1870).
 }
 \keyword{datasets}
-

@@ -15,4 +15,3 @@ cancer
 Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
 }
 \keyword{datasets}
-
