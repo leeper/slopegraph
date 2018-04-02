@@ -89,9 +89,9 @@ ggslopegraph(states, offset.x = 0.06, yrev = TRUE,
 To install the latest development version of **slopegraph** from GitHub:
 
 ```R
-if (!require("ghit")) {
-    install.packages("ghit")
+if (!require("remotes")) {
+    install.packages("remotes")
 }
-ghit::install_github("leeper/slopegraph")
+remotes::install_github("leeper/slopegraph")
 ```
 
