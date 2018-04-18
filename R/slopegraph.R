@@ -151,7 +151,7 @@ slopegraph <- function(
     
     # left-side labels
     if (!is.null(labpos.left)) {
-        if (!is.null(leftlabels)) {
+        if (is.null(leftlabels)) {
             leftlabs <- data[!is.na(data[,1]),1, drop = FALSE]
         } else {
             leftlabs <- leftlabels
@@ -162,7 +162,7 @@ slopegraph <- function(
     }
     # right-side labels
     if (!is.null(labpos.right)) {
-        if (!is.null(rightlabels)) {
+        if (is.null(rightlabels)) {
             rightlabs <- data[!is.na(data[,ncol(data)]), ncol(data), drop = FALSE]
         } else {
             rightlabs <- rightlabels
