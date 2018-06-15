@@ -1,3 +1,4 @@
+#' @rdname cancer
 #' @title Estimates of relative survival rates, by cancer site
 #' @aliases cancer
 #' @description Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
@@ -8,6 +9,7 @@
 #' @keywords datasets
 "cancer"
 
+#' @rdname cancer2
 #' @title Estimates of relative survival rates, by cancer site (other)
 #' @aliases cancer2
 #' @description Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
