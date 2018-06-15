@@ -1,3 +1,4 @@
+#' @rdname cancer
 #' @title Estimates of relative survival rates, by cancer site
 #' @aliases cancer
 #' @description Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
@@ -5,8 +6,21 @@
 #' A data frame containing twenty-four observations for four years.
 #' 
 #' @source Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
+#' @seealso For data in \dQuote{long} format, see \code{\link{cancer2}}
 #' @keywords datasets
 "cancer"
+
+#' @rdname cancer2
+#' @title Estimates of relative survival rates, by cancer site
+#' @aliases cancer
+#' @description Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
+#' @format
+#' A data frame containing long-formatted data from \code{\link{cancer}}, yielding 96 observations for variables \dQuote{Type}, \dQuote{Year}, and \dQuote{Survival} (surival rate).
+#' 
+#' @source Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
+#' @seealso For data in \dQuote{wide} format, see \code{\link{cancer2}}
+#' @keywords datasets
+"cancer2"
 
 #' @title Current receipts of government as a percentage of Gross Domestic Product, 1970 and 1979
 #' @aliases gdp

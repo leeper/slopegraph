@@ -22,14 +22,17 @@
 #' @author Chuck Powell
 #' @examples
 #'
-#' ggslopegraph2(newcancer, Year, Survival, Type)
-#' ggslopegraph2(newcancer, Year, Survival, Type, title = "Estimates of Percent Survival Rates")
-#' ggslopegraph2(newcancer, Year, Survival, Type, 
-#'                 title = "Estimates of Percent Survival Rates", 
-#'                 linecolor = "black", 
-#'                 linethickness = 1, 
-#'                 subtitle = NULL, 
-#'                 caption = NULL)
+#' # basic graph
+#' ggslopegraph2(cancer2, Year, Survival, Type,
+#'               title = "Estimates of Percent Survival Rates")
+#' 
+#' # with further customization
+#' ggslopegraph2(cancer2, Year, Survival, Type, 
+#'               title = "Estimates of Percent Survival Rates", 
+#'               linecolor = "black", 
+#'               linethickness = 1, 
+#'               subtitle = NULL, 
+#'               caption = NULL)
 #'
 #' @seealso For a observation-by-time data frame interface, see \code{\link{ggslopegraph}}.
 #' @import ggplot2

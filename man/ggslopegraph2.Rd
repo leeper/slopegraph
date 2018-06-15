@@ -48,14 +48,17 @@ Takes a dataframe as input, with three named columns being used to plot. Makes t
 }
 \examples{
 
-ggslopegraph2(newcancer, Year, Survival, Type)
-ggslopegraph2(newcancer, Year, Survival, Type, title = "Estimates of Percent Survival Rates")
-ggslopegraph2(newcancer, Year, Survival, Type, 
-                title = "Estimates of Percent Survival Rates", 
-                linecolor = "black", 
-                linethickness = 1, 
-                subtitle = NULL, 
-                caption = NULL)
+# basic graph
+ggslopegraph2(cancer2, Year, Survival, Type,
+              title = "Estimates of Percent Survival Rates")
+
+# with further customization
+ggslopegraph2(cancer2, Year, Survival, Type, 
+              title = "Estimates of Percent Survival Rates", 
+              linecolor = "black", 
+              linethickness = 1, 
+              subtitle = NULL, 
+              caption = NULL)
 
 }
 \seealso{
