@@ -1,3 +1,4 @@
+#' formatting changes as well as major changes to linecolor
 #' @title Plot a Slopegraph a la Tufte using dplyr and ggplot2
 #'
 #' @description Creates a "slopegraph" as conceptualized by Edward Tufte. Slopegraphs are minimalist
