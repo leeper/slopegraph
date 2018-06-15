@@ -1,3 +1,4 @@
+#' Modified by Chuck to correct broken alias as well as upload correct cancer2.RData file
 #' @rdname cancer
 #' @title Estimates of relative survival rates, by cancer site
 #' @aliases cancer
