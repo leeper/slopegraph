@@ -15,6 +15,6 @@ cancer2
 Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
 }
 \seealso{
-For data in \dQuote{wide} format, see \code{\link{cancer2}}
+For data in \dQuote{wide} format, see \code{\link{cancer}}
 }
 \keyword{datasets}

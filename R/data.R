@@ -16,7 +16,7 @@
 #' A data frame containing long-formatted data from \code{\link{cancer}}, yielding 96 observations for variables \dQuote{Type}, \dQuote{Year}, and \dQuote{Survival} (surival rate).
 #' 
 #' @source Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
-#' @seealso For data in \dQuote{wide} format, see \code{\link{cancer2}}
+#' @seealso For data in \dQuote{wide} format, see \code{\link{cancer}}
 #' @keywords datasets
 "cancer2"
 
