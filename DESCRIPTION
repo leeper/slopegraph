@@ -1,11 +1,12 @@
 Package: slopegraph
-Version: 0.1.14
+Version: 0.1.15
 Title: Edward Tufte-Inspired Slopegraphs
-Date: 2017-07-14
+Date: 2018-06-15
 Authors@R: c(person("Thomas J.", "Leeper",
                     role = c("aut", "cre"), 
                     email = "thosjleeper@gmail.com",
-                    comment = c(ORCID = "0000-0003-4097-6326"))
+                    comment = c(ORCID = "0000-0003-4097-6326")),
+             person("Chuck", "Powell", role = "ctb")
              )
 Description: Convert a data frame (containing a panel dataset, where rows
     are observations and columns are time periods) into an Edward Tufte-inspired
@@ -14,10 +15,12 @@ Imports:
     stats,
     utils,
     graphics,
-    ggplot2
+    dplyr,
+    ggplot2,
+    ggrepel
 Suggests:
     svglite
 License: GPL-2
 URL: https://github.com/leeper/slopegraph
 BugReports: https://github.com/leeper/slopegraph/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

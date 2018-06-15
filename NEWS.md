@@ -1,3 +1,7 @@
+# slopegraph 0.1.15
+
+* Add `ggslopegraph2()` function that provides more traditional ggplot2 interface to building a slopegraph. (#26, h/t Chuck Powell)
+
 # slopegraph 0.1.14
 
 * Remove call to `strwidth()` in `ggslopegraph()`. (#17, h/t Boris Shor)

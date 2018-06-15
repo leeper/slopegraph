@@ -66,7 +66,7 @@
 #' names(bachelors) <- substring(names(bachelors), 3, 7)
 #' ggslopegraph(bachelors, offset.x = 0, xlim = c(1, 25), col.num = NA, labpos.left = NULL)
 #'
-#' @seealso For a base graphics version, use \code{\link{slopegraph}}.
+#' @seealso For a base graphics version, use \code{\link{slopegraph}}. For a ggplot2 interface using more traditional ggplot2 semantics, see \code{\link{ggslopegraph2}}.
 #' @import ggplot2
 #' @importFrom stats reshape
 #' @export

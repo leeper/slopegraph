@@ -110,5 +110,5 @@ ggslopegraph(bachelors, offset.x = 0, xlim = c(1, 25), col.num = NA, labpos.left
 
 }
 \seealso{
-For a base graphics version, use \code{\link{slopegraph}}.
+For a base graphics version, use \code{\link{slopegraph}}. For a ggplot2 interface using more traditional ggplot2 semantics, see \code{\link{ggslopegraph2}}.
 }
