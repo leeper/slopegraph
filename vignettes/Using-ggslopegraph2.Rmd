@@ -1,0 +1,184 @@
+---
+title: "Using ggslopegraph2"
+author: "Chuck Powell"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using ggslopegraph2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+This function is designed to automate the process of producing a [Tufte style slopegraph](https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk) using `ggplot2`. 
+
+To make it a little easier to get started with the function I have taken the liberty of providing the cancer data in a format where it is immediately usable.  Please see `?cancer2`.
+
+## Installation and setup
+
+Long term I'll try and ensure the version on `CRAN` is well maintained but for now you're better served by grabbing the current version from GITHUB.
+
+```{r setup}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+# Install the development version from GitHub
+# install.packages("devtools")
+# devtools::install_github("leeper/slopegraph")
+library(slopegraph)
+```
+
+## Simple examples
+
+If you're unfamiliar with slopegraphs or just want to see what the display is all about the dataset I've provided can get you started in one line
+
+```{r ggslope1, fig.height=10, fig.width=7}
+ggslopegraph2(cancer2, Year, Survival, Type)
+```
+
+Optionally you can provide important label information through `title`, `subtitle`, and `caption` arguments.  You can suppress them all together by setting them `= NULL`. Let's provide a title and sub-title but skip the caption.
+
+```{r ggslope2, fig.height=11, fig.width=8.5}
+ggslopegraph2(dataframe = cancer2,
+                times = Year,
+                measurement = Survival,
+                grouping = Type,
+                title = "Estimates of Percent Survival Rates",
+                subtitle = "Based on: Edward Tufte, Beautiful Evidence, 174, 176.",
+                caption = NULL
+                )
+```
+
+## How it all works
+
+It's all well and good to get the little demo to work, but it might be useful for you to understand how to extend it out to data you're interested in.
+
+You'll need a dataframe with at least three columns.  The function will do some basic error checking and complain if you don't meet the essential requirements.
+
+1.  `times` is the column in the dataframe that corresponds to the x axis of the plot and is normally a set of moments in time expressed as either characters, factors or ordered factors (in our case `cancer2$Year`.  If it is truly time series data (especially with a lot of dates you're much better off using an R function purpose built for that). In `cancer2` it's an ordered factor, mainly because if we fed the information in as character the sort order would be `Year 10, Year 15, Year 20, Year 5` which is very suboptimal. A command like `cancer2$Year <- factor(cancer2$Year,levels = c("Year.5", "Year.10", "Year.15", "Year.20"), labels = c("5 Year","10 Year","15 Year","20 Year"), ordered = TRUE)` would be the way to force things they way you want them.
+2.  `measurement` is the column that has the actual numbers you want to display along the y axis. Frequently that's a percentage but it could just as easily be any number.  Watch out for scaling issues here you'll want to ensure that its not disparate. In our case `cancer2$Survival` is the percentage of patients surviving at that point in time, so the maximum scale is 0 to 100.
+3.  `grouping` is what controls how many individual lines are portrayed. Every attempt is made to color them and label them in ways that lead to clarity but eventually you can have too many. In our example case the column is `cancer2$Type` for the type of cancer or location.
+
+## Another quick example
+
+This is loosely based off a blog post from [Murtaza Haider titled “Edward Tufte’s Slopegraphs and political fortunes in Ontario”](https://www.r-bloggers.com/author/murtaza-haider/) that led to my developing this function [chronicled here](https://ibecav.github.io/slopegraph/).
+
+In this case we're going to plot the percent of the vote captured by some Canadian political parties. 
+
+> The data is loosely based on real data but is not actually accurate. 
+
+`moredata$Date` is the hypothetical polling date as a factor (in this case `character` would work equally well). `moredata$Party` is the various political parties and `moredata$Pct` is the percentage of the vote they are estimated to have.
+
+```{r ggslope3, fig.height=5, fig.width=5}
+moredata <- structure(list(Date = structure(c(1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L), 
+                                            .Label = c("11-May-18", "18-May-18", "25-May-18"), 
+                                            class = "factor"), 
+                           Party = structure(c(5L, 3L, 2L, 1L, 4L, 5L, 3L, 2L, 1L, 4L, 5L, 3L, 2L, 1L, 4L), 
+                                             .Label = c("Green", "Liberal", "NDP", "Others", "PC"), 
+                                             class = "factor"), 
+                           Pct = c(42.3, 28.4, 22.1, 5.4, 1.8, 41.9, 29.3, 22.3, 5, 1.4, 41.9, 26.8, 26.8, 5, 1.4)), 
+                      class = "data.frame", 
+                      row.names = c(NA, -15L))
+#tail(moredata)
+ggslopegraph2(moredata, 
+              Date, 
+              Pct, 
+              Party, 
+              title = "Notional data", 
+              subtitle = NULL, 
+              caption = NULL)
+```
+
+There are a plethora of formatting options.  See `?ggslopegraph2` for all of them.  Here's a few.
+
+```{r ggslope4, fig.height=5, fig.width=5}
+ggslopegraph2(moredata, Date, Pct, Party, 
+                title = "Notional data", 
+                subtitle = "none", 
+                caption = "imaginary",
+                linecolor = "gray", 
+                linethickness = .5,
+                ytextsize = 4
+                )
+```
+
+The most complex is `linecolor` where you can do the following if you want to highlight the difference between the Liberal and NDP parties while making the other three less prominent...
+
+```{r ggslope5, fig.height=5, fig.width=5}
+ggslopegraph2(moredata, 
+              Date, 
+              Pct, 
+              Party, 
+              title = "Notional data", 
+              subtitle = "none", 
+              caption = "imaginary",
+              linecolor = c("Green" = "gray", "Liberal" = "green", "NDP" = "red", "Others" = "gray", "PC" = "gray"), 
+              linethickness = .5,
+              ytextsize = 4
+                )
+```
+
+
+## Slopegraph Best Practices
+
+1.  Scaling -- this function plots to scale on an actual scale.
+2.  If the datapoints or labels are bunching up, expand the vertical size of the plot as necessary.
+3.  Names of the items on both the left-hand and right-hand axes are aligned, to make vertical scanning of the items’ names easier.
+4.  Many suggest using a thin, light gray line to connect the data. A too-heavy line is unnecessary and will make the chart harder to read.
+4.  When a chart features many slope intersections, judicious use of color can avoid what Ben Fry describes as the "pile of sticks" phenomenon (Visualizing Data, 121).
+5.  A table (with more statistical detail) might be a good complement to use alongside the slopegraph. As Tufte notes: “The data table and the slopegraph are colleagues in explanation not competitors. One display can serve some but not all functions.”
+
+## One last set of data
+
+Also from Tufte, this is data about a select group of countrys' Gross Domestic Product (GDP).  I'll use it to show you a tricky way to highlight certain countries without making a named vector with `linecolor = c(rep("gray",3), "red", rep("gray",3), "red", rep("gray",10))` the excess vector entries are silently dropped...  The bottom line is that `linecolor` is simply a character vector that you can fill any way you choose.
+
+```{r ggslope6, fig.height=12, fig.width=6}
+newgdp <- structure(list(Year = c("Year1970", "Year1979", "Year1970", "Year1979",  "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979",  "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979", "Year1970", "Year1979"), 
+               Country = structure(c(1L, 1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L, 6L, 6L, 7L, 7L, 8L, 8L, 9L, 9L, 10L, 10L, 11L, 11L, 12L, 12L, 13L, 13L, 14L, 14L, 15L, 15L), 
+              .Label = c("Sweden", "Netherlands", "Norway", "Britain", "France", "Germany", "Belgium", "Canada", "Finland", "Italy", "US", "Greece", "Switzerland", "Spain", "Japan"), class = "factor"), 
+               GDP = c(46.9, 57.4, 44, 55.8, 43.5, 52.2, 40.7, 39, 39, 43.4, 37.5, 42.9, 35.2, 43.2, 35.2, 35.8, 34.9, 38.2, 30.4, 35.7, 30.3, 32.5, 26.8, 30.6, 26.5, 33.2, 22.5, 27.1, 20.7, 26.6)), 
+              row.names = c(NA, -30L), class = "data.frame")
+
+ggslopegraph2(newgdp, 
+                Year, 
+                GDP, 
+                Country, 
+                title = "Gross GDP", 
+                subtitle = NULL, 
+                caption = NULL,
+                linethickness = .5,
+                ytextsize = 4,
+                linecolor = c(rep("gray",3), "red", rep("gray",3), "red", rep("gray",10))
+                )
+```
+
+Finally, let me take a moment about crowding and labeling.  I've made every effort to try and deconflict the labels on the left and right axis (in this example the `Country`) and that should work automatically as you resize your plot dimensions. ** pro tip - if you use `RStudio` you can press the `zoom` icon and then use the rescaling of the window to see best choices **. 
+
+But the numbers (`GDP`) are a different matter and there's no easy way to ensure separation in a case like this data.  There's a decent total spread from 57.4 to 20.7 and some really close measurements like France, Belgium, and Germany on the right side. My suggestion is in a case like this one you create a new column in your dataframe with two significant places. So specifically it would be `newgdp$rGDP <- signif(newgdp$GDP, 2)`.  In my testing, at least, I've found this helps without creating inaccuracy and not causing you to try and "stretch" vertically to disambiguate the numbers.  This time I'll also use `linecolor` to highlight how Canada, Finland and Belgium fare from 1970 to 1979.
+
+```{r ggslope7, fig.height=7, fig.width=6}
+newgdp$rGDP <- signif(newgdp$GDP, 2)
+ggslopegraph2(newgdp, 
+                Year, 
+                rGDP, 
+                Country, 
+                title = "Gross GDP", 
+                subtitle = NULL, 
+                caption = NULL,
+                linethickness = .5,
+                ytextsize = 4,
+                linecolor = c(rep("gray",6), rep("green",3), rep("gray",10))
+                )
+```
+
+
+
+
+### Leaving Feedback
+If you like slopegraph, please consider Filing a GitHub issue by [leaving feedback here](https://github.com/leeper/slopegraph/issues), or by contacting me at ibecav at gmail.com by email.
+
+
+### License
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This vignette is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))
