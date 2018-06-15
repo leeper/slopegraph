@@ -14,4 +14,7 @@ cancer
 \description{
 Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
 }
+\details{
+Modified by Chuck to correct broken alias as well as upload correct cancer2.RData file
+}
 \keyword{datasets}

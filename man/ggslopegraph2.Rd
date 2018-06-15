@@ -67,6 +67,9 @@ the actual numeric values, and the changes and directionality of the data over t
 Takes a dataframe as input, with three named columns being used to draw the plot.
 Makes the required adjustments to the ggplot2 parameters and returns the plot.
 }
+\details{
+formatting changes as well as major changes to linecolor
+}
 \examples{
 
 # basic graph
