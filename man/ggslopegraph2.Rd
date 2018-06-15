@@ -80,6 +80,7 @@ ggslopegraph2(cancer2, Year, Survival, Type,
               linethickness = 1, 
               subtitle = NULL, 
               caption = NULL)
+              
 # demonstrating linecolor recyclng
 ggslopegraph2(cancer2, Year, Survival, Type, 
               title = "Estimates of Percent Survival Rates", 
