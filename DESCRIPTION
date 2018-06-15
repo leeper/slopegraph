@@ -20,6 +20,7 @@ Imports:
     dplyr
 Suggests:
     svglite
+LazyData: true
 License: GPL-2
 URL: https://github.com/leeper/slopegraph
 BugReports: https://github.com/leeper/slopegraph/issues
