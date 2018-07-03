@@ -6,9 +6,10 @@ Authors@R: c(person("Thomas J.", "Leeper",
                     role = c("aut", "cre"), 
                     email = "thosjleeper@gmail.com",
                     comment = c(ORCID = "0000-0003-4097-6326")),
-                    person("Chuck", "Powell", 
-                    role = "ctb",
-                    email = "ibecav@gmail.com")
+             person("Chuck", "Powell", 
+                    role = c("ctb", "aut"),
+                    email = "ibecav@gmail.com",
+                    comment = c(ORCID = "0000-0002-3606-2188"))
              )
 Description: Convert a data frame (containing a panel dataset, where rows
     are observations and columns are time periods) into an Edward Tufte-inspired
