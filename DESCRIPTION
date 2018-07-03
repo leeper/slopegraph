@@ -5,7 +5,10 @@ Date: 2017-07-14
 Authors@R: c(person("Thomas J.", "Leeper",
                     role = c("aut", "cre"), 
                     email = "thosjleeper@gmail.com",
-                    comment = c(ORCID = "0000-0003-4097-6326"))
+                    comment = c(ORCID = "0000-0003-4097-6326")),
+                    person("Chuck", "Powell", 
+                    role = "ctb",
+                    email = "ibecav@gmail.com")
              )
 Description: Convert a data frame (containing a panel dataset, where rows
     are observations and columns are time periods) into an Edward Tufte-inspired
@@ -14,10 +17,17 @@ Imports:
     stats,
     utils,
     graphics,
-    ggplot2
+    ggplot2,
+    ggrepel,
+    methods,
+    dplyr
 Suggests:
-    svglite
+    svglite,
+    knitr,
+    rmarkdown
+LazyData: true
 License: GPL-2
 URL: https://github.com/leeper/slopegraph
 BugReports: https://github.com/leeper/slopegraph/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr

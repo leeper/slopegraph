@@ -1,3 +1,5 @@
+#' Modified by Chuck to correct broken alias as well as upload correct cancer2.RData file
+#' @rdname cancer
 #' @title Estimates of relative survival rates, by cancer site
 #' @aliases cancer
 #' @description Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
@@ -7,6 +9,17 @@
 #' @source Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
 #' @keywords datasets
 "cancer"
+
+#' @rdname cancer2
+#' @title Estimates of relative survival rates, by cancer site (long)
+#' @aliases cancer2
+#' @description Cancer survival rates for 5, 10, 15, and 20 years for twenty-four cancer sites.
+#' @format
+#' A data frame containing twenty-four observations for four years.
+#' 
+#' @source Edward Tufte. \emph{Beautiful Evidence}. Graphics Press, 174-176.
+#' @keywords datasets
+"cancer2"
 
 #' @title Current receipts of government as a percentage of Gross Domestic Product, 1970 and 1979
 #' @aliases gdp
