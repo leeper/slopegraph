@@ -1,3 +1,6 @@
 README.html
 .Rproj.user
 ibecavslopegraph.Rproj
+.DS_Store
+.RData
+.Rhistory
