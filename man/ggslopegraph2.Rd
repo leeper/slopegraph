@@ -7,7 +7,9 @@
 ggslopegraph2(dataframe, times, measurement, grouping, title = "",
   subtitle = "", caption = "", xtextsize = 12, ytextsize = 3,
   titletextsize = 14, subtitletextsize = 10, captiontextsize = 8,
-  linethickness = 1, linecolor = "ByGroup", datatextsize = 2.5)
+  linethickness = 1, linecolor = "ByGroup", datatextsize = 2.5,
+  datatextfamily = "sans", datatextface = "plain",
+  labeltextfamily = "sans", labeltextface = "bold")
 }
 \arguments{
 \item{dataframe}{a dataframe or an object that can be coerced to a dataframe. 
@@ -56,6 +58,14 @@ of a vector \bold{should} equal the number of levels in \code{Grouping}. If the
 user does not provide enough colors they will be recycled.}
 
 \item{datatextsize}{Optionally the font size of the plotted data points. datatextsize = 2.5 is the default must be a numeric.}
+
+\item{datatextfamily}{Optionally the font family of the plotted data points. datatextfamily = "sans" is the default.}
+
+\item{datatextface}{Optionally the font face of the plotted data points. datatextface = "plain" is the default.}
+
+\item{labeltextfamily}{Optionally the font family of the grouping labels. labeltextfamily = "sans" is the default.}
+
+\item{labeltextface}{Optionally the font face of the grouping labels. labeltextface = "bold" is the default.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object.
