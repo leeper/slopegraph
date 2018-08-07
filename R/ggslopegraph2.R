@@ -39,6 +39,10 @@
 #' "Others" = "gray", "PC" = "blue"). Any input must be character, and the length 
 #' of a vector \bold{should} equal the number of levels in \code{Grouping}. If the 
 #' user does not provide enough colors they will be recycled.
+#' @param datatextfamily Optionally the font family of the plotted data points. datatextfamily = "sans" is the default.
+#' @param datatextface Optionally the font face of the plotted data points. datatextface = "plain" is the default.
+#' @param labeltextfamily Optionally the font family of the grouping labels. labeltextfamily = "sans" is the default.
+#' @param labeltextface Optionally the font face of the grouping labels. labeltextface = "bold" is the default.
 #' 
 #' @return A \code{\link[ggplot2]{ggplot}} object.
 #' @author Chuck Powell
@@ -87,7 +91,11 @@ ggslopegraph2 <-
     captiontextsize = 8,
     linethickness = 1,
     linecolor = "ByGroup",
-    datatextsize = 2.5
+    datatextsize = 2.5,
+    datatextfamily = "sans",
+    datatextface = "plain",
+    labeltextfamily = "sans",
+    labeltextface = "bold"
   ) {
     # Since ggplot2 objects are just regular R objects, put them in a list
     my_special <- list(
@@ -173,18 +181,22 @@ ggslopegraph2 <-
       geom_text_repel(data = dataframe %>% filter(!! times == min(!! times)),
                       aes_(label = grouping) ,
                       hjust = "left",
-                      fontface = "bold",
+                      fontface = labeltextface,
+                      family = labeltextfamily,
                       size = ytextsize,
                       nudge_x = -.45,
                       direction = "y") +
       geom_text_repel(data = dataframe %>% filter(!! times == max(!! times)),
                       aes_(label = grouping),
                       hjust = "right",
-                      fontface = "bold",
+                      fontface = labeltextface,
+                      family = labeltextfamily,
                       size = ytextsize,
                       nudge_x = .5,
                       direction = "y") +
-      geom_label(aes_(label = measurement), size = datatextsize, label.padding = unit(0.05, "lines"), label.size = 0.0) +
+      geom_label(aes_(label = measurement), size = datatextsize, 
+                 label.padding = unit(0.05, "lines"), label.size = 0.0,
+                 fontface = datatextface, family = datatextfamily) +
       my_special +
       labs(
         title = title,
